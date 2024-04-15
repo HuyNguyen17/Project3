@@ -3,10 +3,18 @@
 // enumeration for genres
 enum Genre{};
 
+struct Company
+{
+    unsigned const int id;
+    const string name;
+};
+
 class game {
 public:
     game();
-    game(string data); //placeholder for JSON parsing
+    //placeholder for JSON parsing
+    //will include companies, genres, similar games, release date, and id
+    game(string data);
     ~game();
 
 
@@ -14,11 +22,6 @@ private:
 
     const string name;
 
-    struct Company
-    {
-        unsigned const int id;
-        const string name;
-    };
     vector<Company> companies;
     set<Genre> genres;
 
