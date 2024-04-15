@@ -17,7 +17,13 @@ public:
     game(string data);
     ~game();
 
-
+    //getters
+    vector<Company> getCompanies();
+    set<Genre> getGenres();
+    unsigned int getID();
+    string getName();
+    unsigned int getReleaseDate();
+    vector<unsigned int> getSimilarGames();
 private:
 
     const string name;
