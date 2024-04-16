@@ -1,0 +1,10 @@
+# ninja log v5
+1	599	1713239221931190549	CMakeFiles/Project3.dir/src/main.cpp.o	da5310dd8e4aa399
+0	8	1713224999996679913	CMakeFiles/Project3.dir/src/game.cpp.o	17316d7e61af8988
+599	647	1713239221979190887	Project3	f14d7bbebd9d9cbf
+1	284	1713238056541203271	CMakeFiles/Project3.dir/src/JsonReader.cpp.o	c16ff4f4db9b57a3
+0	20	1713301867942743218	build.ninja	2f61975025f7aade
+1	14	1713301867942743218	build.ninja	2f61975025f7aade
+1	16	1713301881415018326	CMakeFiles/Project3.dir/src/game.cpp.o	17316d7e61af8988
+1	573	1713301881971029687	CMakeFiles/Project3.dir/src/main.cpp.o	da5310dd8e4aa399
+573	616	1713301882015030585	Project3	dc47f19b89a6bf6e
