@@ -120,6 +120,7 @@ int main()
                             std::cout << individualCoIter->value.GetInt() << " - ";
                             individualCoIter = individualCo.FindMember("name");
                             std::cout << individualCoIter->value.GetString() << "\n";
+                            // Do we want a vector<int, map<int, string>>
                         }
                     }
                 }
@@ -135,6 +136,7 @@ int main()
                     for (SizeType i = 0; i < similarGamesArray.Size(); i++)
                     {
                         std::cout << similarGamesArray[i].GetInt() << ", ";
+                        // Do we want a vector<int>
                     }
                 }
             }
