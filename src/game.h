@@ -44,7 +44,7 @@ private:
 
 };
 // functor to hash a game
-class gameHash
+struct gameHash
 {
     size_t operator()(const game& game) const;
 };
