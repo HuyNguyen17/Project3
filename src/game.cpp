@@ -29,6 +29,16 @@ vector<unsigned int> game::getSimilarGames() const {
     return similarGamesIDs;
 }
 
+game::game() {
+
+}
+
+game::game(string data) {
+
+}
+
+game::~game() = default;
+
 size_t gameHash::operator()(const game &game) const {
     return game.getID();
 }
