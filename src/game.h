@@ -21,12 +21,12 @@ public:
     ~game();
 
     //getters
-    vector<Company> getCompanies();
-    set<Genre> getGenres();
-    unsigned int getID();
-    string getName();
-    unsigned int getReleaseDate();
-    vector<unsigned int> getSimilarGames();
+    vector<Company> getCompanies() const;
+    set<Genre> getGenres() const;
+    unsigned int getID() const;
+    string getName() const;
+    unsigned int getReleaseDate() const;
+    vector<unsigned int> getSimilarGames() const;
 
     //used for the unordered map
     bool operator==(const game &other) const;
