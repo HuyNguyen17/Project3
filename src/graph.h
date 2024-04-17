@@ -16,7 +16,7 @@ using namespace std;
 
 class graph {
 private:
-    unordered_map<game, vector<game>> List; // Stores adjacency list of games
+    unordered_map<game, vector<game>, gameHash> List; // Stores adjacency list of games
 
 public:
     graph() = default; // Default constructor
@@ -37,4 +37,4 @@ public:
     void connectCompanyGames(string company);
 };
 
-#endif PROJECT3_GRAPH_H
+#endif //PROJECT3_GRAPH_H
