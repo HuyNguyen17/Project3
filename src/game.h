@@ -43,3 +43,8 @@ private:
     vector<unsigned int> similarGamesIDs;
 
 };
+// functor to hash a game
+class gameHash
+{
+    size_t operator()(const game& game) const;
+};
