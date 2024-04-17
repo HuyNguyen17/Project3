@@ -1,3 +1,6 @@
+#cmake debug should be in gitignore because it's user-specific
+cmake-build-debug/
+
 # Prerequisites
 *.d
 
