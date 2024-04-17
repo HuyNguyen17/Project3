@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <cmath>
 #include "game.h"
+
 using namespace std;
 
 class graph {
@@ -36,5 +37,4 @@ public:
     void connectCompanyGames(string company);
 };
 
-#endif //PROJECT3_GRAPH_H
-
+#endif PROJECT3_GRAPH_H

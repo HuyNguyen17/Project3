@@ -1,6 +1,7 @@
 //
 // Created by gator on 4/15/2024.
 //
+
 #include "graph.h"
 
 void graph::connectSimilarGames(const game &startGame, const vector<game>& similarGames) {
@@ -13,7 +14,7 @@ void graph::connectSimilarGames(const game &startGame, const vector<game>& simil
         {
             connectSimilarGames(similarGame,similarGame.similarGamesIDs);
         }
-         /*
+         */
     }
 
 }
