@@ -27,6 +27,9 @@ public:
     string getName();
     unsigned int getReleaseDate();
     vector<unsigned int> getSimilarGames();
+
+    //used for the unordered map
+    bool operator==(const game &other) const;
 private:
 
     const string name;
