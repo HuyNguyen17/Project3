@@ -48,5 +48,7 @@ add_executable(Project3
         include/rapidjson/writer.h
         src/game.cpp
         src/game.h
+        src/graph.cpp
+        src/graph.h
         src/main.cpp
 )
