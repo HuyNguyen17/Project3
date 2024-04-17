@@ -37,8 +37,8 @@ private:
     vector<Company> companies;
     set<Genre> genres;
 
-    unsigned const int release_date; // Change to an actual time type is prolly better
-    unsigned const int id;
+    unsigned int release_date; // Change to an actual time type is prolly better
+    unsigned int id;
 
     vector<unsigned int> similarGamesIDs;
 
