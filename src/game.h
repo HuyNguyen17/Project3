@@ -21,12 +21,15 @@ public:
     ~game();
 
     //getters
-    vector<Company> getCompanies();
-    set<Genre> getGenres();
-    unsigned int getID();
-    string getName();
-    unsigned int getReleaseDate();
-    vector<unsigned int> getSimilarGames();
+    vector<Company> getCompanies() const;
+    set<Genre> getGenres() const;
+    unsigned int getID() const;
+    string getName() const;
+    unsigned int getReleaseDate() const;
+    vector<unsigned int> getSimilarGames() const;
+
+    //used for the unordered map
+    bool operator==(const game &other) const;
 private:
 
     const string name;
@@ -34,9 +37,14 @@ private:
     vector<Company> companies;
     set<Genre> genres;
 
-    unsigned const int release_date; // Change to an actual time type is prolly better
-    unsigned const int id;
+    unsigned int release_date; // Change to an actual time type is prolly better
+    unsigned int id;
 
     vector<unsigned int> similarGamesIDs;
 
+};
+// functor to hash a game
+struct gameHash
+{
+    size_t operator()(const game& game) const;
 };
