@@ -10,31 +10,31 @@
 #include <vector>
 #include <algorithm>
 #include <cmath>
+#include<memory>
 #include "game.h"
+#include "unordered_set"
 
 using namespace std;
 
 class graph {
 private:
-    unordered_map<game, vector<game>, gameHash> List; // Stores adjacency list of games
+    unordered_map<game, vector<game>, gameHash> List; // Stores adjacency list of games, Leaving here for now.
+    
+    unordered_map<int, shared_ptr<game>> nodes; // Maps game ID to game object
+    unordered_map<string, shared_ptr<game>> nameIndex; // Maps game names to game objects for quick lookup
+    unordered_map<int, vector<int>> edges; // Adjacency list for similar games
+
+    //The idea is to parse through the data and store all the information in this graph to enable visualization later based on search criteria.
+    unordered_set<string, vector<int>> genre; //string will be the genre title and int will be gameID
+    unordered_set<string, vector<int>> company; //string will be the company title and int will be gameID
+    unordered_set<string, vector<int>> release_date; //string will be the release date and int will be gameID
+
 
 public:
     graph() = default; // Default constructor
-
-    // Adds an edge between two games, creating a bidirectional link
-    void addEdge(const game, const game);
-
-    // Recursively connects all games that are similar to each other
-    void connectSimilarGames(const game& startGame, const vector<game>& similarGames);
-
-    // Connects all games within the same genre
-    void connectSimilarGenres(const string genre);
-
-    // Connects all games released in the same year
-    void connectSameReleaseDate(int year);
-
-    // Connects all games developed by the same company
-    void connectCompanyGames(string company);
+    void addGame(const shared_ptr<game>& game);
+    void addEdge(int gameId1, int gameId2);
+    shared_ptr<game> findByName(const string& name); // Method to find a game by name
 };
 
 #endif //PROJECT3_GRAPH_H

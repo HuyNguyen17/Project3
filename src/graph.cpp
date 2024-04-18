@@ -4,17 +4,21 @@
 
 #include "graph.h"
 
-void graph::connectSimilarGames(const game &startGame, const vector<game>& similarGames) {
-    for(const game& similarGame : similarGames)
-    {
-        addEdge(startGame, similarGame);
-        addEdge(similarGame, startGame);
-        /*
-        if (List[similarGame].empty())
-        {
-            connectSimilarGames(similarGame,similarGame.similarGamesIDs);
-        }
-         */
-    }
+void graph::addGame(const std::shared_ptr<game>& game) {
+    nodes[game->getID()] = game;
+    nameIndex[game->getName()] = game; // Index the game by name as well
+}
 
+void graph::addEdge(int gameId1, int gameId2) {
+    edges[gameId1].push_back(gameId2);
+    edges[gameId2].push_back(gameId1); // Assuming bidirectional relationship
+}
+
+std::shared_ptr<game> graph::findByName(const std::string& name) {
+    auto it = nameIndex.find(name);
+    if (it != nameIndex.end()) {
+        return it->second; // Return the game if found
+    } else {
+        return nullptr; // Return nullptr if not found
+    }
 }
