@@ -25,9 +25,9 @@ private:
     unordered_map<int, vector<int>> edges; // Adjacency list for similar games
 
     //The idea is to parse through the data and store all the information in this graph to enable visualization later based on search criteria.
-    unordered_set<string, vector<int>> genre; //string will be the genre title and int will be gameID
-    unordered_set<string, vector<int>> company; //string will be the company title and int will be gameID
-    unordered_set<string, vector<int>> release_date; //string will be the release date and int will be gameID
+    unordered_map<string, vector<int>> genre; //string will be the genre title and int will be gameID
+    unordered_map<string, vector<int>> company; //string will be the company title and int will be gameID
+    unordered_map<string, vector<int>> release_date; //string will be the release date and int will be gameID
 
 
 public:
