@@ -61,3 +61,7 @@ bool graph::gameExists(const string &name) const{
 int graph::getNumEdges() const {
     return numEdges;
 }
+
+int graph::getNumeNodes() const {
+    return nodes.size();
+}
