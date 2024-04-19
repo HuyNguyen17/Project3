@@ -169,20 +169,22 @@ int main()
         // add similar games as edges to graph
         for(auto edge : edges)
         {
-            gamesGraph.addEdge(edge.first, edge.second);
+            gamesGraph.addEdge(edge);
         }
 
         // testing to see if findbyname works
         auto testPtr = gamesGraph.findByName("Doesn't Exist");
         if(testPtr == nullptr)
         {
-            std::cout << "Correct for finding invalid game!" << '\n';
+            std::cout << '\n' << "Correct for finding invalid game!" << '\n';
         }
         testPtr = gamesGraph.findByName("Minecraft");
         if(testPtr != nullptr)
         {
             std::cout << "Game: " << testPtr->getName() << ", Released " << testPtr->getReleaseDate() << '\n';
         }
+
+        std::cout << gamesGraph.getNumEdges() <<" edges in graph!" << '\n';
 
         return 0;
     }
