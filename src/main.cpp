@@ -12,6 +12,7 @@
 #include <unordered_map>
 using namespace rapidjson;
 #include "game.h"
+#include "graph.h"
 
 bool parseJSONFromFile(const std::string& filename, Document& d)
 {
@@ -53,7 +54,7 @@ std::string timestampToDate(long long timestamp) {
     return std::string(buffer);
 }
 
-game parseGame(const Value::ConstValueIterator mainIter) {
+shared_ptr<game> parseGame(const Value::ConstValueIterator mainIter) {
     cout << "\n";
     // main game info
     int gameID;
@@ -129,7 +130,7 @@ game parseGame(const Value::ConstValueIterator mainIter) {
         }
     }
     cout << "\n";
-    return game(gameID, gameName, gameReleaseDate, similarGames); // can add more but these are good for now
+    return make_shared<game>(gameID, gameName, gameReleaseDate, similarGames); // can add more but these are good for now
 }
 
 int main()
@@ -141,6 +142,8 @@ int main()
     Document d;
     bool parsed = parseJSONFromFile(filename, d);
 
+    vector<shared_ptr<game>> gamePointers;
+
     if (!parsed)
     {
         return -1;
@@ -149,8 +152,17 @@ int main()
     {
         for (Value::ConstValueIterator mainIter = d.Begin(); mainIter != d.End(); ++mainIter)
         {
-            parseGame(mainIter);
+            gamePointers.push_back(parseGame(mainIter));
         }
+        // Really want to do funky and unique stuff with this graph
+        graph gamesGraph;
+        // but for now, just add all the games into it
+        for(auto ptr : gamePointers)
+        {
+            gamesGraph.addGame(ptr);
+        }
+
+
         return 0;
     }
 
