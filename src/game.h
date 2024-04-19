@@ -14,33 +14,31 @@ struct Company
 
 class game {
 public:
-    game();
-    //placeholder for JSON parsing
     //will include companies, genres, similar games, release date, and id
-    game(string data);
+    game(int ID, string gameName, string gameReleaseDate, vector<int>& similarGames);
     ~game();
 
     //getters
     vector<Company> getCompanies() const;
     set<Genre> getGenres() const;
-    unsigned int getID() const;
+    int getID() const;
     string getName() const;
-    unsigned int getReleaseDate() const;
-    vector<unsigned int> getSimilarGames() const;
+    string getReleaseDate() const;
+    vector<int> getSimilarGames() const;
 
     //used for the unordered map
     bool operator==(const game &other) const;
 private:
 
     const string name;
+    const string releaseDate; // Change to an actual time type is prolly better
 
     vector<Company> companies;
     set<Genre> genres;
 
-    unsigned int release_date; // Change to an actual time type is prolly better
-    unsigned int id;
+    const int id;
 
-    vector<unsigned int> similarGamesIDs;
+    vector<int> similarGamesIDs;
 
 };
 // functor to hash a game

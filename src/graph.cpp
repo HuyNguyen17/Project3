@@ -11,7 +11,7 @@ void graph::addGame(const shared_ptr<game>& game) {
     {
         company[c.name].push_back(game->getID());
     }
-    release_date[to_string(game->getReleaseDate())].push_back(game->getID());
+    release_date[(game->getReleaseDate())].push_back(game->getID());
 }
 
 void graph::addEdge(int gameId1, int gameId2) {

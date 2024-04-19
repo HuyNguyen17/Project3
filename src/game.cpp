@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include <utility>
+
 bool game::operator==(const game &other) const {
     return other.id == this->id;
 }
@@ -13,7 +15,7 @@ set<Genre> game::getGenres() const {
     return genres;
 }
 
-unsigned int game::getID() const {
+int game::getID() const {
     return id;
 }
 
@@ -21,20 +23,16 @@ string game::getName() const {
     return name;
 }
 
-unsigned int game::getReleaseDate() const {
-    return release_date;
+string game::getReleaseDate() const {
+    return releaseDate;
 }
 
-vector<unsigned int> game::getSimilarGames() const {
+vector<int> game::getSimilarGames() const {
     return similarGamesIDs;
 }
 
-game::game() {
-
-}
-
-game::game(string data) {
-
+game::game(int ID, string gameName, string gameReleaseDate, vector<int> &similarGames) :
+        id(ID), name(std::move(gameName)), releaseDate(std::move(gameReleaseDate)), similarGamesIDs(similarGames) {
 }
 
 game::~game() = default;
