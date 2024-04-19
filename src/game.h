@@ -14,7 +14,6 @@ struct Company
 
 class game {
 public:
-    game();
     //will include companies, genres, similar games, release date, and id
     game(int ID, string gameName,string gameReleaseDate, vector<int>& similarGames);
     ~game();
@@ -22,7 +21,7 @@ public:
     //getters
     vector<Company> getCompanies() const;
     set<Genre> getGenres() const;
-    unsigned int getID() const;
+    int getID() const;
     string getName() const;
     string getReleaseDate() const;
     vector<int> getSimilarGames() const;
@@ -32,12 +31,12 @@ public:
 private:
 
     const string name;
+    const string releaseDate; // Change to an actual time type is prolly better
 
     vector<Company> companies;
     set<Genre> genres;
 
-    string releaseDate; // Change to an actual time type is prolly better
-    unsigned int id;
+    const int id;
 
     vector<int> similarGamesIDs;
 

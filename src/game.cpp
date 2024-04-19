@@ -13,7 +13,7 @@ set<Genre> game::getGenres() const {
     return genres;
 }
 
-unsigned int game::getID() const {
+int game::getID() const {
     return id;
 }
 
@@ -27,10 +27,6 @@ string game::getReleaseDate() const {
 
 vector<int> game::getSimilarGames() const {
     return similarGamesIDs;
-}
-
-game::game() {
-
 }
 
 game::game(int ID, string gameName, string gameReleaseDate, vector<int> &similarGames) :
