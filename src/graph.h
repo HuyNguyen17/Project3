@@ -34,7 +34,13 @@ public:
     graph() = default; // Default constructor
     void addGame(const shared_ptr<game>& game);
     void addEdge(int gameId1, int gameId2);
+
     shared_ptr<game> findByName(const string& name); // Method to find a game by name
+    shared_ptr<game> findByID(const int ID); // find a gameby its id
+
+    // checks if a game exists in the graph
+    bool gameExists(const int ID) const;
+    bool gameExists(const string& name) const;
 };
 
 #endif //PROJECT3_GRAPH_H

@@ -27,3 +27,24 @@ std::shared_ptr<game> graph::findByName(const string& name) {
         return nullptr; // Return nullptr if not found
     }
 }
+
+shared_ptr<game> graph::findByID(const int ID) {
+    auto it = nodes.find(ID);
+    // make sure the ID is in the graph
+    if (it != nodes.end()) {
+        return it->second;
+    }
+    else {
+        return nullptr;
+    }
+}
+
+bool graph::gameExists(const int ID) const{
+    // if game exists, then the count in the map will not be 0
+    return(nodes.count(ID) != 0);
+}
+
+bool graph::gameExists(const string &name) const{
+    // if game exists, then the count in the map will not be 0
+    return(nameIndex.count(name) != 0);
+}
