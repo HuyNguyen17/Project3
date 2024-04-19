@@ -131,7 +131,9 @@ void parseGame(const Value::ConstValueIterator mainIter) {
 
 int main()
 {
-    const std::string filename = "../data/data.json";
+    // use smalldata for testing
+    //const std::string filename = "../data/data.json";
+    const std::string filename = "../data/smalldata.json";
 
     Document d;
     bool parsed = parseJSONFromFile(filename, d);
