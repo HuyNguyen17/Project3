@@ -53,6 +53,82 @@ std::string timestampToDate(long long timestamp) {
     return std::string(buffer);
 }
 
+void parseGame(const Value::ConstValueIterator mainIter) {
+    cout << "\n";
+    // main game info
+    int gameID;
+    string gameName;
+    string gameReleaseDate;
+    cout << "Game ID: "  << mainIter->GetObject()["id"].GetInt() << "\n";
+    cout << "Game Name: "  << mainIter->GetObject()["name"].GetString() << "\n";
+    gameID = mainIter->GetObject()["id"].GetInt();
+    gameName = mainIter->GetObject()["name"].GetString();
+
+    bool hasReleaseDate = mainIter->GetObject().HasMember("first_release_date");
+    if (hasReleaseDate)
+    {
+        cout << "Game Release Date: " << timestampToDate(mainIter->GetObject()["first_release_date"].GetInt()) << "\n";
+        gameReleaseDate = timestampToDate(mainIter->GetObject()["first_release_date"].GetInt());
+    }
+
+    // Iterate through the Genres
+    bool hasGenre = (mainIter->GetObject().HasMember("genres"));
+    unordered_map<int, string> genre;
+    if (hasGenre)
+    {
+        if (mainIter->GetObject()["genres"].IsArray())
+        {
+            const Value &gameArray = mainIter->GetObject()["genres"];
+            cout << "Genre: ";
+            for (Value::ConstValueIterator genreIter = gameArray.Begin(); genreIter != gameArray.End(); ++genreIter)
+            {
+                cout << genreIter->GetObject()["id"].GetInt() << " " << genreIter->GetObject()["name"].GetString() << ", ";
+                // add genre to map: id / genre name
+                genre.insert(pair<int, string>(genreIter->GetObject()["id"].GetInt(), genreIter->GetObject()["name"].GetString()));
+            }
+        }
+    }
+
+    // Iterate through Involved Companies
+    if (mainIter->GetObject().HasMember("involved_companies"))
+    {
+        if (mainIter->GetObject()["involved_companies"].IsArray()) {
+            const Value &involvedCoArray = mainIter->GetObject()["involved_companies"];
+            cout << "\nInvolved Companies\n";
+            for (Value::ConstValueIterator involvedCoIter = involvedCoArray.Begin(); involvedCoIter != involvedCoArray.End(); ++involvedCoIter) {
+                cout << involvedCoIter->GetObject()["id"].GetInt() << "- ";
+
+                // Involved Companies Iterate
+                if (involvedCoIter->GetObject()["company"].IsObject())
+                {
+                    const Value& individualCo = involvedCoIter->GetObject()["company"];
+                    Value::ConstMemberIterator individualCoIter = individualCo.FindMember("id");
+                    cout << individualCoIter->value.GetInt() << " - ";
+                    individualCoIter = individualCo.FindMember("name");
+                    cout << individualCoIter->value.GetString() << "\n";
+                    // Do we want a vector<int, map<int, string>>
+                }
+            }
+        }
+    }
+
+    // Iterate through similar games
+    if (mainIter->GetObject().HasMember("similar_games"))
+    {
+        if (mainIter->GetObject()["similar_games"].IsArray())
+        {
+            const Value &similarGamesArray = mainIter->GetObject()["similar_games"];
+            cout << "Similar Games: ";
+            for (SizeType i = 0; i < similarGamesArray.Size(); i++)
+            {
+                cout << similarGamesArray[i].GetInt() << ", ";
+                // Do we want a vector<int>
+            }
+        }
+    }
+    cout << "\n";
+}
+
 int main()
 {
     const std::string filename = "../data/data.json";
@@ -68,79 +144,7 @@ int main()
     {
         for (Value::ConstValueIterator mainIter = d.Begin(); mainIter != d.End(); ++mainIter)
         {
-            std::cout << "\n";
-            // main game info
-            int gameID;
-            std::string gameName;
-            std::string gameReleaseDate;
-            std::cout << "Game ID: "  << mainIter->GetObject()["id"].GetInt() << "\n";
-            std::cout << "Game Name: "  << mainIter->GetObject()["name"].GetString() << "\n";
-            gameID = mainIter->GetObject()["id"].GetInt();
-            gameName = mainIter->GetObject()["name"].GetString();
-
-            bool hasReleaseDate = mainIter->GetObject().HasMember("first_release_date");
-            if (hasReleaseDate)
-            {
-                std::cout << "Game Release Date: " << timestampToDate(mainIter->GetObject()["first_release_date"].GetInt()) << "\n";
-                gameReleaseDate = timestampToDate(mainIter->GetObject()["first_release_date"].GetInt());
-            }
-
-            // Iterate through the Genres
-            bool hasGenre = (mainIter->GetObject().HasMember("genres"));
-            std::unordered_map<int, std::string> genre;
-            if (hasGenre)
-            {
-                if (mainIter->GetObject()["genres"].IsArray())
-                {
-                    const Value &gameArray = mainIter->GetObject()["genres"];
-                    std::cout << "Genre: ";
-                    for (Value::ConstValueIterator genreIter = gameArray.Begin(); genreIter != gameArray.End(); ++genreIter)
-                    {
-                        std::cout << genreIter->GetObject()["id"].GetInt() << " " << genreIter->GetObject()["name"].GetString() << ", ";
-                        // add genre to map: id / genre name
-                        genre.insert(std::pair<int, std::string>(genreIter->GetObject()["id"].GetInt(), genreIter->GetObject()["name"].GetString()));
-                    }
-                }
-            }
-
-            // Iterate through Involved Companies
-            if (mainIter->GetObject().HasMember("involved_companies"))
-            {
-                if (mainIter->GetObject()["involved_companies"].IsArray()) {
-                    const Value &involvedCoArray = mainIter->GetObject()["involved_companies"];
-                    std::cout << "\nInvolved Companies\n";
-                    for (Value::ConstValueIterator involvedCoIter = involvedCoArray.Begin(); involvedCoIter != involvedCoArray.End(); ++involvedCoIter) {
-                        std::cout << involvedCoIter->GetObject()["id"].GetInt() << "- ";
-
-                        // Involved Companies Iterate
-                        if (involvedCoIter->GetObject()["company"].IsObject())
-                        {
-                            const Value& individualCo = involvedCoIter->GetObject()["company"];
-                            Value::ConstMemberIterator individualCoIter = individualCo.FindMember("id");
-                            std::cout << individualCoIter->value.GetInt() << " - ";
-                            individualCoIter = individualCo.FindMember("name");
-                            std::cout << individualCoIter->value.GetString() << "\n";
-                            // Do we want a vector<int, map<int, string>>
-                        }
-                    }
-                }
-            }
-
-            // Iterate through similar games
-            if (mainIter->GetObject().HasMember("similar_games"))
-            {
-                if (mainIter->GetObject()["similar_games"].IsArray())
-                {
-                    const Value &similarGamesArray = mainIter->GetObject()["similar_games"];
-                    std::cout << "Similar Games: ";
-                    for (SizeType i = 0; i < similarGamesArray.Size(); i++)
-                    {
-                        std::cout << similarGamesArray[i].GetInt() << ", ";
-                        // Do we want a vector<int>
-                    }
-                }
-            }
-            std::cout << "\n";
+            parseGame(mainIter);
         }
         return 0;
     }
