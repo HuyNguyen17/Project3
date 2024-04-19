@@ -59,6 +59,8 @@ void parseGame(const Value::ConstValueIterator mainIter) {
     int gameID;
     string gameName;
     string gameReleaseDate;
+    vector<int> similarGames;
+
     cout << "Game ID: "  << mainIter->GetObject()["id"].GetInt() << "\n";
     cout << "Game Name: "  << mainIter->GetObject()["name"].GetString() << "\n";
     gameID = mainIter->GetObject()["id"].GetInt();
@@ -122,7 +124,7 @@ void parseGame(const Value::ConstValueIterator mainIter) {
             for (SizeType i = 0; i < similarGamesArray.Size(); i++)
             {
                 cout << similarGamesArray[i].GetInt() << ", ";
-                // Do we want a vector<int>
+                similarGames.push_back(similarGamesArray[i].GetInt());
             }
         }
     }
