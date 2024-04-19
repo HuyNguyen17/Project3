@@ -44,7 +44,7 @@ public:
     bool gameExists(const string& name) const;
 
     int getNumEdges() const;
-    int getNumeNodes() const;
+    int getNumNodes() const;
 };
 
 #endif //PROJECT3_GRAPH_H
