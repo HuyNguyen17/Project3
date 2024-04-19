@@ -62,6 +62,6 @@ int graph::getNumEdges() const {
     return numEdges;
 }
 
-int graph::getNumeNodes() const {
+int graph::getNumNodes() const {
     return nodes.size();
 }
