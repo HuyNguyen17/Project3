@@ -184,6 +184,7 @@ int main()
             std::cout << "Game: " << testPtr->getName() << ", Released " << testPtr->getReleaseDate() << '\n';
         }
 
+        std::cout << gamesGraph.getNumeNodes() << " nodes in graph!" << '\n';
         std::cout << gamesGraph.getNumEdges() <<" edges in graph!" << '\n';
 
         return 0;
