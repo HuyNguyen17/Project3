@@ -161,7 +161,17 @@ int main()
         {
             gamesGraph.addGame(ptr);
         }
-
+        // testing to see if findbyname works
+        auto testPtr = gamesGraph.findByName("Doesn't Exist");
+        if(testPtr == nullptr)
+        {
+            std::cout << "Correct for finding invalid game!" << '\n';
+        }
+        testPtr = gamesGraph.findByName("Minecraft");
+        if(testPtr != nullptr)
+        {
+            std::cout << "Game: " << testPtr->getName() << ", Released " << testPtr->getReleaseDate() << '\n';
+        }
 
         return 0;
     }
