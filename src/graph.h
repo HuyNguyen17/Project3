@@ -29,7 +29,7 @@ private:
     unordered_map<string, vector<int>> company; //string will be the company title and int will be gameID
     unordered_map<string, vector<int>> release_date; //string will be the release date and int will be gameID
 
-
+    int numEdges = 0;
 public:
     graph() = default; // Default constructor
     void addGame(const shared_ptr<game>& game);
@@ -41,6 +41,8 @@ public:
     // checks if a game exists in the graph
     bool gameExists(const int ID) const;
     bool gameExists(const string& name) const;
+
+    int getNumEdges() const;
 };
 
 #endif //PROJECT3_GRAPH_H

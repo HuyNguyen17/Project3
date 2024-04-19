@@ -17,6 +17,7 @@ void graph::addGame(const shared_ptr<game>& game) {
 void graph::addEdge(int gameId1, int gameId2) {
     edges[gameId1].push_back(gameId2);
     edges[gameId2].push_back(gameId1); // Assuming bidirectional relationship
+    numEdges++;
 }
 
 std::shared_ptr<game> graph::findByName(const string& name) {
@@ -47,4 +48,8 @@ bool graph::gameExists(const int ID) const{
 bool graph::gameExists(const string &name) const{
     // if game exists, then the count in the map will not be 0
     return(nameIndex.count(name) != 0);
+}
+
+int graph::getNumEdges() const {
+    return numEdges;
 }
