@@ -61,16 +61,16 @@ game parseGame(const Value::ConstValueIterator mainIter) {
     string gameReleaseDate;
     vector<int> similarGames;
 
-    cout << "Game ID: "  << mainIter->GetObject()["id"].GetInt() << "\n";
-    cout << "Game Name: "  << mainIter->GetObject()["name"].GetString() << "\n";
     gameID = mainIter->GetObject()["id"].GetInt();
     gameName = mainIter->GetObject()["name"].GetString();
+    cout << "Game ID: "  << gameID << "\n";
+    cout << "Game Name: "  << gameName << "\n";
 
     bool hasReleaseDate = mainIter->GetObject().HasMember("first_release_date");
     if (hasReleaseDate)
     {
-        cout << "Game Release Date: " << timestampToDate(mainIter->GetObject()["first_release_date"].GetInt()) << "\n";
         gameReleaseDate = timestampToDate(mainIter->GetObject()["first_release_date"].GetInt());
+        cout << "Game Release Date: " << gameReleaseDate << "\n";
     }
 
     // Iterate through the Genres
