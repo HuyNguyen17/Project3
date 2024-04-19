@@ -15,9 +15,8 @@ struct Company
 class game {
 public:
     game();
-    //placeholder for JSON parsing
     //will include companies, genres, similar games, release date, and id
-    game(string data);
+    game(int ID, string gameName,string gameReleaseDate, vector<unsigned int>& similarGames);
     ~game();
 
     //getters

@@ -33,8 +33,9 @@ game::game() {
 
 }
 
-game::game(string data) {
-
+game::game(int ID, string gameName, string gameReleaseDate, vector<unsigned int> &similarGames) :
+    id(ID), name(gameName), release_date(gameReleaseDate), similarGamesIDs(similarGames)
+{
 }
 
 game::~game() = default;

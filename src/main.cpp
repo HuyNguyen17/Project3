@@ -129,6 +129,7 @@ void parseGame(const Value::ConstValueIterator mainIter) {
         }
     }
     cout << "\n";
+    return game(gameID, gameName, gameReleaseDate, similarGames); // can add more but these are good for now
 }
 
 int main()
