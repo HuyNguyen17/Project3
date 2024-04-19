@@ -15,7 +15,7 @@ struct Company
 class game {
 public:
     //will include companies, genres, similar games, release date, and id
-    game(int ID, string gameName,string gameReleaseDate, vector<int>& similarGames);
+    game(int ID, string gameName, string gameReleaseDate, vector<int>& similarGames);
     ~game();
 
     //getters

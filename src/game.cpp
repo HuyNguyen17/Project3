@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include <utility>
+
 bool game::operator==(const game &other) const {
     return other.id == this->id;
 }
@@ -30,7 +32,7 @@ vector<int> game::getSimilarGames() const {
 }
 
 game::game(int ID, string gameName, string gameReleaseDate, vector<int> &similarGames) :
-        id(ID), name(gameName), releaseDate(gameReleaseDate), similarGamesIDs(similarGames) {
+        id(ID), name(std::move(gameName)), releaseDate(std::move(gameReleaseDate)), similarGamesIDs(similarGames) {
 }
 
 game::~game() = default;
