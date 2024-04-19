@@ -23,6 +23,11 @@ void graph::addEdge(int gameId1, int gameId2) {
     }
 }
 
+void graph::addEdge(pair<int,int>& gamePair) {
+    //makes it easier to directly add a pair for a graph
+    addEdge(gamePair.first, gamePair.second);
+}
+
 std::shared_ptr<game> graph::findByName(const string& name) {
     auto it = nameIndex.find(name);
     if (it != nameIndex.end()) {
