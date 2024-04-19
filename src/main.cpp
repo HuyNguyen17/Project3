@@ -53,7 +53,7 @@ std::string timestampToDate(long long timestamp) {
     return std::string(buffer);
 }
 
-void parseGame(const Value::ConstValueIterator mainIter) {
+game parseGame(const Value::ConstValueIterator mainIter) {
     cout << "\n";
     // main game info
     int gameID;

@@ -16,7 +16,7 @@ class game {
 public:
     game();
     //will include companies, genres, similar games, release date, and id
-    game(int ID, string gameName,string gameReleaseDate, vector<unsigned int>& similarGames);
+    game(int ID, string gameName,string gameReleaseDate, vector<int>& similarGames);
     ~game();
 
     //getters
@@ -24,8 +24,8 @@ public:
     set<Genre> getGenres() const;
     unsigned int getID() const;
     string getName() const;
-    unsigned int getReleaseDate() const;
-    vector<unsigned int> getSimilarGames() const;
+    string getReleaseDate() const;
+    vector<int> getSimilarGames() const;
 
     //used for the unordered map
     bool operator==(const game &other) const;
@@ -36,10 +36,10 @@ private:
     vector<Company> companies;
     set<Genre> genres;
 
-    string release_date; // Change to an actual time type is prolly better
+    string releaseDate; // Change to an actual time type is prolly better
     unsigned int id;
 
-    vector<unsigned int> similarGamesIDs;
+    vector<int> similarGamesIDs;
 
 };
 // functor to hash a game

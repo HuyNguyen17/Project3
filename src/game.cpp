@@ -21,11 +21,11 @@ string game::getName() const {
     return name;
 }
 
-unsigned int game::getReleaseDate() const {
-    return release_date;
+string game::getReleaseDate() const {
+    return releaseDate;
 }
 
-vector<unsigned int> game::getSimilarGames() const {
+vector<int> game::getSimilarGames() const {
     return similarGamesIDs;
 }
 
@@ -33,9 +33,8 @@ game::game() {
 
 }
 
-game::game(int ID, string gameName, string gameReleaseDate, vector<unsigned int> &similarGames) :
-    id(ID), name(gameName), release_date(gameReleaseDate), similarGamesIDs(similarGames)
-{
+game::game(int ID, string gameName, string gameReleaseDate, vector<int> &similarGames) :
+        id(ID), name(gameName), releaseDate(gameReleaseDate), similarGamesIDs(similarGames) {
 }
 
 game::~game() = default;
