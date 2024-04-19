@@ -15,9 +15,12 @@ void graph::addGame(const shared_ptr<game>& game) {
 }
 
 void graph::addEdge(int gameId1, int gameId2) {
-    edges[gameId1].push_back(gameId2);
-    edges[gameId2].push_back(gameId1); // Assuming bidirectional relationship
-    numEdges++;
+    // need to make sure the nodes exist in the graph
+    if (gameExists(gameId1) && gameExists(gameId2)) {
+        edges[gameId1].push_back(gameId2);
+        edges[gameId2].push_back(gameId1); // Assuming bidirectional relationship
+        numEdges++;
+    }
 }
 
 std::shared_ptr<game> graph::findByName(const string& name) {
