@@ -29,10 +29,6 @@ vector<int> game::getSimilarGames() const {
     return similarGamesIDs;
 }
 
-game::game() {
-
-}
-
 game::game(int ID, string gameName, string gameReleaseDate, vector<int> &similarGames) :
         id(ID), name(gameName), releaseDate(gameReleaseDate), similarGamesIDs(similarGames) {
 }
