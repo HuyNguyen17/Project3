@@ -176,7 +176,7 @@ int main()
         auto testPtr = gamesGraph.findByName("Doesn't Exist");
         if(testPtr == nullptr)
         {
-            std::cout << '\n' << "Correct for finding invalid game!" << '\n';
+            std::cout << '\n' << "Doesn't break when finding invalid game!" << '\n';
         }
         testPtr = gamesGraph.findByName("Minecraft");
         if(testPtr != nullptr)
