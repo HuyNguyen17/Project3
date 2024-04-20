@@ -76,8 +76,8 @@ void Parser::parseGame(const rapidjson::Value::ConstValueIterator mainIter, grap
 
     gameID = mainIter->GetObject()["id"].GetInt();
     gameName = mainIter->GetObject()["name"].GetString();
-//    cout << "Game ID: "  << gameID << "\n";
-//    cout << "Game Name: "  << gameName << "\n";
+    cout << "Game ID: "  << gameID << "\n";
+    cout << "Game Name: "  << gameName << "\n";
 
     bool hasReleaseDate = mainIter->GetObject().HasMember("first_release_date");
     if (hasReleaseDate)
@@ -146,7 +146,7 @@ void Parser::parseGame(const rapidjson::Value::ConstValueIterator mainIter, grap
             }
         }
     }
-    cout << "\n";
+//    cout << "\n";
     // insert into graph
     gamesGraph.addGame(make_shared<game>(gameID, gameName, gameReleaseDate,
                                                 genres, companies, similarGames));
@@ -155,7 +155,7 @@ void Parser::parseGame(const rapidjson::Value::ConstValueIterator mainIter, grap
     gamesGraph.addGameToQString(qStringGameName);
 }
 
-void Parser::parseJSONData(const std::string& filename) {
+void Parser::parseJSONData(const std::string& filename, graph &gamesGraph) {
     rapidjson::Document d;
     bool parsed = parseJSONFromFile(filename, d);
 
@@ -165,7 +165,6 @@ void Parser::parseJSONData(const std::string& filename) {
     }
     else
     {
-        graph gamesGraph;
         for (rapidjson::Value::ConstValueIterator mainIter = d.Begin(); mainIter != d.End(); ++mainIter)
         {
             // parse game and add it to the graph

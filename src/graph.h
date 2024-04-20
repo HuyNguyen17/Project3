@@ -30,6 +30,8 @@ private:
     unordered_map<string, vector<int>> release_date; //string will be the release date and int will be gameID
     QStringList qStringList;
 
+    vector<shared_ptr<game>> names;
+
     int numEdges = 0;
 public:
     graph() = default; // Default constructor
@@ -51,6 +53,10 @@ public:
 
     int getNumEdges() const;
     int getNumNodes() const;
+    int getIDfromSearching(string &_name);
+    void BFSprintConnectedGames(string _name, int maxDepth);
+    void DFSprintConnectedGames(string _name, int maxDepth);
+    bool gamesConnected(string &_name1, string &_name2, int searchPath);
 };
 
 #endif //PROJECT3_GRAPH_H
