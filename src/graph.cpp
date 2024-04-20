@@ -11,6 +11,10 @@ void graph::addGame(const shared_ptr<game>& game) {
     {
         company[c.name].push_back(game->getID());
     }
+    for(auto g: game->getGenres())
+    {
+        genre[g.name].push_back(game->getID());
+    }
     release_date[(game->getReleaseDate())].push_back(game->getID());
 }
 
