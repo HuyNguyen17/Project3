@@ -152,21 +152,11 @@ void parseJSONData(const std::string& filename) {
         }
         // Really want to do funky and unique stuff with this graph
         graph gamesGraph;
-        vector<pair<int, int>> edges; // need to add the similar games after we're all done
-        // but for now, just add all the games into it
         for(auto ptr : gamePointers)
         {
             gamesGraph.addGame(ptr);
-            for(auto similarGame : ptr->getSimilarGames())
-            {
-                edges.push_back(pair<int,int>(ptr->getID(), similarGame));
-            }
         }
-        // add similar games as edges to graph
-        for(auto edge : edges)
-        {
-            gamesGraph.addEdge(edge);
-        }
+        gamesGraph.connectNodes();
 
         // testing to see if findbyname works
         auto testVector = gamesGraph.findByName("Doesn't Exist");

@@ -73,3 +73,15 @@ int graph::getNumEdges() const {
 int graph::getNumNodes() const {
     return nodes.size();
 }
+
+// uses the edges stored in each game to add to the adjacency list
+void graph::connectNodes() {
+    for(auto node: nodes)
+    {
+        // go through each node in the gragh and adds its similar games as edges
+        for(auto similarGame : node.second->getSimilarGames())
+        {
+            addEdge(node.second->getID(), similarGame);
+        }
+    }
+}

@@ -35,6 +35,7 @@ public:
     void addGame(const shared_ptr<game>& game);
     void addEdge(int gameId1, int gameId2);
     void addEdge(pair<int,int>& gamePair);
+    void connectNodes();
 
     std::vector<std::shared_ptr<game>> findByName(const string& name); // Method to find a game by name
     shared_ptr<game> findByID(const int ID); // find a gameby its id
