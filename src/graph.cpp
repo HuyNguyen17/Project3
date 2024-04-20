@@ -249,3 +249,35 @@ bool graph::gamesConnected(string &_name1, string &_name2, int searchPath) {
     cout << _name2 << " is not reachable from " << _name1 << endl;
     return false;
 }
+
+void graph::searchByGenre(string _genre) {
+    auto it = genre.find(_genre);
+    if (it == genre.end())
+    {
+        cout << "No games found for the genre: " << _genre << endl;
+        return;
+    }
+    const auto& gameIDs = it->second;
+    for (auto id : gameIDs)
+    {
+        auto gameIt =nodes.find(id);
+        if (gameIt != nodes.end())
+        {
+            shared_ptr<game> game = gameIt->second;
+            cout << "Game ID: " << game->getID() << ", Name: " << game->getName()
+            << ", Released: " << game->getReleaseDate() << endl;
+        }
+    }
+}
+
+void graph::printAllGenre() {
+    if (genre.empty()) {
+        cout << "No genres available." << endl;
+        return;
+    }
+
+    cout << "Available Genres:" << endl;
+    for (const auto& pair : genre) {
+        cout << pair.first << endl;  // pair.first is the genre name
+    }
+}
