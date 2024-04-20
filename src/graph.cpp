@@ -92,48 +92,42 @@ void graph::connectNodes() {
     }
 }
 
-int graph::getIDfromSearching(std::string &_name)
-{
-    names = findByName(_name);
-    int _id; //id to find
-    if(names.empty())
-    {
-        cout << "Game was not found. Try again" << endl;
+int graph::getIDfromSearching(std::string &_name) {
+    auto names = findByName(_name);
+    int _id = -1; // Initialize ID to -1 to indicate not found
+
+    if (names.empty()) {
+        cout << "Game was not found." << endl;
+        return _id;
     }
-    if(names.size() < 2)
-    {
-        for (const auto& gamePtr : names)
-        {
-            _id =  gamePtr->getID();
-            names.clear();
-            return _id;
+
+    if (names.size() == 1) {
+        _id = names.front()->getID();
+    } else {
+        cout << "Multiple games found. Please select one:" << endl;
+        for (const auto& gamePtr : names) {
+            cout << "Game: " << gamePtr->getName() << ", Released " << gamePtr->getReleaseDate() << ", ID: " << gamePtr->getID() << '\n';
         }
+        cout << "Enter the ID of the game you want to select: ";
+        cin >> _id;
+        cin.ignore(); // Clear the newline character from the buffer
     }
-    else
-    {
-        //Implement Later, we will have the user select the game they want to search in the GUI
-        cout << "there is more than one game" << endl;
-        for (const auto& gamePtr: names)
-        {
-            cout << "Game: " << gamePtr->getName() << ", Released " << gamePtr->getReleaseDate() << '\n';
-        }
-        return -1; //TODO fix this later, add a way for the user to specify which game when there are two names that are equal
-    }
-    names.clear();
-    return -1; //return -1 when there was no game found.
+    return _id;
 }
 
-void graph::printConnectedGames(std::string _name) {
+void graph::printConnectedGames(std::string _name, int maxDepth) {
     int _gameID = getIDfromSearching(_name);
     if (_gameID != -1) {
-        std::queue<int> queue;
+        std::queue<std::pair<int, int>> queue; // Store game ID and depth
         std::unordered_set<int> visited;
 
-        queue.push(_gameID);
+        queue.push({_gameID, 0});
         visited.insert(_gameID);
 
         while (!queue.empty()) {
-            int currentID = queue.front();
+            auto current = queue.front();
+            int currentID = current.first;
+            int currentDepth = current.second;
             queue.pop();
 
             // Access the game using the ID and print its name
@@ -142,16 +136,18 @@ void graph::printConnectedGames(std::string _name) {
                 std::cout << gameIterator->second->getName() << std::endl;
             }
 
+            // Stop BFS if depth exceeds maxDepth
+            if (currentDepth >= maxDepth) continue;
+
             // Traverse all adjacent games
             auto neighbours = edges[currentID];
             for (int neighbourID : neighbours) {
                 if (visited.find(neighbourID) == visited.end()) {
-                    queue.push(neighbourID);
+                    queue.push({neighbourID, currentDepth + 1});
                     visited.insert(neighbourID);
                 }
             }
         }
-    } else {
-        std::cout << "Game not found." << std::endl;
     }
-};
+}
+

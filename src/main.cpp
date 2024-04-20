@@ -19,10 +19,25 @@ int main()
 
     // use smalldata for testing
     //const std::string filename = "../data/data.json";
-    const string filename = "../data/smalldata.json";
+    const string filename = "../data/data.json";
     graph gamesGraph;
     parseJSONData(filename, gamesGraph);
-    gamesGraph.printConnectedGames("Need for Speed: Most Wanted");
+    bool go = true;
+    while (go) {
+        string _name;
+        cout << "Enter 'stop' to end program" << endl;
+        cout << "Enter game you want to search: ";
+        getline(cin, _name);
+        cout << endl;
+
+        if (_name == "stop") {
+            go = false;
+            continue; // Ensures the rest of the loop is skipped
+        }
+
+        gamesGraph.printConnectedGames(_name, 1);
+    }
+
 
 }
 
