@@ -30,17 +30,21 @@ public:
 
     void setupUi(QMainWindow *MainWindow)
     {
+
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
         MainWindow->resize(1050, 629);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
+
         lineEdit = new QLineEdit(centralwidget);
         lineEdit->setObjectName("lineEdit");
         lineEdit->setGeometry(QRect(19, 89, 281, 25));
+
         pushButton = new QPushButton(centralwidget);
         pushButton->setObjectName("pushButton");
         pushButton->setGeometry(QRect(310, 90, 80, 25));
+
         textBrowser = new QTextBrowser(centralwidget);
         textBrowser->setObjectName("textBrowser");
         textBrowser->setGeometry(QRect(350, 10, 321, 51));
@@ -49,15 +53,19 @@ public:
         radioButton = new QRadioButton(centralwidget);
         radioButton->setObjectName("radioButton");
         radioButton->setGeometry(QRect(60, 240, 131, 23));
+
         radioButton_2 = new QRadioButton(centralwidget);
         radioButton_2->setObjectName("radioButton_2");
         radioButton_2->setGeometry(QRect(60, 280, 131, 23));
+
         radioButton_3 = new QRadioButton(centralwidget);
         radioButton_3->setObjectName("radioButton_3");
         radioButton_3->setGeometry(QRect(60, 320, 151, 23));
+
         textBrowser_2 = new QTextBrowser(centralwidget);
         textBrowser_2->setObjectName("textBrowser_2");
         textBrowser_2->setGeometry(QRect(550, 90, 401, 451));
+
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -90,6 +98,8 @@ public:
     } // retranslateUi
 
 };
+
+
 
 namespace Ui {
     class MainWindow: public Ui_MainWindow {};

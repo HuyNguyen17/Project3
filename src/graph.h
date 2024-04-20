@@ -13,7 +13,7 @@
 #include<memory>
 #include "game.h"
 #include "unordered_set"
-
+#include <QStringList>
 using namespace std;
 
 class graph {
@@ -28,6 +28,7 @@ private:
     unordered_map<string, vector<int>> genre; //string will be the genre title and int will be gameID
     unordered_map<string, vector<int>> company; //string will be the company title and int will be gameID
     unordered_map<string, vector<int>> release_date; //string will be the release date and int will be gameID
+    QStringList qStringList;
 
     int numEdges = 0;
 public:
@@ -37,6 +38,10 @@ public:
     void addEdge(pair<int,int>& gamePair);
     void connectNodes();
 
+    // add game name to QStringList
+    void addGameToQString(QString qString);
+    // return game StringList
+    QStringList getQStringGameNames() {return qStringList; }
     std::vector<std::shared_ptr<game>> findByName(const string& name); // Method to find a game by name
     shared_ptr<game> findByID(const int ID); // find a gameby its id
 

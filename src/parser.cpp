@@ -150,6 +150,9 @@ void Parser::parseGame(const rapidjson::Value::ConstValueIterator mainIter, grap
     // insert into graph
     gamesGraph.addGame(make_shared<game>(gameID, gameName, gameReleaseDate,
                                                 genres, companies, similarGames));
+    // Add games name to a QStringList for autocompletion
+    QString qStringGameName = QString::fromStdString(gameName);
+    gamesGraph.addGameToQString(qStringGameName);
 }
 
 void Parser::parseJSONData(const std::string& filename) {

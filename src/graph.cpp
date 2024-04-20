@@ -89,3 +89,8 @@ void graph::connectNodes() {
         }
     }
 }
+
+void graph::addGameToQString(QString qString)
+{
+    qStringList << qString;
+}
