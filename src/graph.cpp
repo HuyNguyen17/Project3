@@ -278,6 +278,43 @@ void graph::printAllGenre() {
 
     cout << "Available Genres:" << endl;
     for (const auto& pair : genre) {
-        cout << pair.first << endl;  // pair.first is the genre name
+        cout << pair.first << endl;
     }
 }
+
+void graph::searchByCompany(std::string _company) {
+    auto it = company.find(_company);
+    if (it == company.end())
+    {
+        cout << "No games found for " << _company << endl;
+        return;
+    }
+    const auto& gameIDs = it->second;
+    for (auto id : gameIDs)
+    {
+        auto gameIt =nodes.find(id);
+        if (gameIt != nodes.end())
+        {
+            shared_ptr<game> game = gameIt->second;
+            cout << "Game ID: " << game->getID() << ", Name: " << game->getName()
+                 << ", Released: " << game->getReleaseDate() << endl;
+        }
+    }
+    cout << endl;
+}
+
+void graph::printAllCompany() {
+    if (company.empty()) {
+        cout << "No company available." << endl;
+        return;
+    }
+
+    cout << "Available Companies:" << endl;
+    for (const auto& pair : company) {
+        cout << pair.first << endl;
+    }
+}
+
+
+
+

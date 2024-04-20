@@ -55,6 +55,7 @@ public:
     void searchByGenre(string _genre);
     void printAllGenre();
     void searchByCompany(string _company);
+    void printAllCompany();
     void searchByReleaseDate(string _releaesDate);
 };
 

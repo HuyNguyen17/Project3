@@ -25,6 +25,7 @@ int main() {
     cout << "Option 1: Search Similar Games" << endl;
     cout << "Option 2: Search if Two Games Are Connected" << endl;
     cout << "Option 3: Search by Genre" << endl;
+    cout << "Option 4: Search by Company" << endl;
     cout << "Enter Number: ";
     cin >> option;
     cout << endl;
@@ -90,6 +91,31 @@ int main() {
             else
             {
                 gamesGraph.searchByGenre(_genre);
+            }
+
+        }
+    }
+
+    else if (option == 4)
+    {
+        while (go)
+        {
+            string _company;
+            cout << "Enter 'stop' to end program." << endl;
+            cout << "Enter 'help' to get the list of all the companies." << endl;
+            cout << "Enter company you want to search: ";
+            getline(cin, _company);
+            if (_company == "stop") {
+                go = false;
+                continue; // Ensures the rest of the loop is skipped
+            }
+            if (_company == "help")
+            {
+                gamesGraph.printAllCompany();
+            }
+            else
+            {
+                gamesGraph.searchByCompany(_company);
             }
 
         }
