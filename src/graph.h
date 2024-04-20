@@ -51,6 +51,7 @@ public:
     int getIDfromSearching(string &_name);
     void BFSprintConnectedGames(string _name, int maxDepth);
     void DFSprintConnectedGames(string _name, int maxDepth);
+    bool gamesConnected(string &_name1, string &_name2, int searchPath);
 };
 
 #endif //PROJECT3_GRAPH_H
