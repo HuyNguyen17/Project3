@@ -171,15 +171,18 @@ void parseJSONData() {
         }
 
         // testing to see if findbyname works
-        auto testPtr = gamesGraph.findByName("Doesn't Exist");
-        if(testPtr == nullptr)
+        auto testVector = gamesGraph.findByName("Doesn't Exist");
+        if(testVector.empty())
         {
             cout << '\n' << "Doesn't break when finding invalid game!" << '\n';
         }
-        testPtr = gamesGraph.findByName("Minecraft");
-        if(testPtr != nullptr)
+        testVector = gamesGraph.findByName("Minecraft");
+        if(!testVector.empty())
         {
-            cout << "Game: " << testPtr->getName() << ", Released " << testPtr->getReleaseDate() << '\n';
+            for (const auto& gamePtr : testVector)
+            {
+                cout << "Game: " << gamePtr->getName() << ", Released " << gamePtr->getReleaseDate() << '\n';
+            }
         }
 
         cout << gamesGraph.getNumNodes() << " nodes in graph!" << '\n';

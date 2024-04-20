@@ -28,13 +28,21 @@ void graph::addEdge(pair<int,int>& gamePair) {
     addEdge(gamePair.first, gamePair.second);
 }
 
-std::shared_ptr<game> graph::findByName(const string& name) {
-    auto it = nameIndex.find(name);
-    if (it != nameIndex.end()) {
-        return it->second; // Return the game if found
-    } else {
-        return nullptr; // Return nullptr if not found
+std::vector<std::shared_ptr<game>> graph::findByName(const string& name) {
+    // pair of iterators that repesent the range of games with the same name
+    auto range = nameIndex.equal_range(name);
+
+    std::vector<std::shared_ptr<game>> games;
+    // check that the range exists
+    if (range.first != nameIndex.end()) {
+        // iterate through this range and add it to the vector
+        for(auto it = range.first; it != range.second; it++)
+        {
+            games.push_back(it->second);
+        }
     }
+    // return empty vector if name not found
+    return games;
 }
 
 shared_ptr<game> graph::findByID(const int ID) {

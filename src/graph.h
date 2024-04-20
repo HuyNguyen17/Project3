@@ -21,7 +21,7 @@ private:
     unordered_map<game, vector<game>, gameHash> List; // Stores adjacency list of games, Leaving here for now.
     
     unordered_map<int, shared_ptr<game>> nodes; // Maps game ID to game object
-    unordered_map<string, shared_ptr<game>> nameIndex; // Maps game names to game objects for quick lookup
+    unordered_multimap<string, shared_ptr<game>> nameIndex; // Maps game names to game objects for quick lookup
     unordered_map<int, vector<int>> edges; // Adjacency list for similar games
 
     //The idea is to parse through the data and store all the information in this graph to enable visualization later based on search criteria.
@@ -36,7 +36,7 @@ public:
     void addEdge(int gameId1, int gameId2);
     void addEdge(pair<int,int>& gamePair);
 
-    shared_ptr<game> findByName(const string& name); // Method to find a game by name
+    std::vector<std::shared_ptr<game>> findByName(const string& name); // Method to find a game by name
     shared_ptr<game> findByID(const int ID); // find a gameby its id
 
     // checks if a game exists in the graph
