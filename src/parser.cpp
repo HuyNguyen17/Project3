@@ -55,13 +55,15 @@ string timestampToDate(long long timestamp) {
     return string(buffer);
 }
 
-shared_ptr<game> parseGame(const rapidjson::Value::ConstValueIterator mainIter) {
+void parseGame(const rapidjson::Value::ConstValueIterator mainIter, graph& gamesGraph) {
     cout << "\n";
     // main game info
     int gameID;
     string gameName;
     string gameReleaseDate;
     vector<int> similarGames;
+    vector<Genre> genres;
+    vector<Company> companies;
 
     gameID = mainIter->GetObject()["id"].GetInt();
     gameName = mainIter->GetObject()["name"].GetString();
@@ -77,7 +79,6 @@ shared_ptr<game> parseGame(const rapidjson::Value::ConstValueIterator mainIter) 
 
     // Iterate through the Genres
     bool hasGenre = (mainIter->GetObject().HasMember("genres"));
-    unordered_map<int, string> genre;
     if (hasGenre)
     {
         if (mainIter->GetObject()["genres"].IsArray())
@@ -87,8 +88,8 @@ shared_ptr<game> parseGame(const rapidjson::Value::ConstValueIterator mainIter) 
             for (rapidjson::Value::ConstValueIterator genreIter = gameArray.Begin(); genreIter != gameArray.End(); ++genreIter)
             {
                 cout << genreIter->GetObject()["id"].GetInt() << " " << genreIter->GetObject()["name"].GetString() << ", ";
-                // add genre to map: id / genre name
-                genre.insert(pair<int, string>(genreIter->GetObject()["id"].GetInt(), genreIter->GetObject()["name"].GetString()));
+                // add genre to vector
+                genres.emplace_back(genreIter->GetObject()["id"].GetInt(), genreIter->GetObject()["name"].GetString());
             }
         }
     }
@@ -105,12 +106,18 @@ shared_ptr<game> parseGame(const rapidjson::Value::ConstValueIterator mainIter) 
                 // Involved Companies Iterate
                 if (involvedCoIter->GetObject()["company"].IsObject())
                 {
+                    int companyId;
+                    string companyName;
+
                     const rapidjson::Value& individualCo = involvedCoIter->GetObject()["company"];
                     rapidjson::Value::ConstMemberIterator individualCoIter = individualCo.FindMember("id");
-                    cout << individualCoIter->value.GetInt() << " - ";
+
+                    companyId = individualCoIter-> value.GetInt();
+                    cout << companyId << " - ";
                     individualCoIter = individualCo.FindMember("name");
-                    cout << individualCoIter->value.GetString() << "\n";
-                    // Do we want a vector<int, map<int, string>>
+                    companyName = individualCoIter->value.GetString();
+                    cout << companyName << "\n";
+                    companies.emplace_back(companyId, companyName);
                 }
             }
         }
@@ -131,16 +138,14 @@ shared_ptr<game> parseGame(const rapidjson::Value::ConstValueIterator mainIter) 
         }
     }
     cout << "\n";
-    return make_shared<game>(gameID, gameName, gameReleaseDate, similarGames); // can add more but these are good for now
+    // insert into graph
+    gamesGraph.addGame(make_shared<game>(gameID, gameName, gameReleaseDate,
+                                                genres, companies, similarGames));
 }
 
-void parseJSONData() {
-    const string filename = "../data/smalldata.json";
-
+void parseJSONData(const std::string& filename) {
     rapidjson::Document d;
     bool parsed = parseJSONFromFile(filename, d);
-
-    vector<shared_ptr<game>> gamePointers;
 
     if (!parsed)
     {
@@ -148,27 +153,13 @@ void parseJSONData() {
     }
     else
     {
+        graph gamesGraph;
         for (rapidjson::Value::ConstValueIterator mainIter = d.Begin(); mainIter != d.End(); ++mainIter)
         {
-            gamePointers.push_back(parseGame(mainIter));
+            // parse game and add it to the graph
+            parseGame(mainIter, gamesGraph);
         }
-        // Really want to do funky and unique stuff with this graph
-        graph gamesGraph;
-        vector<pair<int, int>> edges; // need to add the similar games after we're all done
-        // but for now, just add all the games into it
-        for(auto ptr : gamePointers)
-        {
-            gamesGraph.addGame(ptr);
-            for(auto similarGame : ptr->getSimilarGames())
-            {
-                edges.push_back(pair<int,int>(ptr->getID(), similarGame));
-            }
-        }
-        // add similar games as edges to graph
-        for(auto edge : edges)
-        {
-            gamesGraph.addEdge(edge);
-        }
+        gamesGraph.connectNodes();
 
         // testing to see if findbyname works
         auto testVector = gamesGraph.findByName("Doesn't Exist");

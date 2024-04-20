@@ -4,23 +4,31 @@
 #include<string>
 using namespace std;
 // enumeration for genres
-enum Genre{};
+struct Genre
+{
+    const int id;
+    const string name;
 
+    Genre(int id, string name) : id(id), name(name) {};
+};
 struct Company
 {
-    unsigned const int id;
+    const int id;
     const string name;
+
+    Company(int id, string name) : id(id), name(name) {};
 };
 
 class game {
 public:
     //will include companies, genres, similar games, release date, and id
-    game(int ID, string gameName, string gameReleaseDate, vector<int>& similarGames);
+    game(int ID, string gameName, string gameReleaseDate,
+         vector<Genre>& genres, vector<Company>& companies, vector<int>& similarGames);
     ~game();
 
     //getters
     vector<Company> getCompanies() const;
-    set<Genre> getGenres() const;
+    vector<Genre> getGenres() const;
     int getID() const;
     string getName() const;
     string getReleaseDate() const;
@@ -34,7 +42,7 @@ private:
     const string releaseDate; // Change to an actual time type is prolly better
 
     vector<Company> companies;
-    set<Genre> genres;
+    vector<Genre> genres;
 
     const int id;
 

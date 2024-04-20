@@ -11,7 +11,7 @@ vector<Company> game::getCompanies() const {
     return companies;
 }
 
-set<Genre> game::getGenres() const {
+vector<Genre> game::getGenres() const {
     return genres;
 }
 
@@ -31,8 +31,10 @@ vector<int> game::getSimilarGames() const {
     return similarGamesIDs;
 }
 
-game::game(int ID, string gameName, string gameReleaseDate, vector<int> &similarGames) :
-        id(ID), name(std::move(gameName)), releaseDate(std::move(gameReleaseDate)), similarGamesIDs(similarGames) {
+game::game(int ID, string gameName, string gameReleaseDate,
+           vector<Genre>& genres, vector<Company>& companies, vector<int>& similarGames) :
+        id(ID), name(std::move(gameName)), releaseDate(std::move(gameReleaseDate)),
+        genres(genres), companies(companies), similarGamesIDs(similarGames) {
 }
 
 game::~game() = default;
