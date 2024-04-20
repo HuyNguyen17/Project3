@@ -49,7 +49,8 @@ public:
     int getNumEdges() const;
     int getNumNodes() const;
     int getIDfromSearching(string &_name);
-    void printConnectedGames(string _name, int maxDepth);
+    void BFSprintConnectedGames(string _name, int maxDepth);
+    void DFSprintConnectedGames(string _name, int maxDepth);
 };
 
 #endif //PROJECT3_GRAPH_H

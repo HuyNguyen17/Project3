@@ -35,7 +35,11 @@ int main()
             continue; // Ensures the rest of the loop is skipped
         }
 
-        gamesGraph.printConnectedGames(_name, 1);
+        cout <<"BFS: " << endl;
+        gamesGraph.BFSprintConnectedGames(_name, 1);
+        cout << endl;
+        cout << "DFS: " << endl;
+        gamesGraph.DFSprintConnectedGames(_name, 1);
     }
 
 

@@ -4,6 +4,7 @@
 
 #include "graph.h"
 #include<queue>
+#include<stack>
 
 //Build game Object and add all relevant data to the maps.
 void graph::addGame(const shared_ptr<game>& game) {
@@ -115,7 +116,7 @@ int graph::getIDfromSearching(std::string &_name) {
     return _id;
 }
 
-void graph::printConnectedGames(std::string _name, int maxDepth) {
+void graph::BFSprintConnectedGames(std::string _name, int maxDepth) {
     int _gameID = getIDfromSearching(_name);
     if (_gameID != -1) {
         std::queue<std::pair<int, int>> queue; // Store game ID and depth
@@ -151,3 +152,38 @@ void graph::printConnectedGames(std::string _name, int maxDepth) {
     }
 }
 
+void graph::DFSprintConnectedGames(std::string _name, int maxDepth) {
+    int _gameID = getIDfromSearching(_name);
+    if (_gameID != -1) {
+        std::stack<std::pair<int, int>> stack;  // Use a stack to manage the DFS
+        std::unordered_set<int> visited;
+
+        stack.push({_gameID, 0});
+        visited.insert(_gameID);
+
+        while (!stack.empty()) {
+            auto current = stack.top();
+            stack.pop();
+            int currentID = current.first;
+            int currentDepth = current.second;
+
+            // Access the game using the ID and print its name
+            auto gameIterator = nodes.find(currentID);
+            if (gameIterator != nodes.end()) {
+                std::cout << gameIterator->second->getName() << std::endl;
+            }
+
+            // Stop DFS if depth exceeds maxDepth
+            if (currentDepth >= maxDepth) continue;
+
+            // Traverse all adjacent games
+            auto neighbours = edges[currentID];
+            for (int neighbourID : neighbours) {
+                if (visited.find(neighbourID) == visited.end()) {
+                    stack.push({neighbourID, currentDepth + 1});
+                    visited.insert(neighbourID);
+                }
+            }
+        }
+    }
+}
