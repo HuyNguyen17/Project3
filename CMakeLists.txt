@@ -53,5 +53,4 @@ add_executable(Project3
         src/main.cpp
         src/parser.h
         src/parser.cpp
-        src/parser_2.h
 )
