@@ -51,4 +51,6 @@ add_executable(Project3
         src/graph.cpp
         src/graph.h
         src/main.cpp
+        src/parser.h
+        src/parser.cpp
 )
