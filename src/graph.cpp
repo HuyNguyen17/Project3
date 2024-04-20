@@ -6,7 +6,7 @@
 
 void graph::addGame(const shared_ptr<game>& game) {
     nodes[game->getID()] = game;
-    nameIndex[game->getName()] = game; // Index the game by name as well
+    nameIndex.emplace(game->getName(), game); // Index the game by name as well
     for(auto c: game->getCompanies())
     {
         company[c.name].push_back(game->getID());
