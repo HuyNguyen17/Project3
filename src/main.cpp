@@ -19,6 +19,6 @@ int main()
     // use smalldata for testing
     //const std::string filename = "../data/data.json";
     const string filename = "../data/smalldata.json";
-    parseJSONData(std::__cxx11::string());
+    parseJSONData(filename);
 }
 
