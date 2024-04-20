@@ -134,9 +134,7 @@ shared_ptr<game> parseGame(const rapidjson::Value::ConstValueIterator mainIter) 
     return make_shared<game>(gameID, gameName, gameReleaseDate, similarGames); // can add more but these are good for now
 }
 
-void parseJSONData() {
-    const string filename = "../data/smalldata.json";
-
+void parseJSONData(const std::string& filename) {
     rapidjson::Document d;
     bool parsed = parseJSONFromFile(filename, d);
 
