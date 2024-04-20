@@ -5,7 +5,12 @@ set(CMAKE_AUTOMOC ON)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(CMAKE_PREFIX_PATH "/home/ricky/Qt/6.7.0/gcc_64/lib/cmake") # Adjust the path as per your Qt installation directory
+#Windows uses the installed Qt libraries included
+if(WIN32)
+    set(CMAKE_PREFIX_PATH "include/Qt6/lib/cmake")
+else()
+    set(CMAKE_PREFIX_PATH "/home/ricky/Qt/6.7.0/gcc_64/lib/cmake") # Adjust the path as per your Qt installation directory
+endif()
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
 
 
