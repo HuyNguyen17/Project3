@@ -15,8 +15,17 @@ void graph::addGame(const shared_ptr<game>& game) {
 }
 
 void graph::addEdge(int gameId1, int gameId2) {
-    edges[gameId1].push_back(gameId2);
-    edges[gameId2].push_back(gameId1); // Assuming bidirectional relationship
+    // need to make sure the nodes exist in the graph
+    if (gameExists(gameId1) && gameExists(gameId2)) {
+        edges[gameId1].push_back(gameId2);
+        edges[gameId2].push_back(gameId1); // Assuming bidirectional relationship
+        numEdges++;
+    }
+}
+
+void graph::addEdge(pair<int,int>& gamePair) {
+    //makes it easier to directly add a pair for a graph
+    addEdge(gamePair.first, gamePair.second);
 }
 
 std::shared_ptr<game> graph::findByName(const string& name) {
@@ -26,4 +35,33 @@ std::shared_ptr<game> graph::findByName(const string& name) {
     } else {
         return nullptr; // Return nullptr if not found
     }
+}
+
+shared_ptr<game> graph::findByID(const int ID) {
+    auto it = nodes.find(ID);
+    // make sure the ID is in the graph
+    if (it != nodes.end()) {
+        return it->second;
+    }
+    else {
+        return nullptr;
+    }
+}
+
+bool graph::gameExists(const int ID) const{
+    // if game exists, then the count in the map will not be 0
+    return(nodes.count(ID) != 0);
+}
+
+bool graph::gameExists(const string &name) const{
+    // if game exists, then the count in the map will not be 0
+    return(nameIndex.count(name) != 0);
+}
+
+int graph::getNumEdges() const {
+    return numEdges;
+}
+
+int graph::getNumNodes() const {
+    return nodes.size();
 }
