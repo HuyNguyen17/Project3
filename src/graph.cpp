@@ -252,5 +252,5 @@ bool graph::gamesConnected(string &_name1, string &_name2, int searchPath) {
 
 void graph::addGameToQString(QString qString)
 {
-    qStringList << qString;
+    qStringListNames << qString;
 }

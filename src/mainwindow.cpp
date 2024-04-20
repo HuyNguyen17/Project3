@@ -38,7 +38,7 @@ void MainWindow::on_pushButton_clicked()
         for (const auto& gamePtr : testVector)
         {
             QString qtString = QString::fromStdString(gamePtr->getReleaseDate());
-            ui->textBrowser_2->setHtml(ui->lineEdit->text() + " was released in: " + qtString);
+            ui->textBrowser_2->setHtml(ui->lineEdit->text() + " was released on: " + qtString);
         }
     }
     else

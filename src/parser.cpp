@@ -15,15 +15,9 @@
 
 using namespace rapidjson;
 
-Parser::Parser()
-{
+Parser::Parser() = default;
 
-}
-
-Parser::~Parser()
-{
-
-}
+Parser::~Parser() = default;
 
 bool Parser::parseJSONFromFile(const string& filename, rapidjson::Document& d)
 {
