@@ -3,7 +3,7 @@
 
 void parseGame(rapidjson::Value::ConstValueIterator mainIter);
 bool parseJSONFromFile(const string& filename, rapidjson::Document& d);
-void parseJSONData(const std::string& filename);
+void parseJSONData(const std::string& filename, graph &g);
 
 string timestampToDate(long long timestamp);
 #endif //PROJECT3_PARSER_H

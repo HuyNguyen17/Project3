@@ -29,6 +29,8 @@ private:
     unordered_map<string, vector<int>> company; //string will be the company title and int will be gameID
     unordered_map<string, vector<int>> release_date; //string will be the release date and int will be gameID
 
+    vector<shared_ptr<game>> names;
+
     int numEdges = 0;
 public:
     graph() = default; // Default constructor
@@ -46,6 +48,8 @@ public:
 
     int getNumEdges() const;
     int getNumNodes() const;
+    int getIDfromSearching(string &_name);
+    void printConnectedGames(string _name);
 };
 
 #endif //PROJECT3_GRAPH_H

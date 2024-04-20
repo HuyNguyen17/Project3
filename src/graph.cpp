@@ -3,7 +3,9 @@
 //
 
 #include "graph.h"
+#include<queue>
 
+//Build game Object and add all relevant data to the maps.
 void graph::addGame(const shared_ptr<game>& game) {
     nodes[game->getID()] = game;
     nameIndex.emplace(game->getName(), game); // Index the game by name as well
@@ -82,10 +84,74 @@ int graph::getNumNodes() const {
 void graph::connectNodes() {
     for(auto node: nodes)
     {
-        // go through each node in the gragh and adds its similar games as edges
+        // go through each node in the graph and adds its similar games as edges
         for(auto similarGame : node.second->getSimilarGames())
         {
             addEdge(node.second->getID(), similarGame);
         }
     }
 }
+
+int graph::getIDfromSearching(std::string &_name)
+{
+    names = findByName(_name);
+    int _id; //id to find
+    if(names.empty())
+    {
+        cout << "Game was not found. Try again" << endl;
+    }
+    if(names.size() < 2)
+    {
+        for (const auto& gamePtr : names)
+        {
+            _id =  gamePtr->getID();
+            names.clear();
+            return _id;
+        }
+    }
+    else
+    {
+        //Implement Later, we will have the user select the game they want to search in the GUI
+        cout << "there is more than one game" << endl;
+        for (const auto& gamePtr: names)
+        {
+            cout << "Game: " << gamePtr->getName() << ", Released " << gamePtr->getReleaseDate() << '\n';
+        }
+        return -1; //TODO fix this later, add a way for the user to specify which game when there are two names that are equal
+    }
+    names.clear();
+    return -1; //return -1 when there was no game found.
+}
+
+void graph::printConnectedGames(std::string _name) {
+    int _gameID = getIDfromSearching(_name);
+    if (_gameID != -1) {
+        std::queue<int> queue;
+        std::unordered_set<int> visited;
+
+        queue.push(_gameID);
+        visited.insert(_gameID);
+
+        while (!queue.empty()) {
+            int currentID = queue.front();
+            queue.pop();
+
+            // Access the game using the ID and print its name
+            auto gameIterator = nodes.find(currentID);
+            if (gameIterator != nodes.end()) {
+                std::cout << gameIterator->second->getName() << std::endl;
+            }
+
+            // Traverse all adjacent games
+            auto neighbours = edges[currentID];
+            for (int neighbourID : neighbours) {
+                if (visited.find(neighbourID) == visited.end()) {
+                    queue.push(neighbourID);
+                    visited.insert(neighbourID);
+                }
+            }
+        }
+    } else {
+        std::cout << "Game not found." << std::endl;
+    }
+};

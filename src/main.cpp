@@ -16,9 +16,13 @@
 
 int main()
 {
+
     // use smalldata for testing
     //const std::string filename = "../data/data.json";
     const string filename = "../data/smalldata.json";
-    parseJSONData(filename);
+    graph gamesGraph;
+    parseJSONData(filename, gamesGraph);
+    gamesGraph.printConnectedGames("Need for Speed: Most Wanted");
+
 }
 

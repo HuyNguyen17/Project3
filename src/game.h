@@ -2,6 +2,7 @@
 #include<set>
 #include<vector>
 #include<string>
+#include <iostream>
 using namespace std;
 // enumeration for genres
 struct Genre

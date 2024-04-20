@@ -143,7 +143,7 @@ void parseGame(const rapidjson::Value::ConstValueIterator mainIter, graph& games
                                                 genres, companies, similarGames));
 }
 
-void parseJSONData(const std::string& filename) {
+void parseJSONData(const std::string& filename, graph &gamesGraph) {
     rapidjson::Document d;
     bool parsed = parseJSONFromFile(filename, d);
 
@@ -153,7 +153,6 @@ void parseJSONData(const std::string& filename) {
     }
     else
     {
-        graph gamesGraph;
         for (rapidjson::Value::ConstValueIterator mainIter = d.Begin(); mainIter != d.End(); ++mainIter)
         {
             // parse game and add it to the graph
