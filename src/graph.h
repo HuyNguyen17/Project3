@@ -31,7 +31,6 @@ private:
     unordered_map<string, vector<int>> release_date; //string will be the release date and int will be gameID
     QStringList qStringListNames;
     QStringList qStringListGameNameResults;
-    QStringList dfsStringListGameNames;
     vector<shared_ptr<game>> names;
 
     int numEdges = 0;
