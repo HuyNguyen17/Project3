@@ -62,9 +62,9 @@ public:
     void DFSprintConnectedGames(string _name, int maxDepth);
 
     //Returns a Vector of BFS
-    vector<shared_ptr<game>> getConnectedGamesBFS(string _name, int maxDepth);
+    QVector<shared_ptr<game>> getConnectedGamesBFS(string _name, int maxDepth);
     //Returns a Vector of DFS
-    vector<shared_ptr<game>> getConnectedGamesDFS(string _name, int maxDepth);
+    QVector<shared_ptr<game>> getConnectedGamesDFS(string _name, int maxDepth);
 
     //_name1 is the main searchBar (source), _name2 is the destination, searchPath, 0 is BFS, 1 is DFS.
 

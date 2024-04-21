@@ -341,8 +341,9 @@ void graph::searchByReleaseDate(string _releaseDate) {
     cout << endl;
 }
 
-vector<shared_ptr<game>> graph::getConnectedGamesBFS(string _name, int maxDepth) {
-    vector<shared_ptr<game>> connectedGames;
+QVector<shared_ptr<game>> graph::getConnectedGamesBFS(string _name, int maxDepth) {
+    QVector<shared_ptr<game>> connectedGames;
+
     int _gameID = getIDfromSearching(_name);
 
     if (_gameID == -1) {
@@ -382,8 +383,8 @@ vector<shared_ptr<game>> graph::getConnectedGamesBFS(string _name, int maxDepth)
     return connectedGames;
 }
 
-vector<shared_ptr<game>> graph::getConnectedGamesDFS(string _name, int maxDepth) {
-    vector<shared_ptr<game>> connectedGames;
+QVector<shared_ptr<game>> graph::getConnectedGamesDFS(string _name, int maxDepth) {
+    QVector<shared_ptr<game>> connectedGames;
     int _gameID = getIDfromSearching(_name);
 
     if (_gameID == -1) {
