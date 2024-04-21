@@ -1,0 +1,322 @@
+[
+    {
+        "classes": [
+            {
+                "className": "QQmlAbstractGrpcChannel",
+                "object": true,
+                "qualifiedClassName": "QQmlAbstractGrpcChannel",
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qqmlabstractgrpcchannel.h",
+        "outputRevision": 68
+    },
+    {
+        "classes": [
+            {
+                "classInfos": [
+                    {
+                        "name": "QML.Element",
+                        "value": "GrpcCallOptions"
+                    },
+                    {
+                        "name": "QML.AddedInVersion",
+                        "value": "1543"
+                    }
+                ],
+                "className": "QQmlGrpcCallOptions",
+                "object": true,
+                "properties": [
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": false,
+                        "index": 0,
+                        "name": "deadline",
+                        "notify": "deadlineChanged",
+                        "read": "deadline",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "qint64",
+                        "user": false,
+                        "write": "setDeadline"
+                    },
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": false,
+                        "index": 1,
+                        "name": "metadata",
+                        "notify": "metadataChanged",
+                        "read": "metadata",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "QQmlGrpcMetadata*",
+                        "user": false,
+                        "write": "setMetadata"
+                    }
+                ],
+                "qualifiedClassName": "QQmlGrpcCallOptions",
+                "signals": [
+                    {
+                        "access": "public",
+                        "name": "deadlineChanged",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "name": "metadataChanged",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qqmlgrpccalloptions_p.h",
+        "outputRevision": 68
+    },
+    {
+        "classes": [
+            {
+                "classInfos": [
+                    {
+                        "name": "QML.Element",
+                        "value": "GrpcChannelOptions"
+                    },
+                    {
+                        "name": "QML.AddedInVersion",
+                        "value": "1543"
+                    }
+                ],
+                "className": "QQmlGrpcChannelOptions",
+                "object": true,
+                "properties": [
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": false,
+                        "index": 0,
+                        "name": "host",
+                        "notify": "hostChanged",
+                        "read": "host",
+                        "required": true,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "QUrl",
+                        "user": false,
+                        "write": "setHost"
+                    },
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": false,
+                        "index": 1,
+                        "name": "deadline",
+                        "notify": "deadlineChanged",
+                        "read": "deadline",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "qint64",
+                        "user": false,
+                        "write": "setDeadline"
+                    },
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": false,
+                        "index": 2,
+                        "name": "metadata",
+                        "notify": "metadataChanged",
+                        "read": "metadata",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "QQmlGrpcMetadata*",
+                        "user": false,
+                        "write": "setMetadata"
+                    },
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": false,
+                        "index": 3,
+                        "name": "sslConfiguration",
+                        "notify": "sslConfigurationChanged",
+                        "read": "sslConfiguration",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "QQmlSslConfiguration",
+                        "user": false,
+                        "write": "setSslConfiguration"
+                    }
+                ],
+                "qualifiedClassName": "QQmlGrpcChannelOptions",
+                "signals": [
+                    {
+                        "access": "public",
+                        "name": "hostChanged",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "name": "deadlineChanged",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "name": "metadataChanged",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "name": "sslConfigurationChanged",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qqmlgrpcchanneloptions_p.h",
+        "outputRevision": 68
+    },
+    {
+        "classes": [
+            {
+                "classInfos": [
+                    {
+                        "name": "QML.Element",
+                        "value": "GrpcHttp2Channel"
+                    },
+                    {
+                        "name": "QML.AddedInVersion",
+                        "value": "1543"
+                    }
+                ],
+                "className": "QQmlGrpcHttp2Channel",
+                "object": true,
+                "properties": [
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": false,
+                        "index": 0,
+                        "name": "options",
+                        "notify": "optionsChanged",
+                        "read": "options",
+                        "required": true,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "QQmlGrpcChannelOptions*",
+                        "user": false,
+                        "write": "setOptions"
+                    },
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": false,
+                        "index": 1,
+                        "name": "channel",
+                        "notify": "channelUpdated",
+                        "read": "getChannel",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "std::shared_ptr<QAbstractGrpcChannel>",
+                        "user": false
+                    }
+                ],
+                "qualifiedClassName": "QQmlGrpcHttp2Channel",
+                "signals": [
+                    {
+                        "access": "public",
+                        "name": "optionsChanged",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "name": "channelUpdated",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QQmlAbstractGrpcChannel"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qqmlgrpchttp2channel_p.h",
+        "outputRevision": 68
+    },
+    {
+        "classes": [
+            {
+                "classInfos": [
+                    {
+                        "name": "QML.Element",
+                        "value": "GrpcMetadata"
+                    },
+                    {
+                        "name": "QML.AddedInVersion",
+                        "value": "1543"
+                    }
+                ],
+                "className": "QQmlGrpcMetadata",
+                "object": true,
+                "properties": [
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": false,
+                        "index": 0,
+                        "name": "data",
+                        "notify": "dataChanged",
+                        "read": "data",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "QVariantMap",
+                        "user": false,
+                        "write": "setData"
+                    }
+                ],
+                "qualifiedClassName": "QQmlGrpcMetadata",
+                "signals": [
+                    {
+                        "access": "public",
+                        "name": "dataChanged",
+                        "returnType": "void"
+                    }
+                ],
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QObject"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "qqmlgrpcmetadata_p.h",
+        "outputRevision": 68
+    }
+]

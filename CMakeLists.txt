@@ -1,7 +1,17 @@
 cmake_minimum_required(VERSION 3.27)
 project(Project3)
 
+set(CMAKE_AUTOMOC ON)
+
 set(CMAKE_CXX_STANDARD 14)
+
+#Windows uses the installed Qt libraries included
+if(WIN32)
+    set(CMAKE_PREFIX_PATH "include/Qt6/lib/cmake")
+elseif(UNIX)
+    set(CMAKE_PREFIX_PATH "include/Qt6/lib/cmake-unix") # Adjust the path as per your Qt installation directory
+endif()
+find_package(Qt6 COMPONENTS Widgets REQUIRED)
 
 include_directories(include)
 include_directories(include/rapidjson)
@@ -53,4 +63,10 @@ add_executable(Project3
         src/main.cpp
         src/parser.h
         src/parser.cpp
+        src/gui.cpp
+        src/mainwindow.h
+        src/ui_mainwindow.h
+        src/mainwindow.cpp
 )
+
+target_link_libraries(Project3 Qt6::Widgets)
