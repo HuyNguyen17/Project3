@@ -38,11 +38,21 @@ void MainWindow::searchButtonClick()
     {
         for (const auto& gamePtr : testVector)
         {
-            gameGraph.BFSprintConnectedGames(gamePtr->getName(),1);
-
-            for (auto simiGames : gameGraph.getQStringBFSGameNames())
+            if (ui->radioBtnBFS->isChecked())
             {
-                ui->textBrowserLstWgtResults->append(simiGames);
+                gameGraph.BFSprintConnectedGames(gamePtr->getName(), 1);
+
+                for (auto simiGames: gameGraph.getQStringBFSGameNames()) {
+                    ui->textBrowserLstWgtResults->append(simiGames);
+                }
+            }
+            else if (ui->radioBtnDFS->isChecked())
+            {
+                gameGraph.DFSprintConnectedGames(gamePtr->getName(), 1);
+
+                for (auto simiGames: gameGraph.getQStringBFSGameNames()) {
+                    ui->textBrowserLstWgtResults->append(simiGames);
+                }
             }
 //            ui->textBrowserLstWgtResults->setHtml(
 //                    ui->lineEditSearchBar->text()
