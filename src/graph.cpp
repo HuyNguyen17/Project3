@@ -425,3 +425,22 @@ QVector<shared_ptr<game>> graph::getConnectedGamesDFS(string _name, int maxDepth
 
     return connectedGames;
 }
+
+QVector<shared_ptr<game>> graph::getGamesByGenre(string _genre) {
+    QVector<shared_ptr<game>> gamesByGenre;
+    auto it = genre.find(_genre);
+    if (it == genre.end()) {
+        // Optionally handle the case where no games are found for the genre
+        cout << "No games found for the genre: " << _genre << endl;
+        return gamesByGenre; // Return an empty vector
+    }
+
+    const auto& gameIDs = it->second;
+    for (auto id : gameIDs) {
+        auto gameIt = nodes.find(id);
+        if (gameIt != nodes.end()) {
+            gamesByGenre.push_back(gameIt->second);
+        }
+    }
+    return gamesByGenre;
+}
