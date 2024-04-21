@@ -23,7 +23,7 @@ public:
     ~MainWindow();
     graph gameGraph;
 private slots:
-    void on_pushButton_clicked();
+    void searchButtonClick();
 
 private:
     Ui::MainWindow *ui;
