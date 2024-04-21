@@ -8,8 +8,6 @@
 #include <QString>
 #include <QCompleter>
 
-//Todo: Allen Change widget names, fix the widget frame, incorporate the graph functions for search
-
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent)
         , ui(new Ui::MainWindow)
@@ -45,48 +43,32 @@ void MainWindow::searchButtonClick()
         auto testVector = gameGraph.findByName(ui->lineEditSearchBar->text().toStdString());
         if (!testVector.empty()) {
             for (const auto &gamePtr: testVector) {
-                if (ui->radioBtnBFS->isChecked()) {
+                if (ui->radioBtnBFS->isChecked())
+                {
                     gameGraph.BFSprintConnectedGames(gamePtr->getName(), 1);
-
-                    for (auto simiGames: gameGraph.getQStringGameNameResults()) {
-                        ui->textBrowserLstWgtResults->append(simiGames);
-                    }
                 } else if (ui->radioBtnDFS->isChecked()) {
                     gameGraph.DFSprintConnectedGames(gamePtr->getName(), 1);
-
-                    for (auto simiGames: gameGraph.getQStringGameNameResults()) {
-                        ui->textBrowserLstWgtResults->append(simiGames);
-                    }
                 }
+
                 // populate QListWidget with text corresponding to the results
                 ui->listWgtSearchObjects->clear();
                 ui->listWgtSearchObjects->addItems(gameGraph.getQStringGameNameResults());
-//            ui->textBrowserLstWgtResults->setHtml(
-//                    ui->lineEditSearchBar->text()
-//                    + " Released on: " + QString::fromStdString(gamePtr->getReleaseDate())
-
-//            );
-//            ui->textBrowserLstWgtResults->append("<br>Check out these <b>awesome</b> games: <br>");
-//            for (auto simiGames : gameGraph.findByID(gamePtr->getID())->getSimilarGames())
-//            {
-//                ui->textBrowserLstWgtResults->append(QString::fromStdString(gameGraph.findByID(simiGames)->getName()));
-//            }
             }
+            // are they checking for connections
             if (ui->radioBtnConnectedTo->isChecked())
             {
                 if (!ui->lineEditConnectedToResults->text().toStdString().empty())
                 {
-//                    gameGraph.gamesConnected(ui->lineEditSearchBar->text().toStdString(), ui->lineEditConnectedToResults->text().toStdString(),1);
                     std::string name1 = ui->lineEditSearchBar->text().toStdString();
                     std::string name2 = ui->lineEditConnectedToResults->text().toStdString();
-                    gameGraph.gamesConnected(name1, name2, 1);
+                    ui->textBrowsrConnectedToResult->setHtml(gameGraph.gamesConnected(name1, name2, 1));
                 }
             }
         }
         else
         {
             ui->textBrowserLstWgtResults->setHtml(
-                    ui->lineEditSearchBar->text() + " is not a valid game. Please try a different game name.");
+                    ui->lineEditSearchBar->text() + " is not a valid Game. Please try a different Game name.");
         }
     }
     else if(ui->radioBtnGenre->isChecked())
@@ -94,15 +76,20 @@ void MainWindow::searchButtonClick()
         // do genre search
         auto gamesBygenre = gameGraph.getGamesByGenre(ui->lineEditSearchBar->text().toStdString());
         if (!gamesBygenre.empty()) {
+            // store the games from genre into qlist
+            QStringList gamesFromGenre;
             for (const auto &gamePtr: gamesBygenre)
             {
-                ui->textBrowserLstWgtResults->append(QString::fromStdString(gamePtr->getName()));
+                gamesFromGenre << QString::fromStdString(gamePtr->getName());
             }
+            // populate QListWidget with text corresponding to the results
+            ui->listWgtSearchObjects->clear();
+            ui->listWgtSearchObjects->addItems(gamesFromGenre);
         }
         else
         {
             ui->textBrowserLstWgtResults->setHtml(
-                    ui->lineEditSearchBar->text() + " is not a valid Genre. Please try a different genre name.");
+                    ui->lineEditSearchBar->text() + " is not a valid Genre. Please try a different Genre name.");
         }
     }
     else if (ui->radioBtnCompany->isChecked())
@@ -110,32 +97,23 @@ void MainWindow::searchButtonClick()
         // do company search
         auto gamesByCompany = gameGraph.getGamesByCompany(ui->lineEditSearchBar->text().toStdString());
         if (!gamesByCompany.empty()) {
-            for (const auto &gamePtr: gamesByCompany) {
-                ui->textBrowserLstWgtResults->append(QString::fromStdString(gamePtr->getName()));
+            // store the games from genre into qlist
+            QStringList gamesFromCompany;
+            for (const auto &gamePtr: gamesByCompany)
+            {
+                gamesFromCompany << QString::fromStdString(gamePtr->getName());
             }
+            // populate QListWidget with text corresponding to the results
+            ui->listWgtSearchObjects->clear();
+            ui->listWgtSearchObjects->addItems(gamesFromCompany);
+        }
+        else
+        {
+            ui->textBrowserLstWgtResults->setHtml(
+                    ui->lineEditSearchBar->text() + " is not a valid Company. Please try a different Company name.");
         }
     }
 
-}
-
-void MainWindow::on_radioBtnGames_toggled(bool checked)
-{
-    // sets the autocompleter if checked
-    if(checked)
-    {
-        ui->lineEditSearchBar->setCompleter(gameCompleter);
-    }
-}
-
-void MainWindow::on_radioBtnCompany_toggled(bool checked)
-{
-    // sets the autocompleter if checked
-    ui->lineEditSearchBar->setCompleter(companyCompleter);
-}
-
-void MainWindow::on_radioBtnGenre_toggled(bool checked) {
-    // sets the autocompleter if checked
-    ui->lineEditSearchBar->setCompleter(genreCompleter);
 }
 
 void MainWindow::on_listWgtSearchObjects_itemSelectionChanged() {
@@ -144,7 +122,7 @@ void MainWindow::on_listWgtSearchObjects_itemSelectionChanged() {
     if(!selectedItems.empty())
     {
       auto gameName = selectedItems.at(0);
-      // uses the first game found by the graph. The name should already be in the map so this sould be fine
+      // uses the first game found by the graph. The name should already be in the map so this should be fine
       auto gamePtr = gameGraph.findByName(gameName->text().toStdString()).at(0);
       //sets the name of the game
       ui->textBrowserLstWgtResults->setHtml(gameName->text());
@@ -182,4 +160,50 @@ void MainWindow::displayGameInfo(shared_ptr<game> gamePtr) {// release date
           ui->textBrowserLstWgtResults->append(QString::fromStdString(gameGraph.findByID(simiGames)->getName()));
     }
 
+}
+
+void MainWindow::on_radioBtnGames_toggled(bool checked)
+{
+    // sets the autocompleter if checked
+    if(checked)
+    {
+        ui->lineEditSearchBar->clear();
+        ui->listWgtSearchObjects->clear();
+        ui->textBrowserLstWgtResults->clear();
+        gameCompleter = new QCompleter(gameGraph.getQStringGameNames(), ui->lineEditSearchBar);
+        gameCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+        ui->lineEditSearchBar->setCompleter(gameCompleter);
+    }
+}
+
+void MainWindow::on_radioBtnCompany_toggled(bool checked)
+{
+    // sets the autocompleter if checked
+    if (checked)
+    {
+        ui->lineEditSearchBar->clear();
+        ui->listWgtSearchObjects->clear();
+        ui->textBrowserLstWgtResults->clear();
+        companyCompleter = new QCompleter(gameGraph.getQStringCompanyNames(), ui->lineEditSearchBar);
+        companyCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+        ui->lineEditSearchBar->setCompleter(companyCompleter);
+    }
+}
+
+void MainWindow::on_radioBtnGenre_toggled(bool checked) {
+    // sets the autocompleter if checked
+    if (checked)
+    {
+        ui->lineEditSearchBar->clear();
+        ui->listWgtSearchObjects->clear();
+        ui->textBrowserLstWgtResults->clear();
+        genreCompleter = new QCompleter(gameGraph.getQStringGenreNames(), ui->lineEditSearchBar);
+        genreCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+        ui->lineEditSearchBar->setCompleter(genreCompleter);
+    }
+}
+
+void MainWindow::on_radioBtnConnectedTo_toggled(bool checked)
+{
+    ui->lineEditConnectedToResults->setCompleter(gameCompleter);
 }

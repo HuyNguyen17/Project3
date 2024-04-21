@@ -104,14 +104,18 @@ int graph::getIDfromSearching(string &_name) {
 
     if (names.size() == 1) {
         _id = names.front()->getID();
-    } else {
-        cout << "Multiple games found. Please select one:" << endl;
-        for (const auto& gamePtr : names) {
-            cout << "Game: " << gamePtr->getName() << ", Released " << gamePtr->getReleaseDate() << ", ID: " << gamePtr->getID() << '\n';
-        }
-        cout << "Enter the ID of the game you want to select: ";
-        cin >> _id;
-        cin.ignore(); // Clear the newline character from the buffer
+    }
+    else
+    {
+        _id = names.front()->getID();
+//        Todo: give player ability to choose the game
+//        cout << "Multiple games found. Please select one:" << endl;
+//        for (const auto& gamePtr : names) {
+//            cout << "Game: " << gamePtr->getName() << ", Released " << gamePtr->getReleaseDate() << ", ID: " << gamePtr->getID() << '\n';
+//        }
+//        cout << "Enter the ID of the game you want to select: ";
+//        cin >> _id;
+//        cin.ignore(); // Clear the newline character from the buffer
     }
     return _id;
 }
@@ -137,7 +141,7 @@ void graph::BFSprintConnectedGames(string _name, int maxDepth) {
             // Access the game using the ID and print its name
             auto gameIterator = nodes.find(currentID);
             if (gameIterator != nodes.end()) {
-                cout << gameIterator->second->getName() << endl;
+//                cout << gameIterator->second->getName() << endl;
                 // Add the game to a QStringList
                 qStringListGameNameResults << QString::fromStdString(gameIterator->second->getName());
             }
@@ -177,7 +181,7 @@ void graph::DFSprintConnectedGames(string _name, int maxDepth) {
             // Access the game using the ID and print its name
             auto gameIterator = nodes.find(currentID);
             if (gameIterator != nodes.end()) {
-                cout << gameIterator->second->getName() << endl;
+//                cout << gameIterator->second->getName() << endl;
                 qStringListGameNameResults << QString::fromStdString(gameIterator->second->getName());
             }
 
@@ -456,7 +460,7 @@ QVector<shared_ptr<game>> graph::getGamesByGenre(string _genre) {
     auto it = genre.find(_genre);
     if (it == genre.end()) {
         // Optionally handle the case where no games are found for the genre
-        cout << "No games found for the genre: " << _genre << endl;
+//        cout << "No games found for the genre: " << _genre << endl;
         return gamesByGenre; // Return an empty vector
     }
 
@@ -475,7 +479,7 @@ QVector<shared_ptr<game>> graph::getGamesByCompany(string _company) {
     auto it = company.find(_company);
     if (it == company.end()) {
         // Optionally handle the case where no games are found for the company
-        cout << "No games found for " << _company << endl;
+//        cout << "No games found for " << _company << endl;
         return gamesByCompany; // Return an empty vector
     }
 
@@ -534,7 +538,7 @@ QString graph::gamesConnected( string &name1,  string &name2, int searchPath) {
             int currentDepth = current.second;
 
             if (currentID == targetID) {
-                result = QString("[%1] is %2 games away from [%3].").arg(_name2).arg(currentDepth).arg(_name1);
+                result = QString("%1 is %2 games away from %3.").arg(_name2).arg(currentDepth).arg(_name1);
                 return result;
             }
 
@@ -557,7 +561,7 @@ QString graph::gamesConnected( string &name1,  string &name2, int searchPath) {
             int currentDepth = current.second;
 
             if (currentID == targetID) {
-                result = QString("[%1] is %2 games away from [%3].").arg(_name2).arg(currentDepth).arg(_name1);
+                result = QString("%1 is %2 games away from %3.").arg(_name2).arg(currentDepth).arg(_name1);
                 return result;
             }
 
