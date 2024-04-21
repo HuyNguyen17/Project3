@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
@@ -33,7 +34,7 @@ public:
     QPushButton *pushBtnSearch;
     QTextBrowser *textBrowserHeader;
     QTextBrowser *textBrowserLstWgtResults;
-    QRadioButton *radioBtnConnectedTo;
+    QCheckBox *checkBoxConnectedTo;
     QLineEdit *lineEditConnectedToResults;
     QTextBrowser *textBrowsrConnectedToResult;
     QListWidget *listWgtSearchObjects;
@@ -113,9 +114,9 @@ public:
         verticalLayoutAlgoType->addWidget(radioBtnDFS);
 
         // connectedto stuff
-        radioBtnConnectedTo = new QRadioButton(centralwidget);
-        radioBtnConnectedTo->setObjectName("radioBtnConnectedTo");
-        radioBtnConnectedTo->setGeometry(QRect(40, 440, 131, 23));
+        checkBoxConnectedTo = new QCheckBox(centralwidget);
+        checkBoxConnectedTo->setObjectName("checkBoxConnectedTo");
+        checkBoxConnectedTo->setGeometry(QRect(40, 440, 131, 23));
         lineEditConnectedToResults = new QLineEdit(centralwidget);
         lineEditConnectedToResults->setObjectName("lineEditConnectedToResults");
         lineEditConnectedToResults->setGeometry(QRect(180, 440, 221, 25));
@@ -149,7 +150,7 @@ public:
                                                                              "li.checked::marker { content: \"\\2612\"; }\n"
                                                                              "</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
                                                                              "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:700; color:#1a5fb4;\">Gamerz Edge</span></p></body></html>", nullptr));
-        radioBtnConnectedTo->setText(QCoreApplication::translate("MainWindow", "Connected To", nullptr));
+        checkBoxConnectedTo->setText(QCoreApplication::translate("MainWindow", "Connected To", nullptr));
         radioBtnGames->setText(QCoreApplication::translate("MainWindow", "Search by games", nullptr));
         radioBtnGenre->setText(QCoreApplication::translate("MainWindow", "Search by genre", nullptr));
         radioBtnCompany->setText(QCoreApplication::translate("MainWindow", "Search by company", nullptr));

@@ -55,7 +55,7 @@ void MainWindow::searchButtonClick()
                 ui->listWgtSearchObjects->addItems(gameGraph.getQStringGameNameResults());
             }
             // are they checking for connections
-            if (ui->radioBtnConnectedTo->isChecked())
+            if (ui->checkBoxConnectedTo->isChecked())
             {
                 if (!ui->lineEditConnectedToResults->text().toStdString().empty())
                 {
@@ -174,7 +174,7 @@ void MainWindow::on_radioBtnGames_toggled(bool checked)
         // show the search config widget for game
         ui->gameSearchWidget->setVisible(true);
         // should prolly group these together into a widget
-        ui->radioBtnConnectedTo->setVisible(true);
+        ui->checkBoxConnectedTo->setVisible(true);
         ui->lineEditConnectedToResults->setVisible(true);
         ui->lineEditConnectedToResults->clear();
         ui->textBrowsrConnectedToResult->setVisible(true);
@@ -194,7 +194,7 @@ void MainWindow::on_radioBtnCompany_toggled(bool checked)
         ui->lineEditSearchBar->setCompleter(companyCompleter);
         ui->gameSearchWidget->setVisible(false);
 
-        ui->radioBtnConnectedTo->setVisible(false);
+        ui->checkBoxConnectedTo->setVisible(false);
         ui->lineEditConnectedToResults->setVisible(false);
         ui->textBrowsrConnectedToResult->setVisible(false);
     }
@@ -210,13 +210,13 @@ void MainWindow::on_radioBtnGenre_toggled(bool checked) {
         ui->lineEditConnectedToResults->setCompleter(genreCompleter);
         ui->gameSearchWidget->setVisible(false);
 
-        ui->radioBtnConnectedTo->setVisible(false);
+        ui->checkBoxConnectedTo->setVisible(false);
         ui->lineEditConnectedToResults->setVisible(false);
         ui->textBrowsrConnectedToResult->setVisible(false);
     }
 }
 
-void MainWindow::on_radioBtnConnectedTo_toggled(bool checked)
+void MainWindow::on_checkBoxConnectedTo_toggled(bool checked)
 {
     ui->lineEditConnectedToResults->setCompleter(gameCompleter);
 }

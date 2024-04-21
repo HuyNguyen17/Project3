@@ -29,7 +29,7 @@ private slots:
     void on_radioBtnGames_toggled(bool checked);
     void on_radioBtnCompany_toggled(bool checked);
     void on_radioBtnGenre_toggled(bool checked);
-    void on_radioBtnConnectedTo_toggled(bool checked);
+    void on_checkBoxConnectedTo_toggled(bool checked);
     void on_listWgtSearchObjects_itemSelectionChanged();
 
 private:
