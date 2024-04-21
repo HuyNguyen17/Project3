@@ -70,15 +70,6 @@ public:
         textBrowserLstWgtResults = new QTextBrowser(centralwidget);
         textBrowserLstWgtResults->setObjectName("textBrowserLstWgtResults");
         textBrowserLstWgtResults->setGeometry(QRect(840, 100, 401, 451));
-        radioBtnConnectedTo = new QRadioButton(centralwidget);
-        radioBtnConnectedTo->setObjectName("radioBtnConnectedTo");
-        radioBtnConnectedTo->setGeometry(QRect(40, 440, 131, 23));
-        lineEditConnectedToResults = new QLineEdit(centralwidget);
-        lineEditConnectedToResults->setObjectName("lineEditConnectedToResults");
-        lineEditConnectedToResults->setGeometry(QRect(180, 440, 221, 25));
-        textBrowsrConnectedToResult = new QTextBrowser(centralwidget);
-        textBrowsrConnectedToResult->setObjectName("textBrowsrConnectedToResult");
-        textBrowsrConnectedToResult->setGeometry(QRect(40, 480, 361, 71));
         listWgtSearchObjects = new QListWidget(centralwidget);
         listWgtSearchObjects->setObjectName("listWgtSearchObjects");
         listWgtSearchObjects->setGeometry(QRect(480, 100, 341, 451));
@@ -120,6 +111,17 @@ public:
         radioBtnDFS->setObjectName("radioBtnDFS");
 
         verticalLayoutAlgoType->addWidget(radioBtnDFS);
+
+        // connectedto stuff
+        radioBtnConnectedTo = new QRadioButton(centralwidget);
+        radioBtnConnectedTo->setObjectName("radioBtnConnectedTo");
+        radioBtnConnectedTo->setGeometry(QRect(40, 440, 131, 23));
+        lineEditConnectedToResults = new QLineEdit(centralwidget);
+        lineEditConnectedToResults->setObjectName("lineEditConnectedToResults");
+        lineEditConnectedToResults->setGeometry(QRect(180, 440, 221, 25));
+        textBrowsrConnectedToResult = new QTextBrowser(centralwidget);
+        textBrowsrConnectedToResult->setObjectName("textBrowsrConnectedToResult");
+        textBrowsrConnectedToResult->setGeometry(QRect(40, 480, 361, 71));
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);

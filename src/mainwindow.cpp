@@ -173,6 +173,13 @@ void MainWindow::on_radioBtnGames_toggled(bool checked)
         ui->lineEditSearchBar->setCompleter(gameCompleter);
         // show the search config widget for game
         ui->gameSearchWidget->setVisible(true);
+        // should prolly group these together into a widget
+        ui->radioBtnConnectedTo->setVisible(true);
+        ui->lineEditConnectedToResults->setVisible(true);
+        ui->lineEditConnectedToResults->clear();
+        ui->textBrowsrConnectedToResult->setVisible(true);
+        ui->textBrowsrConnectedToResult->clear();
+
     }
 }
 
@@ -186,6 +193,10 @@ void MainWindow::on_radioBtnCompany_toggled(bool checked)
         ui->textBrowserLstWgtResults->clear();
         ui->lineEditSearchBar->setCompleter(companyCompleter);
         ui->gameSearchWidget->setVisible(false);
+
+        ui->radioBtnConnectedTo->setVisible(false);
+        ui->lineEditConnectedToResults->setVisible(false);
+        ui->textBrowsrConnectedToResult->setVisible(false);
     }
 }
 
@@ -196,8 +207,12 @@ void MainWindow::on_radioBtnGenre_toggled(bool checked) {
         ui->lineEditSearchBar->clear();
         ui->listWgtSearchObjects->clear();
         ui->textBrowserLstWgtResults->clear();
-        ui->lineEditSearchBar->setCompleter(genreCompleter);
+        ui->lineEditConnectedToResults->setCompleter(genreCompleter);
         ui->gameSearchWidget->setVisible(false);
+
+        ui->radioBtnConnectedTo->setVisible(false);
+        ui->lineEditConnectedToResults->setVisible(false);
+        ui->textBrowsrConnectedToResult->setVisible(false);
     }
 }
 
