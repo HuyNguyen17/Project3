@@ -8,6 +8,8 @@
 #include <QString>
 #include <QCompleter>
 
+//Todo: Allen Change widget names, fix the widget frame, incorporate the graph functions for search
+
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent)
         , ui(new Ui::MainWindow)

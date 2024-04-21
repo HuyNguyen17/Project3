@@ -15,7 +15,6 @@ public:
     ~Parser();
     void parseGame(rapidjson::Value::ConstValueIterator mainIter, graph& gamesGraph);
     bool parseJSONFromFile(std::string filename, rapidjson::Document& d);
-//    void parseJSONData(const std::string* filename);
     graph parseToGraph(std::string filename);
 private:
     string timestampToDate(long long timestamp);

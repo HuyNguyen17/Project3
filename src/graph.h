@@ -54,8 +54,13 @@ public:
     int getNumEdges() const;
     int getNumNodes() const;
     int getIDfromSearching(string &_name);
+
+    // Todo: Cyrus to add return vectors
+    // maxDepth default is 1; change to show others not so related
     void BFSprintConnectedGames(string _name, int maxDepth);
     void DFSprintConnectedGames(string _name, int maxDepth);
+    // searchPath =  0 is BFS and 1 is DFS
+    // name1 is the main search, name2 is the connected search
     bool gamesConnected(string &_name1, string &_name2, int searchPath);
 };
 
