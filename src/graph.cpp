@@ -135,6 +135,8 @@ void graph::BFSprintConnectedGames(string _name, int maxDepth) {
             auto gameIterator = nodes.find(currentID);
             if (gameIterator != nodes.end()) {
                 cout << gameIterator->second->getName() << endl;
+                // Add the game to a QStringList
+                qStringListBFSGameNames << QString::fromStdString(gameIterator->second->getName());
             }
 
             // Stop BFS if depth exceeds maxDepth

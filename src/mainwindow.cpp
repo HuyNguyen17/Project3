@@ -38,20 +38,31 @@ void MainWindow::searchButtonClick()
     {
         for (const auto& gamePtr : testVector)
         {
-            ui->textBrowserLstWgtResults->setHtml(
-                    ui->lineEditSearchBar->text()
-                    + " Released on: " + QString::fromStdString(gamePtr->getReleaseDate())
+            gameGraph.BFSprintConnectedGames(gamePtr->getName(),1);
 
-            );
-            ui->textBrowserLstWgtResults->append("<br>Check out these <b>awesome</b> games: <br>");
-            for (auto simiGames : gameGraph.findByID(gamePtr->getID())->getSimilarGames())
+            for (auto simiGames : gameGraph.getQStringBFSGameNames())
             {
-                ui->textBrowserLstWgtResults->append(QString::fromStdString(gameGraph.findByID(simiGames)->getName()));
+                ui->textBrowserLstWgtResults->append(simiGames);
             }
+//            ui->textBrowserLstWgtResults->setHtml(
+//                    ui->lineEditSearchBar->text()
+//                    + " Released on: " + QString::fromStdString(gamePtr->getReleaseDate())
+
+//            );
+//            ui->textBrowserLstWgtResults->append("<br>Check out these <b>awesome</b> games: <br>");
+//            for (auto simiGames : gameGraph.findByID(gamePtr->getID())->getSimilarGames())
+//            {
+//                ui->textBrowserLstWgtResults->append(QString::fromStdString(gameGraph.findByID(simiGames)->getName()));
+//            }
         }
     }
     else
     {
         ui->textBrowserLstWgtResults->setHtml(ui->lineEditSearchBar->text() + " is not a valid game. Please try a different game name.");
     }
+}
+
+void MainWindow::on_radioBtnGames_toggled(bool checked)
+{
+    ui->textBrowserLstWgtResults->setHtml(ui->lineEditSearchBar->text());
 }

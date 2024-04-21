@@ -24,6 +24,7 @@ public:
     graph gameGraph;
 private slots:
     void searchButtonClick();
+    void on_radioBtnGames_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;
