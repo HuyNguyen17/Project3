@@ -40,7 +40,7 @@ public:
 private:
 
     const string name;
-    const string releaseDate; // Change to an actual time type is prolly better
+    const string releaseDate;
 
     vector<Company> companies;
     vector<Genre> genres;

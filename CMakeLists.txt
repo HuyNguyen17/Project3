@@ -63,7 +63,6 @@ add_executable(Project3
         src/main.cpp
         src/parser.h
         src/parser.cpp
-        src/gui.cpp
         src/mainwindow.h
         src/ui_mainwindow.h
         src/mainwindow.cpp
