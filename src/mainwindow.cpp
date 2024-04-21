@@ -34,27 +34,25 @@ MainWindow::~MainWindow()
 void MainWindow::searchButtonClick()
 {
     ui->textBrowserLstWgtResults->clear(); // clear results at each search
-    auto testVector = gameGraph.findByName(ui->lineEditSearchBar->text().toStdString());
-    if(!testVector.empty())
+    // only search games if games button checked
+    if(ui->radioBtnGames->isChecked())
     {
-        for (const auto& gamePtr : testVector)
-        {
-            if (ui->radioBtnBFS->isChecked())
-            {
-                gameGraph.BFSprintConnectedGames(gamePtr->getName(), 1);
+        auto testVector = gameGraph.findByName(ui->lineEditSearchBar->text().toStdString());
+        if (!testVector.empty()) {
+            for (const auto &gamePtr: testVector) {
+                if (ui->radioBtnBFS->isChecked()) {
+                    gameGraph.BFSprintConnectedGames(gamePtr->getName(), 1);
 
-                for (auto simiGames: gameGraph.getQStringGameNameResults()) {
-                    ui->textBrowserLstWgtResults->append(simiGames);
-                }
-            }
-            else if (ui->radioBtnDFS->isChecked())
-            {
-                gameGraph.DFSprintConnectedGames(gamePtr->getName(), 1);
+                    for (auto simiGames: gameGraph.getQStringGameNameResults()) {
+                        ui->textBrowserLstWgtResults->append(simiGames);
+                    }
+                } else if (ui->radioBtnDFS->isChecked()) {
+                    gameGraph.DFSprintConnectedGames(gamePtr->getName(), 1);
 
-                for (auto simiGames: gameGraph.getQStringGameNameResults()) {
-                    ui->textBrowserLstWgtResults->append(simiGames);
+                    for (auto simiGames: gameGraph.getQStringGameNameResults()) {
+                        ui->textBrowserLstWgtResults->append(simiGames);
+                    }
                 }
-            }
 //            ui->textBrowserLstWgtResults->setHtml(
 //                    ui->lineEditSearchBar->text()
 //                    + " Released on: " + QString::fromStdString(gamePtr->getReleaseDate())
@@ -65,11 +63,19 @@ void MainWindow::searchButtonClick()
 //            {
 //                ui->textBrowserLstWgtResults->append(QString::fromStdString(gameGraph.findByID(simiGames)->getName()));
 //            }
+            }
+        } else {
+            ui->textBrowserLstWgtResults->setHtml(
+                    ui->lineEditSearchBar->text() + " is not a valid game. Please try a different game name.");
         }
     }
-    else
+    else if(ui->radioBtnGenre->isChecked())
     {
-        ui->textBrowserLstWgtResults->setHtml(ui->lineEditSearchBar->text() + " is not a valid game. Please try a different game name.");
+        // do genre search
+    }
+    else if (ui->radioBtnCompany->isChecked())
+    {
+        // do company search
     }
 }
 
