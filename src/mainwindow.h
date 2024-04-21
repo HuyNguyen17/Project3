@@ -9,6 +9,7 @@
 #include "graph.h"
 #include "parser.h"
 #include <iostream>
+#include <QCompleter>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,10 +26,15 @@ public:
 private slots:
     void searchButtonClick();
     void on_radioBtnGames_toggled(bool checked);
+    void on_radioBtnCompany_toggled(bool checked);
+    void on_radioBtnGenre_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;
     class Parser* parsed;
+    QCompleter* gameCompleter;
+    QCompleter* genreCompleter;
+    QCompleter* companyCompleter;
 };
 
 #endif //PROJECT3_MAINWINDOW_H

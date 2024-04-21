@@ -6,7 +6,7 @@
 #include <QMessageBox>
 #include "parser.h"
 #include <QString>
-#include <QCompleter>
+
 
 //Todo: Allen Change widget names, fix the widget frame, incorporate the graph functions for search
 
@@ -20,10 +20,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     gameGraph = parsed->parseToGraph("../data/data.json");
 
-    auto *completer = new QCompleter(gameGraph.getQStringGameNames(), ui->lineEditSearchBar);
-    completer->setCaseSensitivity(Qt::CaseInsensitive);
+    gameCompleter = new QCompleter(gameGraph.getQStringGameNames(), ui->lineEditSearchBar);
+    gameCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+    companyCompleter = new QCompleter(gameGraph.getQStringCompanyNames(), ui->lineEditSearchBar);
+    companyCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+    genreCompleter = new QCompleter(gameGraph.getQStringGenreNames(), ui->lineEditSearchBar);
+    genreCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+
+
     // Set the QCompleter to the existing QLineEdit
-    ui->lineEditSearchBar->setCompleter(completer);
+    ui->lineEditSearchBar->setCompleter(gameCompleter); // game completer by default
 }
 
 MainWindow::~MainWindow()
@@ -81,5 +87,19 @@ void MainWindow::searchButtonClick()
 
 void MainWindow::on_radioBtnGames_toggled(bool checked)
 {
-    ui->textBrowserLstWgtResults->setHtml(ui->lineEditSearchBar->text());
+    // sets the autocompleter if checked
+    if(checked)
+    {
+        ui->lineEditSearchBar->setCompleter(gameCompleter);
+    }
+}
+
+void MainWindow::on_radioBtnCompany_toggled(bool checked) {
+    // sets the autocompleter if checked
+    ui->lineEditSearchBar->setCompleter(gameCompleter);
+}
+
+void MainWindow::on_radioBtnGenre_toggled(bool checked) {
+    // sets the autocompleter if checked
+    ui->lineEditSearchBar->setCompleter(gameCompleter);
 }
