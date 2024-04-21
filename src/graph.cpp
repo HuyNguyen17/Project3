@@ -256,3 +256,173 @@ void graph::addGameToQString(QString qString)
 {
     qStringListNames << qString;
 }
+
+void graph::searchByGenre(string _genre) {
+    auto it = genre.find(_genre);
+    if (it == genre.end())
+    {
+        cout << "No games found for the genre: " << _genre << endl;
+        return;
+    }
+    const auto& gameIDs = it->second;
+    for (auto id : gameIDs)
+    {
+        auto gameIt =nodes.find(id);
+        if (gameIt != nodes.end())
+        {
+            shared_ptr<game> game = gameIt->second;
+            cout << "Game ID: " << game->getID() << ", Name: " << game->getName()
+                 << ", Released: " << game->getReleaseDate() << endl;
+        }
+    }
+}
+
+void graph::printAllGenre() {
+    if (genre.empty()) {
+        cout << "No genres available." << endl;
+        return;
+    }
+
+    cout << "Available Genres:" << endl;
+    for (const auto& pair : genre) {
+        cout << pair.first << endl;
+    }
+}
+
+void graph::searchByCompany(std::string _company) {
+    auto it = company.find(_company);
+    if (it == company.end())
+    {
+        cout << "No games found for " << _company << endl;
+        return;
+    }
+    const auto& gameIDs = it->second;
+    for (auto id : gameIDs)
+    {
+        auto gameIt =nodes.find(id);
+        if (gameIt != nodes.end())
+        {
+            shared_ptr<game> game = gameIt->second;
+            cout << "Game ID: " << game->getID() << ", Name: " << game->getName()
+                 << ", Released: " << game->getReleaseDate() << endl;
+        }
+    }
+    cout << endl;
+}
+
+void graph::printAllCompany() {
+    if (company.empty()) {
+        cout << "No company available." << endl;
+        return;
+    }
+
+    cout << "Available Companies:" << endl;
+    for (const auto& pair : company) {
+        cout << pair.first << endl;
+    }
+}
+
+void graph::searchByReleaseDate(string _releaseDate) {
+    auto it = release_date.find(_releaseDate);
+    if (it == release_date.end())
+    {
+        cout << "No games found for release date " << _releaseDate << endl;
+        return;
+    }
+    const auto& gameIDs = it->second;
+    for (auto id : gameIDs)
+    {
+        auto gameIt = nodes.find(id);
+        if (gameIt != nodes.end())
+        {
+            shared_ptr<game> game = gameIt->second;
+            cout << "Game ID: " << game->getID() << ", Name: " << game->getName()
+                 << ", Released: " << game->getReleaseDate() << endl;
+        }
+    }
+    cout << endl;
+}
+
+vector<shared_ptr<game>> graph::getConnectedGamesBFS(string _name, int maxDepth) {
+    vector<shared_ptr<game>> connectedGames;
+    int _gameID = getIDfromSearching(_name);
+
+    if (_gameID == -1) {
+        return connectedGames; // Return empty vector if no game is found
+    }
+
+    queue<pair<int, int>> queue; // Store game ID and depth
+    unordered_set<int> visited;
+
+    queue.push({_gameID, 0});
+    visited.insert(_gameID);
+
+    while (!queue.empty()) {
+        auto current = queue.front();
+        int currentID = current.first;
+        int currentDepth = current.second;
+        queue.pop();
+
+        // Access the game using the ID and collect it
+        auto gameIterator = nodes.find(currentID);
+        if (gameIterator != nodes.end()) {
+            connectedGames.push_back(gameIterator->second);
+        }
+
+        // Stop BFS if depth exceeds maxDepth
+        if (currentDepth >= maxDepth) continue;
+
+        // Traverse all adjacent games
+        auto neighbours = edges[currentID];
+        for (int neighbourID : neighbours) {
+            if (visited.find(neighbourID) == visited.end()) {
+                queue.push({neighbourID, currentDepth + 1});
+                visited.insert(neighbourID);
+            }
+        }
+    }
+    return connectedGames;
+}
+
+vector<shared_ptr<game>> graph::getConnectedGamesDFS(string _name, int maxDepth) {
+    vector<shared_ptr<game>> connectedGames;
+    int _gameID = getIDfromSearching(_name);
+
+    if (_gameID == -1) {
+        return connectedGames; // Return empty vector if no game is found
+    }
+
+    stack<pair<int, int>> stack; // Use a stack to manage the DFS
+    unordered_set<int> visited;
+
+    stack.push({_gameID, 0});
+    visited.insert(_gameID);
+
+    while (!stack.empty()) {
+        auto current = stack.top();
+        stack.pop();
+        int currentID = current.first;
+        int currentDepth = current.second;
+
+        // Access the game using the ID and collect it
+        auto gameIterator = nodes.find(currentID);
+        if (gameIterator != nodes.end()) {
+            connectedGames.push_back(gameIterator->second);
+        }
+
+        // Stop DFS if depth exceeds maxDepth
+        if (currentDepth >= maxDepth) continue;
+
+        // Traverse all adjacent games in reverse to maintain typical DFS order
+        auto neighbours = edges[currentID];
+        for (auto it = neighbours.rbegin(); it != neighbours.rend(); ++it) {
+            int neighbourID = *it;
+            if (visited.find(neighbourID) == visited.end()) {
+                stack.push({neighbourID, currentDepth + 1});
+                visited.insert(neighbourID);
+            }
+        }
+    }
+
+    return connectedGames;
+}
