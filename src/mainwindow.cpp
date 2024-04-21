@@ -33,6 +33,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::searchButtonClick()
 {
+    ui->textBrowserLstWgtResults->clear(); // clear results at each search
     auto testVector = gameGraph.findByName(ui->lineEditSearchBar->text().toStdString());
     if(!testVector.empty())
     {
@@ -42,7 +43,7 @@ void MainWindow::searchButtonClick()
             {
                 gameGraph.BFSprintConnectedGames(gamePtr->getName(), 1);
 
-                for (auto simiGames: gameGraph.getQStringBFSGameNames()) {
+                for (auto simiGames: gameGraph.getQStringGameNameResults()) {
                     ui->textBrowserLstWgtResults->append(simiGames);
                 }
             }
@@ -50,7 +51,7 @@ void MainWindow::searchButtonClick()
             {
                 gameGraph.DFSprintConnectedGames(gamePtr->getName(), 1);
 
-                for (auto simiGames: gameGraph.getQStringBFSGameNames()) {
+                for (auto simiGames: gameGraph.getQStringGameNameResults()) {
                     ui->textBrowserLstWgtResults->append(simiGames);
                 }
             }

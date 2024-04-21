@@ -119,6 +119,9 @@ int graph::getIDfromSearching(string &_name) {
 void graph::BFSprintConnectedGames(string _name, int maxDepth) {
     int _gameID = getIDfromSearching(_name);
     if (_gameID != -1) {
+        // clear the results before we add anything
+        qStringListGameNameResults.clear();
+
         queue<pair<int, int>> queue; // Store game ID and depth
         unordered_set<int> visited;
 
@@ -136,7 +139,7 @@ void graph::BFSprintConnectedGames(string _name, int maxDepth) {
             if (gameIterator != nodes.end()) {
                 cout << gameIterator->second->getName() << endl;
                 // Add the game to a QStringList
-                qStringListBFSGameNames << QString::fromStdString(gameIterator->second->getName());
+                qStringListGameNameResults << QString::fromStdString(gameIterator->second->getName());
             }
 
             // Stop BFS if depth exceeds maxDepth
@@ -157,6 +160,8 @@ void graph::BFSprintConnectedGames(string _name, int maxDepth) {
 void graph::DFSprintConnectedGames(string _name, int maxDepth) {
     int _gameID = getIDfromSearching(_name);
     if (_gameID != -1) {
+        // clear the results before we add anything
+        qStringListGameNameResults.clear();
         stack<pair<int, int>> stack;  // Use a stack to manage the DFS
         unordered_set<int> visited;
 
@@ -173,6 +178,7 @@ void graph::DFSprintConnectedGames(string _name, int maxDepth) {
             auto gameIterator = nodes.find(currentID);
             if (gameIterator != nodes.end()) {
                 cout << gameIterator->second->getName() << endl;
+                qStringListGameNameResults << QString::fromStdString(gameIterator->second->getName());
             }
 
             // Stop DFS if depth exceeds maxDepth
