@@ -57,6 +57,11 @@ public:
     void BFSprintConnectedGames(string _name, int maxDepth);
     void DFSprintConnectedGames(string _name, int maxDepth);
     bool gamesConnected(string &_name1, string &_name2, int searchPath);
+    void searchByGenre(string _genre);
+    void printAllGenre();
+    void searchByCompany(string _company);
+    void printAllCompany();
+    void searchByReleaseDate(string _releaesDate);
 };
 
 #endif //PROJECT3_GRAPH_H
