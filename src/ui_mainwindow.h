@@ -37,12 +37,12 @@ public:
     QLineEdit *lineEditConnectedToResults;
     QTextBrowser *textBrowsrConnectedToResult;
     QListWidget *listWgtSearchObjects;
-    QWidget *widget;
+    QWidget *searchTypeWidget;
     QHBoxLayout *horizontalLayoutSearchCriteria;
     QRadioButton *radioBtnGames;
     QRadioButton *radioBtnGenre;
     QRadioButton *radioBtnCompany;
-    QWidget *widget1;
+    QWidget *gameSearchWidget;
     QVBoxLayout *verticalLayoutAlgoType;
     QRadioButton *radioBtnBFS;
     QRadioButton *radioBtnDFS;
@@ -82,41 +82,41 @@ public:
         listWgtSearchObjects = new QListWidget(centralwidget);
         listWgtSearchObjects->setObjectName("listWgtSearchObjects");
         listWgtSearchObjects->setGeometry(QRect(480, 100, 341, 451));
-        widget = new QWidget(centralwidget);
-        widget->setObjectName("widget");
-        widget->setGeometry(QRect(20, 80, 442, 25));
-        horizontalLayoutSearchCriteria = new QHBoxLayout(widget);
+        searchTypeWidget = new QWidget(centralwidget);
+        searchTypeWidget->setObjectName("searchTypeWidget");
+        searchTypeWidget->setGeometry(QRect(20, 80, 442, 25));
+        horizontalLayoutSearchCriteria = new QHBoxLayout(searchTypeWidget);
         horizontalLayoutSearchCriteria->setObjectName("horizontalLayoutSearchCriteria");
         horizontalLayoutSearchCriteria->setContentsMargins(0, 0, 0, 0);
-        radioBtnGames = new QRadioButton(widget);
+        radioBtnGames = new QRadioButton(searchTypeWidget);
         radioBtnGames->setObjectName("radioBtnGames");
         radioBtnGames->setChecked(true);
 
         horizontalLayoutSearchCriteria->addWidget(radioBtnGames);
 
-        radioBtnGenre = new QRadioButton(widget);
+        radioBtnGenre = new QRadioButton(searchTypeWidget);
         radioBtnGenre->setObjectName("radioBtnGenre");
 
         horizontalLayoutSearchCriteria->addWidget(radioBtnGenre);
 
-        radioBtnCompany = new QRadioButton(widget);
+        radioBtnCompany = new QRadioButton(searchTypeWidget);
         radioBtnCompany->setObjectName("radioBtnCompany");
 
         horizontalLayoutSearchCriteria->addWidget(radioBtnCompany);
 
-        widget1 = new QWidget(centralwidget);
-        widget1->setObjectName("widget1");
-        widget1->setGeometry(QRect(40, 350, 54, 54));
-        verticalLayoutAlgoType = new QVBoxLayout(widget1);
+        gameSearchWidget = new QWidget(centralwidget);
+        gameSearchWidget->setObjectName("gameSearchWidget");
+        gameSearchWidget->setGeometry(QRect(40, 350, 54, 54));
+        verticalLayoutAlgoType = new QVBoxLayout(gameSearchWidget);
         verticalLayoutAlgoType->setObjectName("verticalLayoutAlgoType");
         verticalLayoutAlgoType->setContentsMargins(0, 0, 0, 0);
-        radioBtnBFS = new QRadioButton(widget1);
+        radioBtnBFS = new QRadioButton(gameSearchWidget);
         radioBtnBFS->setObjectName("radioBtnBFS");
         radioBtnBFS->setChecked(true);
 
         verticalLayoutAlgoType->addWidget(radioBtnBFS);
 
-        radioBtnDFS = new QRadioButton(widget1);
+        radioBtnDFS = new QRadioButton(gameSearchWidget);
         radioBtnDFS->setObjectName("radioBtnDFS");
 
         verticalLayoutAlgoType->addWidget(radioBtnDFS);
