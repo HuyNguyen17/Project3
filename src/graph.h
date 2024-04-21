@@ -61,7 +61,7 @@ public:
     void printAllGenre();
     void searchByCompany(string _company);
     void printAllCompany();
-    void searchByReleaseDate(string _releaesDate);
+    void searchByReleaseDate(string _releaseDate);
 };
 
 #endif //PROJECT3_GRAPH_H

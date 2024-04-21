@@ -319,3 +319,24 @@ void graph::printAllCompany() {
         cout << pair.first << endl;
     }
 }
+
+void graph::searchByReleaseDate(string _releaseDate) {
+    auto it = release_date.find(_releaseDate);
+    if (it == release_date.end())
+    {
+        cout << "No games found for release date " << _releaseDate << endl;
+        return;
+    }
+    const auto& gameIDs = it->second;
+    for (auto id : gameIDs)
+    {
+        auto gameIt = nodes.find(id);
+        if (gameIt != nodes.end())
+        {
+            shared_ptr<game> game = gameIt->second;
+            cout << "Game ID: " << game->getID() << ", Name: " << game->getName()
+                 << ", Released: " << game->getReleaseDate() << endl;
+        }
+    }
+    cout << endl;
+}
