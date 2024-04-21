@@ -20,10 +20,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     gameGraph = parsed->parseToGraph("../data/data.json");
 
-    auto *completer = new QCompleter(gameGraph.getQStringGameNames(), ui->lineEditSearchBar);
-    completer->setCaseSensitivity(Qt::CaseInsensitive);
+    gameCompleter = new QCompleter(gameGraph.getQStringGameNames(), ui->lineEditSearchBar);
+    gameCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+    companyCompleter = new QCompleter(gameGraph.getQStringCompanyNames(), ui->lineEditSearchBar);
+    companyCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+    genreCompleter = new QCompleter(gameGraph.getQStringGenreNames(), ui->lineEditSearchBar);
+    genreCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+
+
     // Set the QCompleter to the existing QLineEdit
-    ui->lineEditSearchBar->setCompleter(completer);
+    ui->lineEditSearchBar->setCompleter(gameCompleter); // game completer by default
 }
 
 MainWindow::~MainWindow()
@@ -34,59 +40,66 @@ MainWindow::~MainWindow()
 void MainWindow::searchButtonClick()
 {
     ui->textBrowserLstWgtResults->clear(); // clear results at each search
-    auto testVector = gameGraph.findByName(ui->lineEditSearchBar->text().toStdString());
-    if(!testVector.empty())
+    // only search games if games button checked
+    if(ui->radioBtnGames->isChecked())
     {
-        for (const auto& gamePtr : testVector)
-        {
-<<<<<<< Updated upstream
-            if (ui->radioBtnBFS->isChecked())
-            {
-                gameGraph.BFSprintConnectedGames(gamePtr->getName(), 1);
+        auto testVector = gameGraph.findByName(ui->lineEditSearchBar->text().toStdString());
+        if (!testVector.empty()) {
+            for (const auto &gamePtr: testVector) {
+                if (ui->radioBtnBFS->isChecked()) {
+                    gameGraph.BFSprintConnectedGames(gamePtr->getName(), 1);
 
-                for (auto simiGames: gameGraph.getQStringGameNameResults()) {
-                    ui->textBrowserLstWgtResults->append(simiGames);
+                    for (auto simiGames: gameGraph.getQStringGameNameResults()) {
+                        ui->textBrowserLstWgtResults->append(simiGames);
+                    }
+                } else if (ui->radioBtnDFS->isChecked()) {
+                    gameGraph.DFSprintConnectedGames(gamePtr->getName(), 1);
+
+                    for (auto simiGames: gameGraph.getQStringGameNameResults()) {
+                        ui->textBrowserLstWgtResults->append(simiGames);
+                    }
                 }
+//            ui->textBrowserLstWgtResults->setHtml(
+//                    ui->lineEditSearchBar->text()
+//                    + " Released on: " + QString::fromStdString(gamePtr->getReleaseDate())
+
+//            );
+//            ui->textBrowserLstWgtResults->append("<br>Check out these <b>awesome</b> games: <br>");
+//            for (auto simiGames : gameGraph.findByID(gamePtr->getID())->getSimilarGames())
+//            {
+//                ui->textBrowserLstWgtResults->append(QString::fromStdString(gameGraph.findByID(simiGames)->getName()));
+//            }
             }
-            else if (ui->radioBtnDFS->isChecked())
-            {
-                gameGraph.DFSprintConnectedGames(gamePtr->getName(), 1);
-
-                for (auto simiGames: gameGraph.getQStringGameNameResults()) {
-                    ui->textBrowserLstWgtResults->append(simiGames);
-                }
-=======
-            if (ui->radioBtnGames->isChecked())
-            {
-                // check if radioBtnGames is clicked then do this
-                gameGraph.getConnectedGamesBFS(gamePtr->getName(),1);
-
-                for (auto simiGames : gameGraph.getConnectedGamesBFS(gamePtr->getName(),1))
-                {
-                    ui->textBrowserLstWgtResults->append(QString::fromStdString(simiGames->getName()));
-                }
-            }
-            else if (ui->radioBtnGenre->isChecked())
-            {
-
->>>>>>> Stashed changes
-            }
-
-
-            // check if radioBtnGenre
-                // do the appropriate search
-
-            // check if radioBtnCompany
-                // do the appropriate search
+        } else {
+            ui->textBrowserLstWgtResults->setHtml(
+                    ui->lineEditSearchBar->text() + " is not a valid game. Please try a different game name.");
         }
     }
-    else
+    else if(ui->radioBtnGenre->isChecked())
     {
-        ui->textBrowserLstWgtResults->setHtml(ui->lineEditSearchBar->text() + " is not a valid game. Please try a different game name.");
+        // do genre search
+    }
+    else if (ui->radioBtnCompany->isChecked())
+    {
+        // do company search
     }
 }
 
 void MainWindow::on_radioBtnGames_toggled(bool checked)
 {
-    ui->textBrowserLstWgtResults->setHtml(ui->lineEditSearchBar->text());
+    // sets the autocompleter if checked
+    if(checked)
+    {
+        ui->lineEditSearchBar->setCompleter(gameCompleter);
+    }
+}
+
+void MainWindow::on_radioBtnCompany_toggled(bool checked) {
+    // sets the autocompleter if checked
+    ui->lineEditSearchBar->setCompleter(gameCompleter);
+}
+
+void MainWindow::on_radioBtnGenre_toggled(bool checked) {
+    // sets the autocompleter if checked
+    ui->lineEditSearchBar->setCompleter(gameCompleter);
 }

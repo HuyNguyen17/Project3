@@ -29,9 +29,11 @@ private:
     unordered_map<string, vector<int>> genre; //string will be the genre title and int will be gameID
     unordered_map<string, vector<int>> company; //string will be the company title and int will be gameID
     unordered_map<string, vector<int>> release_date; //string will be the release date and int will be gameID
+
     QStringList qStringListNames;
+    QStringList qStringListCompanies;
+    QStringList qStringListGenres;
     QStringList qStringListGameNameResults;
-    QStringList dfsStringListGameNames;
     vector<shared_ptr<game>> names;
 
     int numEdges = 0;
@@ -44,8 +46,13 @@ public:
 
     // add game name to QStringList
     void addGameToQString(QString qString);
+
+    void addAllGenresToQString();
+    void addAllCompaniesToQString();
     // return game StringList
     QStringList getQStringGameNames() {return qStringListNames; }
+    QStringList getQStringCompanyNames() {return qStringListCompanies; }
+    QStringList getQStringGenreNames() {return qStringListGenres; }
     QStringList getQStringGameNameResults() {return qStringListGameNameResults; }
 
     std::vector<std::shared_ptr<game>> findByName(const string& name); // Method to find a game by name
