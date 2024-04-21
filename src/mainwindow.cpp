@@ -27,7 +27,6 @@ MainWindow::MainWindow(QWidget *parent)
     genreCompleter = new QCompleter(gameGraph.getQStringGenreNames(), ui->lineEditSearchBar);
     genreCompleter->setCaseSensitivity(Qt::CaseInsensitive);
 
-
     // Set the QCompleter to the existing QLineEdit
     ui->lineEditSearchBar->setCompleter(gameCompleter); // game completer by default
 }
@@ -41,7 +40,7 @@ void MainWindow::searchButtonClick()
 {
     ui->textBrowserLstWgtResults->clear(); // clear results at each search
     // only search games if games button checked
-    if(ui->radioBtnGames->isChecked())
+    if (ui->radioBtnGames->isChecked())
     {
         auto testVector = gameGraph.findByName(ui->lineEditSearchBar->text().toStdString());
         if (!testVector.empty()) {
@@ -73,7 +72,19 @@ void MainWindow::searchButtonClick()
 //                ui->textBrowserLstWgtResults->append(QString::fromStdString(gameGraph.findByID(simiGames)->getName()));
 //            }
             }
-        } else {
+            if (ui->radioBtnConnectedTo->isChecked())
+            {
+                if (!ui->lineEditConnectedToResults->text().toStdString().empty())
+                {
+//                    gameGraph.gamesConnected(ui->lineEditSearchBar->text().toStdString(), ui->lineEditConnectedToResults->text().toStdString(),1);
+                    std::string name1 = ui->lineEditSearchBar->text().toStdString();
+                    std::string name2 = ui->lineEditConnectedToResults->text().toStdString();
+                    gameGraph.gamesConnected(name1, name2, 1);
+                }
+            }
+        }
+        else
+        {
             ui->textBrowserLstWgtResults->setHtml(
                     ui->lineEditSearchBar->text() + " is not a valid game. Please try a different game name.");
         }
@@ -81,11 +92,30 @@ void MainWindow::searchButtonClick()
     else if(ui->radioBtnGenre->isChecked())
     {
         // do genre search
+        auto gamesBygenre = gameGraph.getGamesByGenre(ui->lineEditSearchBar->text().toStdString());
+        if (!gamesBygenre.empty()) {
+            for (const auto &gamePtr: gamesBygenre)
+            {
+                ui->textBrowserLstWgtResults->append(QString::fromStdString(gamePtr->getName()));
+            }
+        }
+        else
+        {
+            ui->textBrowserLstWgtResults->setHtml(
+                    ui->lineEditSearchBar->text() + " is not a valid Genre. Please try a different genre name.");
+        }
     }
     else if (ui->radioBtnCompany->isChecked())
     {
         // do company search
+        auto gamesByCompany = gameGraph.getGamesByCompany(ui->lineEditSearchBar->text().toStdString());
+        if (!gamesByCompany.empty()) {
+            for (const auto &gamePtr: gamesByCompany) {
+                ui->textBrowserLstWgtResults->append(QString::fromStdString(gamePtr->getName()));
+            }
+        }
     }
+
 }
 
 void MainWindow::on_radioBtnGames_toggled(bool checked)
@@ -97,14 +127,15 @@ void MainWindow::on_radioBtnGames_toggled(bool checked)
     }
 }
 
-void MainWindow::on_radioBtnCompany_toggled(bool checked) {
+void MainWindow::on_radioBtnCompany_toggled(bool checked)
+{
     // sets the autocompleter if checked
-    ui->lineEditSearchBar->setCompleter(gameCompleter);
+    ui->lineEditSearchBar->setCompleter(companyCompleter);
 }
 
 void MainWindow::on_radioBtnGenre_toggled(bool checked) {
     // sets the autocompleter if checked
-    ui->lineEditSearchBar->setCompleter(gameCompleter);
+    ui->lineEditSearchBar->setCompleter(genreCompleter);
 }
 
 void MainWindow::on_listWgtSearchObjects_itemSelectionChanged() {

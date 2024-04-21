@@ -263,6 +263,21 @@ void graph::addGameToQString(QString qString)
     qStringListNames << qString;
 }
 
+void graph::addAllGenresToQString()
+{
+    for (const auto& pair : genre)
+    {
+        qStringListGenres << QString::fromStdString(pair.first);
+    }
+}
+
+void graph::addAllCompaniesToQString() {
+    for (const auto& pair : company)
+    {
+        qStringListCompanies << QString::fromStdString(pair.first);
+    }
+}
+
 void graph::searchByGenre(string _genre) {
     auto it = genre.find(_genre);
     if (it == genre.end())
@@ -290,7 +305,8 @@ void graph::printAllGenre() {
     }
 
     cout << "Available Genres:" << endl;
-    for (const auto& pair : genre) {
+    for (const auto& pair : genre)
+    {
         cout << pair.first << endl;
     }
 }
@@ -323,7 +339,8 @@ void graph::printAllCompany() {
     }
 
     cout << "Available Companies:" << endl;
-    for (const auto& pair : company) {
+    for (const auto& pair : company)
+    {
         cout << pair.first << endl;
     }
 }

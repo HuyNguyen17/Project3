@@ -97,8 +97,6 @@ public:
     void printAllCompany();
     //Prints all the games in a specific release date
     void searchByReleaseDate(string _releaseDate);
-
-
 };
 
 #endif //PROJECT3_GRAPH_H
