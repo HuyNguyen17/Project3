@@ -188,7 +188,7 @@ void graph::DFSprintConnectedGames(string _name, int maxDepth) {
     }
 }
 
-bool graph::gamesConnected(string &_name1, string &_name2, int searchPath) {
+bool graph::printGamesConnected(string &_name1, string &_name2, int searchPath) {
     int startID = getIDfromSearching(_name1);
     int targetID = getIDfromSearching(_name2);
 
@@ -481,4 +481,70 @@ QVector<shared_ptr<game>> graph::getGamesByReleaseDate(string _releaseDate) {
         }
     }
     return gamesByReleaseDate;
+}
+
+QString graph::gamesConnected( string &name1,  string &name2, int searchPath) {
+    QString result;
+    QString _name1 = QString::fromStdString(name1);
+    QString _name2 = QString::fromStdString(name2);
+
+    int startID = getIDfromSearching(name1);
+    int targetID = getIDfromSearching(name2);
+
+    if (startID == -1 || targetID == -1) {
+        result = "One or both games not found.";
+        return result;
+    }
+
+    unordered_set<int> visited;
+    if (searchPath == 0) {  // BFS
+        queue<pair<int, int>> queue;
+        queue.push({startID, 0});
+        visited.insert(startID);
+
+        while (!queue.empty()) {
+            auto current = queue.front();
+            queue.pop();
+            int currentID = current.first;
+            int currentDepth = current.second;
+
+            if (currentID == targetID) {
+                result = QString("[%1] is %2 games away from [%3].").arg(_name2).arg(currentDepth).arg(_name1);
+                return result;
+            }
+
+            for (int neighbourID : edges[currentID]) {
+                if (visited.find(neighbourID) == visited.end()) {
+                    queue.push({neighbourID, currentDepth + 1});
+                    visited.insert(neighbourID);
+                }
+            }
+        }
+    } else if (searchPath == 1) {  // DFS
+        stack<pair<int, int>> stack;
+        stack.push({startID, 0});
+        visited.insert(startID);
+
+        while (!stack.empty()) {
+            auto current = stack.top();
+            stack.pop();
+            int currentID = current.first;
+            int currentDepth = current.second;
+
+            if (currentID == targetID) {
+                result = QString("[%1] is %2 games away from [%3].").arg(_name2).arg(currentDepth).arg(_name1);
+                return result;
+            }
+
+            for (int neighbourID : edges[currentID]) {
+                if (visited.find(neighbourID) == visited.end()) {
+                    stack.push({neighbourID, currentDepth + 1});
+                    visited.insert(neighbourID);
+                }
+            }
+        }
+    }
+
+    result = QString("%1 is not reachable from %2").arg(_name2).arg(_name1);
+    return result;
 }

@@ -14,6 +14,7 @@
 #include "game.h"
 #include "unordered_set"
 #include <QStringList>
+#include <QString>
 using namespace std;
 
 class graph {
@@ -72,8 +73,10 @@ public:
     QVector<shared_ptr<game>> getGamesByReleaseDate(string _releaseDate);
 
     //_name1 is the main searchBar (source), _name2 is the destination, searchPath, 0 is BFS, 1 is DFS.
-
-    bool gamesConnected(string &_name1, string &_name2, int searchPath);
+    //Returns a QString
+    QString gamesConnected(string &_name1,string &_name2, int searchPath);
+    //Prints gamesConnected
+    bool printGamesConnected(string &_name1, string &_name2, int searchPath);
     //Prints all the games in a specific Genre
     void searchByGenre(string _genre);
     //Prints all the available Genres to search from.
