@@ -62,6 +62,11 @@ public:
     void searchByCompany(string _company);
     void printAllCompany();
     void searchByReleaseDate(string _releaseDate);
+
+    //Returns a Vector of BFS
+    vector<shared_ptr<game>> getConnectedGamesBFS(string _name, int maxDepth);
+    //Returns a Vector of DFS
+    vector<shared_ptr<game>> getConnectedGamesDFS(string _name, int maxDepth);
 };
 
 #endif //PROJECT3_GRAPH_H

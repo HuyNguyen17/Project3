@@ -340,3 +340,87 @@ void graph::searchByReleaseDate(string _releaseDate) {
     }
     cout << endl;
 }
+
+vector<shared_ptr<game>> graph::getConnectedGamesBFS(string _name, int maxDepth) {
+    vector<shared_ptr<game>> connectedGames;
+    int _gameID = getIDfromSearching(_name);
+
+    if (_gameID == -1) {
+        return connectedGames; // Return empty vector if no game is found
+    }
+
+    queue<pair<int, int>> queue; // Store game ID and depth
+    unordered_set<int> visited;
+
+    queue.push({_gameID, 0});
+    visited.insert(_gameID);
+
+    while (!queue.empty()) {
+        auto current = queue.front();
+        int currentID = current.first;
+        int currentDepth = current.second;
+        queue.pop();
+
+        // Access the game using the ID and collect it
+        auto gameIterator = nodes.find(currentID);
+        if (gameIterator != nodes.end()) {
+            connectedGames.push_back(gameIterator->second);
+        }
+
+        // Stop BFS if depth exceeds maxDepth
+        if (currentDepth >= maxDepth) continue;
+
+        // Traverse all adjacent games
+        auto neighbours = edges[currentID];
+        for (int neighbourID : neighbours) {
+            if (visited.find(neighbourID) == visited.end()) {
+                queue.push({neighbourID, currentDepth + 1});
+                visited.insert(neighbourID);
+            }
+        }
+    }
+    return connectedGames;
+}
+
+vector<shared_ptr<game>> graph::getConnectedGamesDFS(string _name, int maxDepth) {
+    vector<shared_ptr<game>> connectedGames;
+    int _gameID = getIDfromSearching(_name);
+
+    if (_gameID == -1) {
+        return connectedGames; // Return empty vector if no game is found
+    }
+
+    stack<pair<int, int>> stack; // Use a stack to manage the DFS
+    unordered_set<int> visited;
+
+    stack.push({_gameID, 0});
+    visited.insert(_gameID);
+
+    while (!stack.empty()) {
+        auto current = stack.top();
+        stack.pop();
+        int currentID = current.first;
+        int currentDepth = current.second;
+
+        // Access the game using the ID and collect it
+        auto gameIterator = nodes.find(currentID);
+        if (gameIterator != nodes.end()) {
+            connectedGames.push_back(gameIterator->second);
+        }
+
+        // Stop DFS if depth exceeds maxDepth
+        if (currentDepth >= maxDepth) continue;
+
+        // Traverse all adjacent games in reverse to maintain typical DFS order
+        auto neighbours = edges[currentID];
+        for (auto it = neighbours.rbegin(); it != neighbours.rend(); ++it) {
+            int neighbourID = *it;
+            if (visited.find(neighbourID) == visited.end()) {
+                stack.push({neighbourID, currentDepth + 1});
+                visited.insert(neighbourID);
+            }
+        }
+    }
+
+    return connectedGames;
+}
