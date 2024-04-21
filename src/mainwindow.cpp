@@ -170,8 +170,6 @@ void MainWindow::on_radioBtnGames_toggled(bool checked)
         ui->lineEditSearchBar->clear();
         ui->listWgtSearchObjects->clear();
         ui->textBrowserLstWgtResults->clear();
-        gameCompleter = new QCompleter(gameGraph.getQStringGameNames(), ui->lineEditSearchBar);
-        gameCompleter->setCaseSensitivity(Qt::CaseInsensitive);
         ui->lineEditSearchBar->setCompleter(gameCompleter);
         // show the search config widget for game
         ui->gameSearchWidget->setVisible(true);
@@ -186,8 +184,6 @@ void MainWindow::on_radioBtnCompany_toggled(bool checked)
         ui->lineEditSearchBar->clear();
         ui->listWgtSearchObjects->clear();
         ui->textBrowserLstWgtResults->clear();
-        companyCompleter = new QCompleter(gameGraph.getQStringCompanyNames(), ui->lineEditSearchBar);
-        companyCompleter->setCaseSensitivity(Qt::CaseInsensitive);
         ui->lineEditSearchBar->setCompleter(companyCompleter);
         ui->gameSearchWidget->setVisible(false);
     }
@@ -200,8 +196,6 @@ void MainWindow::on_radioBtnGenre_toggled(bool checked) {
         ui->lineEditSearchBar->clear();
         ui->listWgtSearchObjects->clear();
         ui->textBrowserLstWgtResults->clear();
-        genreCompleter = new QCompleter(gameGraph.getQStringGenreNames(), ui->lineEditSearchBar);
-        genreCompleter->setCaseSensitivity(Qt::CaseInsensitive);
         ui->lineEditSearchBar->setCompleter(genreCompleter);
         ui->gameSearchWidget->setVisible(false);
     }
