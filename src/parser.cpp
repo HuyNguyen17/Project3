@@ -49,7 +49,7 @@ string Parser::timestampToDate(long long timestamp) {
 
     // Format struct tm to a string
     char buffer[80]; // Buffer for the formatted string
-    strftime(buffer, 80, "%m-%d-%Y", t); // Format: MM-DD-YYYY
+    strftime(buffer, 80, "%Y", t); // Format: MM-DD-YYYY
 
     return string(buffer);
 }
