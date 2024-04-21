@@ -21,9 +21,9 @@ Parser::~Parser()
 
 }
 
-bool Parser::parseJSONFromFile(const char* filename, rapidjson::Document& d)
+bool Parser::parseJSONFromFile(std::string filename, rapidjson::Document& d)
 {
-    FILE* fp = fopen(filename, "rb");
+    FILE* fp = fopen(filename.c_str(), "rb");
     char readBuffer[65536];
 
 //    // Open the file
@@ -201,7 +201,7 @@ void Parser::parseGame(const rapidjson::Value::ConstValueIterator mainIter, grap
 //    }
 //}
 
-graph Parser::parseToGraph(const char* filename) {
+graph Parser::parseToGraph(std::string filename) {
     rapidjson::Document d;
     bool parsed = parseJSONFromFile(filename, d);
 
