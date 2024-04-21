@@ -13,16 +13,12 @@ MainWindow::MainWindow(QWidget *parent)
         , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    gameGraph = parsed->parseToGraph("../data/smalldata.json");
+    gameGraph = parsed->parseToGraph("../data/data.json");
 
-    QStringList completionList;
-
-    QCompleter *completer = new QCompleter(gameGraph.getQStringGameNames(), ui->lineEdit);
+    auto *completer = new QCompleter(gameGraph.getQStringGameNames(), ui->lineEdit);
     completer->setCaseSensitivity(Qt::CaseInsensitive);
     // Set the QCompleter to the existing QLineEdit
     ui->lineEdit->setCompleter(completer);
-
-
 }
 
 MainWindow::~MainWindow()
@@ -37,8 +33,16 @@ void MainWindow::on_pushButton_clicked()
     {
         for (const auto& gamePtr : testVector)
         {
-            QString qtString = QString::fromStdString(gamePtr->getReleaseDate());
-            ui->textBrowser_2->setHtml(ui->lineEdit->text() + " was released on: " + qtString);
+            ui->textBrowser_2->setHtml(
+                    ui->lineEdit->text()
+                    + " Released on: " + QString::fromStdString(gamePtr->getReleaseDate())
+
+            );
+            ui->textBrowser_2->append("<br>Check out these <b>awesome</b> games: <br>");
+            for (auto simiGames : gameGraph.findByID(gamePtr->getID())->getSimilarGames())
+            {
+                ui->textBrowser_2->append(QString::fromStdString(gameGraph.findByID(simiGames)->getName()));
+            }
         }
     }
     else

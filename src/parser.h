@@ -13,11 +13,11 @@ class Parser
 public:
     Parser();
     ~Parser();
-    static void parseGame(rapidjson::Value::ConstValueIterator mainIter, graph& gamesGraph);
-    static bool parseJSONFromFile(const string& filename, rapidjson::Document& d);
-    void parseJSONData(const std::string& filename, graph &g);
-    static graph parseToGraph(const std::string& filename);
+    void parseGame(rapidjson::Value::ConstValueIterator mainIter, graph& gamesGraph);
+    bool parseJSONFromFile(const char* filename, rapidjson::Document& d);
+//    void parseJSONData(const std::string* filename);
+    graph parseToGraph(const char* filename);
 private:
-    static string timestampToDate(long long timestamp);
+    string timestampToDate(long long timestamp);
 };
 #endif //PROJECT3_PARSER_H

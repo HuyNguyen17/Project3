@@ -1,12 +1,8 @@
 #include <unordered_map>
 #include <vector>
 #include <iomanip>
-//#include "rapidjson/filereadstream.h"
-//#include "rapidjson/stringbuffer.h"
-//#include "rapidjson/writer.h"
-//#include <cstdio>
-//#include <chrono>
-//#include "rapidjson/document.h"
+#include "rapidjson/filereadstream.h"
+#include <cstdio>
 #include <fstream>
 #include <iostream>
 #include "graph.h"
@@ -15,24 +11,36 @@
 
 using namespace rapidjson;
 
-Parser::Parser() = default;
-
-Parser::~Parser() = default;
-
-bool Parser::parseJSONFromFile(const string& filename, rapidjson::Document& d)
+Parser::Parser()
 {
-    // Open the file
-    ifstream ifs(filename);
-    if (!ifs.is_open()) {
-        cerr << "Failed to open file: " << filename << endl;
-        return false;
-    }
 
-    // Read the entire file into a string
-    string jsonStr((istreambuf_iterator<char>(ifs)), istreambuf_iterator<char>());
-    ifs.close();
+}
 
-    d.Parse(jsonStr.c_str());
+Parser::~Parser()
+{
+
+}
+
+bool Parser::parseJSONFromFile(const char* filename, rapidjson::Document& d)
+{
+    FILE* fp = fopen(filename, "rb");
+    char readBuffer[65536];
+
+//    // Open the file
+//    ifstream ifs(filename);
+//    if (!ifs.is_open()) {
+//        cerr << "Failed to open file: " << filename << endl;
+//        return false;
+//    }
+
+//    // Read the entire file into a string
+//    string jsonStr((istreambuf_iterator<char>(ifs)), istreambuf_iterator<char>());
+//    ifs.close();
+
+    FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+
+    d.ParseStream(is);
+//    d.Parse(jsonStr.c_str());
 
     // Check if parsing succeeded
     if (d.HasParseError()) {
@@ -70,8 +78,8 @@ void Parser::parseGame(const rapidjson::Value::ConstValueIterator mainIter, grap
 
     gameID = mainIter->GetObject()["id"].GetInt();
     gameName = mainIter->GetObject()["name"].GetString();
-    cout << "Game ID: "  << gameID << "\n";
-    cout << "Game Name: "  << gameName << "\n";
+//    cout << "Game ID: "  << gameID << "\n";
+//    cout << "Game Name: "  << gameName << "\n";
 
     bool hasReleaseDate = mainIter->GetObject().HasMember("first_release_date");
     if (hasReleaseDate)
@@ -149,44 +157,45 @@ void Parser::parseGame(const rapidjson::Value::ConstValueIterator mainIter, grap
     gamesGraph.addGameToQString(qStringGameName);
 }
 
-void Parser::parseJSONData(const std::string& filename, graph &gamesGraph) {
-    rapidjson::Document d;
-    bool parsed = parseJSONFromFile(filename, d);
+//void Parser::parseJSONData(const std::string filename) {
+//    rapidjson::Document d;
+//    bool parsed = parseJSONFromFile(filename, d);
+//
+//    if (!parsed)
+//    {
+//        return;
+//    }
+//    else
+//    {
+//        graph gamesGraph;
+//        for (rapidjson::Value::ConstValueIterator mainIter = d.Begin(); mainIter != d.End(); ++mainIter)
+//        {
+//            // parse game and add it to the graph
+//            parseGame(mainIter, gamesGraph);
+//        }
+//        gamesGraph.connectNodes();
+//
+//        // testing to see if findbyname works
+//        auto testVector= gamesGraph.findByName("Doesn't Exist");
+//        if(testVector.empty())
+//        {
+//            cout << '\n' << "Doesn't break when finding invalid game!" << '\n';
+//        }
+//        testVector = gamesGraph.findByName("Minecraft");
+//        if(!testVector.empty())
+//        {
+//            for (const auto& gamePtr : testVector)
+//            {
+//                cout << "Game: " << gamePtr->getName() << ", Released " << gamePtr->getReleaseDate() << '\n';
+//            }
+//        }
+//
+//        cout << gamesGraph.getNumNodes() << " nodes in graph!" << '\n';
+//        cout << gamesGraph.getNumEdges() <<" edges in graph!" << '\n';
+//    }
+//}
 
-    if (!parsed)
-    {
-        return;
-    }
-    else
-    {
-        for (rapidjson::Value::ConstValueIterator mainIter = d.Begin(); mainIter != d.End(); ++mainIter)
-        {
-            // parse game and add it to the graph
-            parseGame(mainIter, gamesGraph);
-        }
-        gamesGraph.connectNodes();
-
-        // testing to see if findbyname works
-        auto testVector= gamesGraph.findByName("Doesn't Exist");
-        if(testVector.empty())
-        {
-            cout << '\n' << "Doesn't break when finding invalid game!" << '\n';
-        }
-        testVector = gamesGraph.findByName("Minecraft");
-        if(!testVector.empty())
-        {
-            for (const auto& gamePtr : testVector)
-            {
-                cout << "Game: " << gamePtr->getName() << ", Released " << gamePtr->getReleaseDate() << '\n';
-            }
-        }
-
-        cout << gamesGraph.getNumNodes() << " nodes in graph!" << '\n';
-        cout << gamesGraph.getNumEdges() <<" edges in graph!" << '\n';
-    }
-}
-
-graph Parser::parseToGraph(const std::string& filename) {
+graph Parser::parseToGraph(const char* filename) {
     rapidjson::Document d;
     bool parsed = parseJSONFromFile(filename, d);
 

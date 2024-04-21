@@ -13,7 +13,6 @@ else()
 endif()
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
 
-
 include_directories(include)
 include_directories(include/rapidjson)
 include_directories(src)
