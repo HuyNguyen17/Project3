@@ -57,7 +57,6 @@ public:
     // Returns the ID of a game when searching by the game's _name.
     int getIDfromSearching(string &_name);
 
-
     //_name is the main searchBar, maxDepth specifies the maximum depth to which the user wants to explore connected games
     void BFSprintConnectedGames(string _name, int maxDepth);
     void DFSprintConnectedGames(string _name, int maxDepth);
@@ -68,6 +67,7 @@ public:
     vector<shared_ptr<game>> getConnectedGamesDFS(string _name, int maxDepth);
 
     //_name1 is the main searchBar (source), _name2 is the destination, searchPath, 0 is BFS, 1 is DFS.
+
     bool gamesConnected(string &_name1, string &_name2, int searchPath);
     //Prints all the games in a specific Genre
     void searchByGenre(string _genre);
