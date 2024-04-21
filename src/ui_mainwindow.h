@@ -112,6 +112,7 @@ public:
         verticalLayoutAlgoType->setContentsMargins(0, 0, 0, 0);
         radioBtnBFS = new QRadioButton(widget1);
         radioBtnBFS->setObjectName("radioBtnBFS");
+        radioBtnBFS->setChecked(true);
 
         verticalLayoutAlgoType->addWidget(radioBtnBFS);
 

@@ -39,6 +39,7 @@ void MainWindow::searchButtonClick()
     {
         for (const auto& gamePtr : testVector)
         {
+<<<<<<< Updated upstream
             if (ui->radioBtnBFS->isChecked())
             {
                 gameGraph.BFSprintConnectedGames(gamePtr->getName(), 1);
@@ -54,17 +55,29 @@ void MainWindow::searchButtonClick()
                 for (auto simiGames: gameGraph.getQStringGameNameResults()) {
                     ui->textBrowserLstWgtResults->append(simiGames);
                 }
-            }
-//            ui->textBrowserLstWgtResults->setHtml(
-//                    ui->lineEditSearchBar->text()
-//                    + " Released on: " + QString::fromStdString(gamePtr->getReleaseDate())
+=======
+            if (ui->radioBtnGames->isChecked())
+            {
+                // check if radioBtnGames is clicked then do this
+                gameGraph.getConnectedGamesBFS(gamePtr->getName(),1);
 
-//            );
-//            ui->textBrowserLstWgtResults->append("<br>Check out these <b>awesome</b> games: <br>");
-//            for (auto simiGames : gameGraph.findByID(gamePtr->getID())->getSimilarGames())
-//            {
-//                ui->textBrowserLstWgtResults->append(QString::fromStdString(gameGraph.findByID(simiGames)->getName()));
-//            }
+                for (auto simiGames : gameGraph.getConnectedGamesBFS(gamePtr->getName(),1))
+                {
+                    ui->textBrowserLstWgtResults->append(QString::fromStdString(simiGames->getName()));
+                }
+            }
+            else if (ui->radioBtnGenre->isChecked())
+            {
+
+>>>>>>> Stashed changes
+            }
+
+
+            // check if radioBtnGenre
+                // do the appropriate search
+
+            // check if radioBtnCompany
+                // do the appropriate search
         }
     }
     else
