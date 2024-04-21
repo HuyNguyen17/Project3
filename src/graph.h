@@ -66,8 +66,10 @@ public:
     //Returns a Vector of DFS
     QVector<shared_ptr<game>> getConnectedGamesDFS(string _name, int maxDepth);
 
-    //Returns a vector of Objects
+    //Returns a vector of objects
     QVector<shared_ptr<game>> getGamesByGenre(string _genre);
+    QVector<shared_ptr<game>> getGamesByCompany(string _company);
+    QVector<shared_ptr<game>> getGamesByReleaseDate(string _releaseDate);
 
     //_name1 is the main searchBar (source), _name2 is the destination, searchPath, 0 is BFS, 1 is DFS.
 

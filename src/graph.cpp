@@ -444,3 +444,41 @@ QVector<shared_ptr<game>> graph::getGamesByGenre(string _genre) {
     }
     return gamesByGenre;
 }
+
+QVector<shared_ptr<game>> graph::getGamesByCompany(string _company) {
+    QVector<shared_ptr<game>> gamesByCompany;
+    auto it = company.find(_company);
+    if (it == company.end()) {
+        // Optionally handle the case where no games are found for the company
+        cout << "No games found for " << _company << endl;
+        return gamesByCompany; // Return an empty vector
+    }
+
+    const auto& gameIDs = it->second;
+    for (auto id : gameIDs) {
+        auto gameIt = nodes.find(id);
+        if (gameIt != nodes.end()) {
+            gamesByCompany.push_back(gameIt->second);
+        }
+    }
+    return gamesByCompany;
+}
+
+QVector<shared_ptr<game>> graph::getGamesByReleaseDate(string _releaseDate) {
+    QVector<shared_ptr<game>> gamesByReleaseDate;
+    auto it = release_date.find(_releaseDate);
+    if (it == release_date.end()) {
+        // Optionally handle the case where no games are found for the release date
+        cout << "No games found for release date " << _releaseDate << endl;
+        return gamesByReleaseDate; // Return an empty vector
+    }
+
+    const auto& gameIDs = it->second;
+    for (auto id : gameIDs) {
+        auto gameIt = nodes.find(id);
+        if (gameIt != nodes.end()) {
+            gamesByReleaseDate.push_back(gameIt->second);
+        }
+    }
+    return gamesByReleaseDate;
+}
