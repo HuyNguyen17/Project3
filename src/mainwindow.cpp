@@ -207,7 +207,7 @@ void MainWindow::on_radioBtnGenre_toggled(bool checked) {
         ui->lineEditSearchBar->clear();
         ui->listWgtSearchObjects->clear();
         ui->textBrowserLstWgtResults->clear();
-        ui->lineEditConnectedToResults->setCompleter(genreCompleter);
+        ui->lineEditSearchBar->setCompleter(genreCompleter);
         ui->gameSearchWidget->setVisible(false);
 
         ui->checkBoxConnectedTo->setVisible(false);
