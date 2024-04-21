@@ -59,6 +59,9 @@ void MainWindow::searchButtonClick()
                         ui->textBrowserLstWgtResults->append(simiGames);
                     }
                 }
+                // populate QListWidget with text corresponding to the results
+                ui->listWgtSearchObjects->clear();
+                ui->listWgtSearchObjects->addItems(gameGraph.getQStringGameNameResults());
 //            ui->textBrowserLstWgtResults->setHtml(
 //                    ui->lineEditSearchBar->text()
 //                    + " Released on: " + QString::fromStdString(gamePtr->getReleaseDate())
@@ -102,4 +105,11 @@ void MainWindow::on_radioBtnCompany_toggled(bool checked) {
 void MainWindow::on_radioBtnGenre_toggled(bool checked) {
     // sets the autocompleter if checked
     ui->lineEditSearchBar->setCompleter(gameCompleter);
+}
+
+void MainWindow::on_listWgtSearchObjects_itemSelectionChanged() {
+    auto selectedItems = ui->listWgtSearchObjects->selectedItems();
+    // change the selection to the selected item if it's empty
+    if(!selectedItems.empty())
+    ui->textBrowserLstWgtResults->setHtml(selectedItems.at(0)->text());
 }

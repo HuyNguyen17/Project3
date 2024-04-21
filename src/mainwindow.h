@@ -10,6 +10,7 @@
 #include "parser.h"
 #include <iostream>
 #include <QCompleter>
+#include <QListWidgetItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -28,6 +29,7 @@ private slots:
     void on_radioBtnGames_toggled(bool checked);
     void on_radioBtnCompany_toggled(bool checked);
     void on_radioBtnGenre_toggled(bool checked);
+    void on_listWgtSearchObjects_itemSelectionChanged();
 
 private:
     Ui::MainWindow *ui;
