@@ -37,6 +37,8 @@ private:
     QCompleter* gameCompleter;
     QCompleter* genreCompleter;
     QCompleter* companyCompleter;
+
+    void displayGameInfo(shared_ptr<game> gamePtr);
 };
 
 #endif //PROJECT3_MAINWINDOW_H
