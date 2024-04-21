@@ -15,6 +15,9 @@ MainWindow::MainWindow(QWidget *parent)
         , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    connect(ui->pushBtnSearch, &QPushButton::clicked, this, &MainWindow::searchButtonClick);
+
     gameGraph = parsed->parseToGraph("../data/data.json");
 
     auto *completer = new QCompleter(gameGraph.getQStringGameNames(), ui->lineEditSearchBar);
