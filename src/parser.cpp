@@ -56,7 +56,6 @@ string timestampToDate(long long timestamp) {
 }
 
 void parseGame(const rapidjson::Value::ConstValueIterator mainIter, graph& gamesGraph) {
-    cout << "\n";
     // main game info
     int gameID;
     string gameName;
@@ -67,14 +66,11 @@ void parseGame(const rapidjson::Value::ConstValueIterator mainIter, graph& games
 
     gameID = mainIter->GetObject()["id"].GetInt();
     gameName = mainIter->GetObject()["name"].GetString();
-    cout << "Game ID: "  << gameID << "\n";
-    cout << "Game Name: "  << gameName << "\n";
 
     bool hasReleaseDate = mainIter->GetObject().HasMember("first_release_date");
     if (hasReleaseDate)
     {
         gameReleaseDate = timestampToDate(mainIter->GetObject()["first_release_date"].GetInt());
-        cout << "Game Release Date: " << gameReleaseDate << "\n";
     }
 
     // Iterate through the Genres
@@ -84,10 +80,8 @@ void parseGame(const rapidjson::Value::ConstValueIterator mainIter, graph& games
         if (mainIter->GetObject()["genres"].IsArray())
         {
             const rapidjson::Value &gameArray = mainIter->GetObject()["genres"];
-            cout << "Genre: ";
             for (rapidjson::Value::ConstValueIterator genreIter = gameArray.Begin(); genreIter != gameArray.End(); ++genreIter)
             {
-                cout << genreIter->GetObject()["id"].GetInt() << " " << genreIter->GetObject()["name"].GetString() << ", ";
                 // add genre to vector
                 genres.emplace_back(genreIter->GetObject()["id"].GetInt(), genreIter->GetObject()["name"].GetString());
             }
@@ -99,10 +93,7 @@ void parseGame(const rapidjson::Value::ConstValueIterator mainIter, graph& games
     {
         if (mainIter->GetObject()["involved_companies"].IsArray()) {
             const rapidjson::Value &involvedCoArray = mainIter->GetObject()["involved_companies"];
-            cout << "\nInvolved Companies\n";
             for (rapidjson::Value::ConstValueIterator involvedCoIter = involvedCoArray.Begin(); involvedCoIter != involvedCoArray.End(); ++involvedCoIter) {
-                cout << involvedCoIter->GetObject()["id"].GetInt() << "- ";
-
                 // Involved Companies Iterate
                 if (involvedCoIter->GetObject()["company"].IsObject())
                 {
@@ -113,10 +104,8 @@ void parseGame(const rapidjson::Value::ConstValueIterator mainIter, graph& games
                     rapidjson::Value::ConstMemberIterator individualCoIter = individualCo.FindMember("id");
 
                     companyId = individualCoIter-> value.GetInt();
-                    cout << companyId << " - ";
                     individualCoIter = individualCo.FindMember("name");
                     companyName = individualCoIter->value.GetString();
-                    cout << companyName << "\n";
                     companies.emplace_back(companyId, companyName);
                 }
             }
@@ -129,15 +118,12 @@ void parseGame(const rapidjson::Value::ConstValueIterator mainIter, graph& games
         if (mainIter->GetObject()["similar_games"].IsArray())
         {
             const rapidjson::Value &similarGamesArray = mainIter->GetObject()["similar_games"];
-            cout << "Similar Games: ";
             for (rapidjson::SizeType i = 0; i < similarGamesArray.Size(); i++)
             {
-                cout << similarGamesArray[i].GetInt() << ", ";
                 similarGames.push_back(similarGamesArray[i].GetInt());
             }
         }
     }
-    cout << "\n";
     // insert into graph
     gamesGraph.addGame(make_shared<game>(gameID, gameName, gameReleaseDate,
                                                 genres, companies, similarGames));
