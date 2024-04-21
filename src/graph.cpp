@@ -343,8 +343,9 @@ void graph::searchByReleaseDate(string _releaseDate) {
     cout << endl;
 }
 
-vector<shared_ptr<game>> graph::getConnectedGamesBFS(string _name, int maxDepth) {
-    vector<shared_ptr<game>> connectedGames;
+QVector<shared_ptr<game>> graph::getConnectedGamesBFS(string _name, int maxDepth) {
+    QVector<shared_ptr<game>> connectedGames;
+
     int _gameID = getIDfromSearching(_name);
 
     if (_gameID == -1) {
@@ -384,8 +385,8 @@ vector<shared_ptr<game>> graph::getConnectedGamesBFS(string _name, int maxDepth)
     return connectedGames;
 }
 
-vector<shared_ptr<game>> graph::getConnectedGamesDFS(string _name, int maxDepth) {
-    vector<shared_ptr<game>> connectedGames;
+QVector<shared_ptr<game>> graph::getConnectedGamesDFS(string _name, int maxDepth) {
+    QVector<shared_ptr<game>> connectedGames;
     int _gameID = getIDfromSearching(_name);
 
     if (_gameID == -1) {
@@ -425,4 +426,61 @@ vector<shared_ptr<game>> graph::getConnectedGamesDFS(string _name, int maxDepth)
     }
 
     return connectedGames;
+}
+
+QVector<shared_ptr<game>> graph::getGamesByGenre(string _genre) {
+    QVector<shared_ptr<game>> gamesByGenre;
+    auto it = genre.find(_genre);
+    if (it == genre.end()) {
+        // Optionally handle the case where no games are found for the genre
+        cout << "No games found for the genre: " << _genre << endl;
+        return gamesByGenre; // Return an empty vector
+    }
+
+    const auto& gameIDs = it->second;
+    for (auto id : gameIDs) {
+        auto gameIt = nodes.find(id);
+        if (gameIt != nodes.end()) {
+            gamesByGenre.push_back(gameIt->second);
+        }
+    }
+    return gamesByGenre;
+}
+
+QVector<shared_ptr<game>> graph::getGamesByCompany(string _company) {
+    QVector<shared_ptr<game>> gamesByCompany;
+    auto it = company.find(_company);
+    if (it == company.end()) {
+        // Optionally handle the case where no games are found for the company
+        cout << "No games found for " << _company << endl;
+        return gamesByCompany; // Return an empty vector
+    }
+
+    const auto& gameIDs = it->second;
+    for (auto id : gameIDs) {
+        auto gameIt = nodes.find(id);
+        if (gameIt != nodes.end()) {
+            gamesByCompany.push_back(gameIt->second);
+        }
+    }
+    return gamesByCompany;
+}
+
+QVector<shared_ptr<game>> graph::getGamesByReleaseDate(string _releaseDate) {
+    QVector<shared_ptr<game>> gamesByReleaseDate;
+    auto it = release_date.find(_releaseDate);
+    if (it == release_date.end()) {
+        // Optionally handle the case where no games are found for the release date
+        cout << "No games found for release date " << _releaseDate << endl;
+        return gamesByReleaseDate; // Return an empty vector
+    }
+
+    const auto& gameIDs = it->second;
+    for (auto id : gameIDs) {
+        auto gameIt = nodes.find(id);
+        if (gameIt != nodes.end()) {
+            gamesByReleaseDate.push_back(gameIt->second);
+        }
+    }
+    return gamesByReleaseDate;
 }
