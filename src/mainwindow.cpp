@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
         , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    setWindowTitle("infoGamerz");
     connect(ui->pushBtnSearch, &QPushButton::clicked, this, &MainWindow::searchButtonClick);
 
     gameGraph = parsed->parseToGraph("../data/data.json");
@@ -49,6 +49,12 @@ void MainWindow::searchButtonClick()
                 } else if (ui->radioBtnDFS->isChecked()) {
                     gameGraph.DFSprintConnectedGames(gamePtr->getName(), 1);
                 }
+
+                // Display Game header
+                ui->lineEditSearchBar->clear();
+                ui->textBrowserGameHeader->setHtml("Viewing:<br>");
+                ui->textBrowserGameHeader->append("Game: " + QString::fromStdString(gamePtr->getName()));
+                ui->textBrowserGameHeader->append("Released in: " + QString::fromStdString(gamePtr->getReleaseDate()));
 
                 // populate QListWidget with text corresponding to the results
                 ui->listWgtSearchObjects->clear();

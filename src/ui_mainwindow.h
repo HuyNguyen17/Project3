@@ -33,6 +33,7 @@ public:
     QLineEdit *lineEditSearchBar;
     QPushButton *pushBtnSearch;
     QTextBrowser *textBrowserHeader;
+    QTextBrowser *textBrowserGameHeader;
     QTextBrowser *textBrowserLstWgtResults;
     QCheckBox *checkBoxConnectedTo;
     QLineEdit *lineEditConnectedToResults;
@@ -65,9 +66,16 @@ public:
         pushBtnSearch->setGeometry(QRect(310, 120, 80, 25));
         textBrowserHeader = new QTextBrowser(centralwidget);
         textBrowserHeader->setObjectName("textBrowserHeader");
-        textBrowserHeader->setGeometry(QRect(350, 10, 321, 51));
+        textBrowserHeader->setGeometry(QRect(510, 10, 261, 41));
         textBrowserHeader->setFrameShape(QFrame::NoFrame);
         textBrowserHeader->setFrameShadow(QFrame::Sunken);
+
+        textBrowserGameHeader = new QTextBrowser(centralwidget);
+        textBrowserGameHeader->setObjectName("textBrowserGameHeader");
+        textBrowserGameHeader->setGeometry(QRect(20, 150, 371, 121));
+        textBrowserGameHeader->setFrameShape(QFrame::NoFrame);
+        textBrowserGameHeader->setLineWidth(0);
+
         textBrowserLstWgtResults = new QTextBrowser(centralwidget);
         textBrowserLstWgtResults->setObjectName("textBrowserLstWgtResults");
         textBrowserLstWgtResults->setGeometry(QRect(840, 100, 401, 451));
@@ -149,7 +157,7 @@ public:
                                                                              "li.unchecked::marker { content: \"\\2610\"; }\n"
                                                                              "li.checked::marker { content: \"\\2612\"; }\n"
                                                                              "</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-                                                                             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:700; color:#1a5fb4;\">Gamerz Edge</span></p></body></html>", nullptr));
+                                                                             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:700; color:#1a5fb4;\">Game Recommender</span></p></body></html>", nullptr));
         checkBoxConnectedTo->setText(QCoreApplication::translate("MainWindow", "Connected To", nullptr));
         radioBtnGames->setText(QCoreApplication::translate("MainWindow", "Search by games", nullptr));
         radioBtnGenre->setText(QCoreApplication::translate("MainWindow", "Search by genre", nullptr));
