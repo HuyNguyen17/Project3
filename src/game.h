@@ -5,7 +5,6 @@
 #include <iostream>
 
 using namespace std;
-// enumeration for genres
 struct Genre
 {
     const int id;

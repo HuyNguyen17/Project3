@@ -19,8 +19,6 @@ using namespace std;
 
 class graph {
 private:
-    unordered_map<game, vector<game>, gameHash> List; // Stores adjacency list of games, Leaving here for now.
-    
     unordered_map<int, shared_ptr<game>> nodes; // Maps game ID to game object
     unordered_multimap<string, shared_ptr<game>> nameIndex; // Maps game names to game objects for quick lookup
     unordered_map<int, vector<int>> edges; // Adjacency list for similar games
