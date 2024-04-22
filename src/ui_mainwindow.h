@@ -93,6 +93,7 @@ public:
         textBrowserLstWgtResults->setObjectName("textBrowserLstWgtResults");
         textBrowserLstWgtResults->setGeometry(QRect(940, 100, 311, 451));
         textBrowserLstWgtResults->setFrameShape(QFrame::NoFrame);
+
         listWgtSearchObjects = new QListWidget(centralwidget);
         listWgtSearchObjects->setObjectName("listWgtSearchObjects");
         listWgtSearchObjects->setGeometry(QRect(580, 100, 341, 451));
@@ -160,6 +161,7 @@ public:
         textBrowsrConnectedToResult->setObjectName("textBrowsrConnectedToResult");
         textBrowsrConnectedToResult->setGeometry(QRect(40, 480, 361, 71));
         textBrowsrConnectedToResult->setFrameShape(QFrame::NoFrame);
+
 
         widget2 = new QWidget(centralwidget);
         widget2->setObjectName("widget2");

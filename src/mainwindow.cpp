@@ -52,7 +52,7 @@ void MainWindow::searchButtonClick()
                 }
 
                 // Display Game header
-                ui->lineEditSearchBar->clear();
+//                ui->lineEditSearchBar->clear();
                 ui->textBrowserGameHeader->setHtml("Viewing:<br>");
                 ui->textBrowserGameHeader->append("Game: " + QString::fromStdString(gamePtr->getName()));
                 ui->textBrowserGameHeader->append("<b>Released in</b>: " + QString::fromStdString(gamePtr->getReleaseDate()));
@@ -70,6 +70,8 @@ void MainWindow::searchButtonClick()
                 // populate QListWidget with text corresponding to the results
                 ui->listWgtSearchObjects->clear();
                 ui->listWgtSearchObjects->addItems(gameGraph.getQStringGameNameResults());
+                ui->listWgtSearchObjects->setStyleSheet("border: 1px solid rgb(200, 200, 200); padding-top: 8px ");
+
             }
             // are they checking for connections
             if (ui->checkBoxConnectedTo->isChecked())
