@@ -40,6 +40,7 @@ void MainWindow::searchButtonClick()
     // only search games if games button checked
     if (ui->radioBtnGames->isChecked())
     {
+        ui->labelWaitText->setVisible(false);
         auto testVector = gameGraph.findByName(ui->lineEditSearchBar->text().toStdString());
         if (!testVector.empty()) {
             for (const auto &gamePtr: testVector) {
@@ -54,7 +55,17 @@ void MainWindow::searchButtonClick()
                 ui->lineEditSearchBar->clear();
                 ui->textBrowserGameHeader->setHtml("Viewing:<br>");
                 ui->textBrowserGameHeader->append("Game: " + QString::fromStdString(gamePtr->getName()));
-                ui->textBrowserGameHeader->append("Released in: " + QString::fromStdString(gamePtr->getReleaseDate()));
+                ui->textBrowserGameHeader->append("<b>Released in</b>: " + QString::fromStdString(gamePtr->getReleaseDate()));
+                string genreStr = " <b>Genres:</b> \n";
+                for(const auto& genre : gamePtr->getGenres())
+                {
+                    genreStr += genre.name;
+                    genreStr += ", ";
+                }
+                // remove the last two characters of the string before printing
+                ui->textBrowserGameHeader->append(genreStr.substr(0, genreStr.size() - 2).c_str());
+//                ui->textBrowserGameHeader->append("Genre: " + QString::fromStdString(gamePtr->getGenres()[0].name));
+                ui->textBrowserGameHeader->append("<b>Created by:</b> " + QString::fromStdString(gamePtr->getCompanies()[0].name));
 
                 // populate QListWidget with text corresponding to the results
                 ui->listWgtSearchObjects->clear();
@@ -181,8 +192,8 @@ void MainWindow::on_radioBtnGames_toggled(bool checked)
     if(checked)
     {
         ui->lineEditSearchBar->clear();
-        ui->listWgtSearchObjects->clear();
-        ui->textBrowserLstWgtResults->clear();
+//        ui->listWgtSearchObjects->clear();
+//        ui->textBrowserLstWgtResults->clear();
         // show the search config widget for game
         ui->gameSearchWidget->setVisible(true);
         // should prolly group these together into a widget
@@ -209,8 +220,8 @@ void MainWindow::on_radioBtnCompany_toggled(bool checked)
     if (checked)
     {
         ui->lineEditSearchBar->clear();
-        ui->listWgtSearchObjects->clear();
-        ui->textBrowserLstWgtResults->clear();
+//        ui->listWgtSearchObjects->clear();
+//        ui->textBrowserLstWgtResults->clear();
 
         ui->gameSearchWidget->setVisible(false);
 
@@ -229,8 +240,8 @@ void MainWindow::on_radioBtnGenre_toggled(bool checked) {
     if (checked)
     {
         ui->lineEditSearchBar->clear();
-        ui->listWgtSearchObjects->clear();
-        ui->textBrowserLstWgtResults->clear();
+//        ui->listWgtSearchObjects->clear();
+//        ui->textBrowserLstWgtResults->clear();
 
         ui->gameSearchWidget->setVisible(false);
         ui->checkBoxConnectedTo->setVisible(false);

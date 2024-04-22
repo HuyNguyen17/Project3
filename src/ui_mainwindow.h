@@ -14,6 +14,7 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -50,17 +51,30 @@ public:
     QRadioButton *radioBtnDFS;
     QMenuBar *menubar;
     QStatusBar *statusbar;
+    QWidget *widget2;
+    QHBoxLayout *horizontalLayoutSearch;
+    QLabel *labelWaitText;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
         MainWindow->resize(1277, 599);
+
+        MainWindow->setStyleSheet(QString::fromUtf8("color: white;\n"
+                                                    "background-color: rgb(94, 92, 100);\n"
+        ));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
+
+        centralwidget->setStyleSheet("QLineEdit { background-color: rgb(0,0,0)};"
+         );
+
+//        centralwidget->setStyleSheet("QTextBrowser { background-color: rgb(0,0,0)};");
+
         lineEditSearchBar = new QLineEdit(centralwidget);
         lineEditSearchBar->setObjectName("lineEditSearchBar");
-        lineEditSearchBar->setGeometry(QRect(19, 119, 281, 25));
+        lineEditSearchBar->setGeometry(QRect(19, 120, 281, 25));
         pushBtnSearch = new QPushButton(centralwidget);
         pushBtnSearch->setObjectName("pushBtnSearch");
         pushBtnSearch->setGeometry(QRect(310, 120, 80, 25));
@@ -68,20 +82,21 @@ public:
         textBrowserHeader->setObjectName("textBrowserHeader");
         textBrowserHeader->setGeometry(QRect(510, 10, 261, 41));
         textBrowserHeader->setFrameShape(QFrame::NoFrame);
-        textBrowserHeader->setFrameShadow(QFrame::Sunken);
 
         textBrowserGameHeader = new QTextBrowser(centralwidget);
         textBrowserGameHeader->setObjectName("textBrowserGameHeader");
-        textBrowserGameHeader->setGeometry(QRect(20, 150, 371, 121));
+        textBrowserGameHeader->setGeometry(QRect(20, 160, 371, 171));
         textBrowserGameHeader->setFrameShape(QFrame::NoFrame);
         textBrowserGameHeader->setLineWidth(0);
 
         textBrowserLstWgtResults = new QTextBrowser(centralwidget);
         textBrowserLstWgtResults->setObjectName("textBrowserLstWgtResults");
-        textBrowserLstWgtResults->setGeometry(QRect(840, 100, 401, 451));
+        textBrowserLstWgtResults->setGeometry(QRect(940, 100, 311, 451));
+        textBrowserLstWgtResults->setFrameShape(QFrame::NoFrame);
         listWgtSearchObjects = new QListWidget(centralwidget);
         listWgtSearchObjects->setObjectName("listWgtSearchObjects");
-        listWgtSearchObjects->setGeometry(QRect(480, 100, 341, 451));
+        listWgtSearchObjects->setGeometry(QRect(580, 100, 341, 451));
+        listWgtSearchObjects->setFrameShape(QFrame::NoFrame);
         searchTypeWidget = new QWidget(centralwidget);
         searchTypeWidget->setObjectName("searchTypeWidget");
         searchTypeWidget->setGeometry(QRect(20, 80, 442, 25));
@@ -91,6 +106,18 @@ public:
         radioBtnGames = new QRadioButton(searchTypeWidget);
         radioBtnGames->setObjectName("radioBtnGames");
         radioBtnGames->setChecked(true);
+
+        // waiting message
+        labelWaitText = new QLabel(centralwidget);
+        labelWaitText->setObjectName("labelWaitText");
+        labelWaitText->setGeometry(QRect(680, 290, 521, 41));
+        QFont font;
+        font.setPointSize(24);
+        font.setBold(true);
+        labelWaitText->setFont(font);
+        labelWaitText->setStyleSheet(QString::fromUtf8("color: rgb(53, 132, 228)"));
+        labelWaitText->setLineWidth(1);
+        labelWaitText->setAlignment(Qt::AlignCenter);
 
         horizontalLayoutSearchCriteria->addWidget(radioBtnGames);
 
@@ -127,10 +154,29 @@ public:
         checkBoxConnectedTo->setGeometry(QRect(40, 440, 131, 23));
         lineEditConnectedToResults = new QLineEdit(centralwidget);
         lineEditConnectedToResults->setObjectName("lineEditConnectedToResults");
+        lineEditConnectedToResults->setPlaceholderText(QString::fromStdString("Enter connected game!"));
         lineEditConnectedToResults->setGeometry(QRect(180, 440, 221, 25));
         textBrowsrConnectedToResult = new QTextBrowser(centralwidget);
         textBrowsrConnectedToResult->setObjectName("textBrowsrConnectedToResult");
         textBrowsrConnectedToResult->setGeometry(QRect(40, 480, 361, 71));
+        textBrowsrConnectedToResult->setFrameShape(QFrame::NoFrame);
+
+        widget2 = new QWidget(centralwidget);
+        widget2->setObjectName("widget2");
+        widget2->setGeometry(QRect(19, 119, 481, 27));
+        horizontalLayoutSearch = new QHBoxLayout(widget2);
+        horizontalLayoutSearch->setObjectName("horizontalLayoutSearch");
+        horizontalLayoutSearch->setContentsMargins(0, 0, 0, 0);
+        lineEditSearchBar = new QLineEdit(widget2);
+        lineEditSearchBar->setObjectName("lineEditSearchBar");
+        lineEditSearchBar->setPlaceholderText(QString::fromStdString("Enter game to search!"));
+
+        horizontalLayoutSearch->addWidget(lineEditSearchBar);
+
+        pushBtnSearch = new QPushButton(widget2);
+        pushBtnSearch->setObjectName("pushBtnSearch");
+
+        horizontalLayoutSearch->addWidget(pushBtnSearch);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -157,13 +203,14 @@ public:
                                                                              "li.unchecked::marker { content: \"\\2610\"; }\n"
                                                                              "li.checked::marker { content: \"\\2612\"; }\n"
                                                                              "</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-                                                                             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:700; color:#1a5fb4;\">Game Recommender</span></p></body></html>", nullptr));
+                                                                             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:700; color:#ff7800;\">Game Recommender</span></p></body></html>", nullptr));
         checkBoxConnectedTo->setText(QCoreApplication::translate("MainWindow", "Connected To", nullptr));
         radioBtnGames->setText(QCoreApplication::translate("MainWindow", "Search by games", nullptr));
         radioBtnGenre->setText(QCoreApplication::translate("MainWindow", "Search by genre", nullptr));
         radioBtnCompany->setText(QCoreApplication::translate("MainWindow", "Search by company", nullptr));
         radioBtnBFS->setText(QCoreApplication::translate("MainWindow", "BFS", nullptr));
         radioBtnDFS->setText(QCoreApplication::translate("MainWindow", "DFS", nullptr));
+        labelWaitText->setText(QCoreApplication::translate("MainWindow", "Discover your next favorite Game!", nullptr));
     } // retranslateUi
 
 };
