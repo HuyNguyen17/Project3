@@ -54,6 +54,8 @@ public:
     QWidget *widget2;
     QHBoxLayout *horizontalLayoutSearch;
     QLabel *labelWaitText;
+    QLabel *labelSimilarGame;
+    QLabel *labelSimilarGameDetail;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -91,12 +93,12 @@ public:
 
         textBrowserLstWgtResults = new QTextBrowser(centralwidget);
         textBrowserLstWgtResults->setObjectName("textBrowserLstWgtResults");
-        textBrowserLstWgtResults->setGeometry(QRect(940, 100, 311, 451));
+        textBrowserLstWgtResults->setGeometry(QRect(940, 100, 321, 451));
         textBrowserLstWgtResults->setFrameShape(QFrame::NoFrame);
 
         listWgtSearchObjects = new QListWidget(centralwidget);
         listWgtSearchObjects->setObjectName("listWgtSearchObjects");
-        listWgtSearchObjects->setGeometry(QRect(580, 100, 341, 451));
+        listWgtSearchObjects->setGeometry(QRect(510, 100, 421, 451));
         listWgtSearchObjects->setFrameShape(QFrame::NoFrame);
         searchTypeWidget = new QWidget(centralwidget);
         searchTypeWidget->setObjectName("searchTypeWidget");
@@ -119,6 +121,22 @@ public:
         labelWaitText->setStyleSheet(QString::fromUtf8("color: rgb(53, 132, 228)"));
         labelWaitText->setLineWidth(1);
         labelWaitText->setAlignment(Qt::AlignCenter);
+
+//        simialr games
+        labelSimilarGame = new QLabel(centralwidget);
+        labelSimilarGame->setObjectName("labelSimilarGame");
+        labelSimilarGame->setGeometry(QRect(630, 80, 181, 20));
+        QFont font1;
+        font1.setBold(true);
+        labelSimilarGame->setFont(font1);
+        labelSimilarGame->setStyleSheet(QString::fromUtf8("color: rgb(53, 132, 228)"));
+        labelSimilarGame->setAlignment(Qt::AlignCenter);
+        labelSimilarGameDetail = new QLabel(centralwidget);
+        labelSimilarGameDetail->setObjectName("labelSimilarGameDetail");
+        labelSimilarGameDetail->setGeometry(QRect(1020, 80, 181, 20));
+        labelSimilarGameDetail->setFont(font1);
+        labelSimilarGameDetail->setStyleSheet(QString::fromUtf8("color: rgb(53, 132, 228)"));
+        labelSimilarGameDetail->setAlignment(Qt::AlignCenter);
 
         horizontalLayoutSearchCriteria->addWidget(radioBtnGames);
 
@@ -213,6 +231,10 @@ public:
         radioBtnBFS->setText(QCoreApplication::translate("MainWindow", "BFS", nullptr));
         radioBtnDFS->setText(QCoreApplication::translate("MainWindow", "DFS", nullptr));
         labelWaitText->setText(QCoreApplication::translate("MainWindow", "Discover your next favorite Game!", nullptr));
+        labelSimilarGame->setText(QCoreApplication::translate("MainWindow", "Similar Games", nullptr));
+        labelSimilarGame->setVisible(false);
+        labelSimilarGameDetail->setText(QCoreApplication::translate("MainWindow", "Similar Game Detail", nullptr));
+        labelSimilarGameDetail->setVisible(false);
     } // retranslateUi
 
 };

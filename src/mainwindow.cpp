@@ -41,6 +41,7 @@ void MainWindow::searchButtonClick()
     if (ui->radioBtnGames->isChecked())
     {
         ui->labelWaitText->setVisible(false);
+        ui->labelSimilarGame->setVisible(true);
         auto testVector = gameGraph.findByName(ui->lineEditSearchBar->text().toStdString());
         if (!testVector.empty()) {
             for (const auto &gamePtr: testVector) {
@@ -53,8 +54,8 @@ void MainWindow::searchButtonClick()
 
                 // Display Game header
 //                ui->lineEditSearchBar->clear();
-                ui->textBrowserGameHeader->setHtml("Viewing:<br>");
-                ui->textBrowserGameHeader->append("Game: " + QString::fromStdString(gamePtr->getName()));
+                ui->textBrowserGameHeader->setHtml("<b><font color='#3584E4'>Viewing:</font></b><br>");
+                ui->textBrowserGameHeader->append(QString::fromStdString(gamePtr->getName()));
                 ui->textBrowserGameHeader->append("<b>Released in</b>: " + QString::fromStdString(gamePtr->getReleaseDate()));
                 string genreStr = " <b>Genres:</b> \n";
                 for(const auto& genre : gamePtr->getGenres())
@@ -70,7 +71,7 @@ void MainWindow::searchButtonClick()
                 // populate QListWidget with text corresponding to the results
                 ui->listWgtSearchObjects->clear();
                 ui->listWgtSearchObjects->addItems(gameGraph.getQStringGameNameResults());
-                ui->listWgtSearchObjects->setStyleSheet("border: 1px solid rgb(200, 200, 200); padding-top: 8px ");
+                ui->listWgtSearchObjects->setStyleSheet("border: 1px solid rgb(125, 125, 125); padding-top: 8px; padding-left: 8px");
 
             }
             // are they checking for connections
@@ -158,6 +159,8 @@ void MainWindow::on_listWgtSearchObjects_itemSelectionChanged() {
 
 void MainWindow::displayGameInfo(shared_ptr<game> gamePtr) {// release date
 
+    ui->labelSimilarGameDetail->setVisible(true);
+    ui->textBrowserLstWgtResults->setStyleSheet("border: 1px solid rgb(125, 125, 125); padding-top: 8px; padding-left: 8px");
     ui->textBrowserLstWgtResults->append("Released in: " + QString::fromStdString(gamePtr->getReleaseDate()));
     // genres
     string genreStr = " <b>Genres:</b> \n";
