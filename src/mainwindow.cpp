@@ -61,7 +61,14 @@ void MainWindow::searchButtonClick()
                 {
                     std::string name1 = ui->lineEditSearchBar->text().toStdString();
                     std::string name2 = ui->lineEditConnectedToResults->text().toStdString();
-                    ui->textBrowsrConnectedToResult->setHtml(gameGraph.gamesConnected(name1, name2, 1));
+                    if (ui->radioBtnGames->isChecked())
+                    {
+                        // Searchpath 0 corresponds to BFS, Searchpath 1 is DFS
+                        ui->textBrowsrConnectedToResult->setHtml(gameGraph.gamesConnected(name1, name2, 0));
+                    } else
+                    {
+                        ui->textBrowsrConnectedToResult->setHtml(gameGraph.gamesConnected(name1, name2, 1));
+                    }
                 }
             }
         }
