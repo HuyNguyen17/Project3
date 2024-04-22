@@ -41,9 +41,10 @@ void MainWindow::searchButtonClick()
     if (ui->radioBtnGames->isChecked())
     {
         ui->labelWaitText->setVisible(false);
-        ui->labelSimilarGame->setVisible(true);
+
         auto testVector = gameGraph.findByName(ui->lineEditSearchBar->text().toStdString());
         if (!testVector.empty()) {
+            ui->labelSimilarGame->setVisible(true);
             for (const auto &gamePtr: testVector) {
                 if (ui->radioBtnBFS->isChecked())
                 {
@@ -55,7 +56,7 @@ void MainWindow::searchButtonClick()
                 // Display Game header
 //                ui->lineEditSearchBar->clear();
                 ui->textBrowserGameHeader->setHtml("<b><font color='#3584E4'>Viewing:</font></b><br>");
-                ui->textBrowserGameHeader->append(QString::fromStdString(gamePtr->getName()));
+                ui->textBrowserGameHeader->append("<b><font size='4'>"+ QString::fromStdString(gamePtr->getName()) +"</font></b>");
                 ui->textBrowserGameHeader->append("<b>Released in</b>: " + QString::fromStdString(gamePtr->getReleaseDate()));
                 string genreStr = " <b>Genres:</b> \n";
                 for(const auto& genre : gamePtr->getGenres())
@@ -94,8 +95,7 @@ void MainWindow::searchButtonClick()
         }
         else
         {
-            ui->textBrowserLstWgtResults->setHtml(
-                    ui->lineEditSearchBar->text() + " is not a valid Game. Please try a different Game name.");
+            ui->textBrowserGameHeader->setHtml(QString::fromStdString(" is not a valid Game. Please try a different Game name."));
         }
     }
     else if(ui->radioBtnGenre->isChecked())
@@ -115,8 +115,8 @@ void MainWindow::searchButtonClick()
         }
         else
         {
-            ui->textBrowserLstWgtResults->setHtml(
-                    ui->lineEditSearchBar->text() + " is not a valid Genre. Please try a different Genre name.");
+            ui->textBrowserGameHeader->setHtml(
+                    " is not a valid Genre. Please try a different Genre name.");
         }
     }
     else if (ui->radioBtnCompany->isChecked())
@@ -136,8 +136,8 @@ void MainWindow::searchButtonClick()
         }
         else
         {
-            ui->textBrowserLstWgtResults->setHtml(
-                    ui->lineEditSearchBar->text() + " is not a valid Company. Please try a different Company name.");
+            ui->textBrowserGameHeader->setHtml(
+                    " is not a valid Company. Please try a different Company name.");
         }
     }
 
