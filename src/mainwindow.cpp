@@ -157,7 +157,7 @@ void MainWindow::on_listWgtSearchObjects_itemSelectionChanged() {
     }
 }
 
-void MainWindow::displayGameInfo(shared_ptr<game> gamePtr) {// release date
+void MainWindow::displayGameInfo(shared_ptr<game> gamePtr) {
 
     ui->labelSimilarGameDetail->setVisible(true);
     ui->textBrowserLstWgtResults->setStyleSheet("border: 1px solid rgb(125, 125, 125); padding-top: 8px; padding-left: 8px");

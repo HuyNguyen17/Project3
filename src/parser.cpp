@@ -88,9 +88,15 @@ void Parser::parseGame(const rapidjson::Value::ConstValueIterator mainIter, grap
             }
         }
     }
+    else
+    {
+        //if no genres, then create a dummy None genre
+        genres.emplace_back(-1, "None"); //give the NONE genre an id of -1
+    }
 
     // Iterate through Involved Companies
-    if (mainIter->GetObject().HasMember("involved_companies"))
+    bool hasCompany = mainIter->GetObject().HasMember("involved_companies");
+    if (hasCompany)
     {
         if (mainIter->GetObject()["involved_companies"].IsArray()) {
             const rapidjson::Value &involvedCoArray = mainIter->GetObject()["involved_companies"];
@@ -115,6 +121,11 @@ void Parser::parseGame(const rapidjson::Value::ConstValueIterator mainIter, grap
                 }
             }
         }
+    }
+    else
+    {
+        //if no companies, then create a dummy None company
+        companies.emplace_back(-1, "None"); //give the NONE company an id of -1
     }
 
     // Iterate through similar games

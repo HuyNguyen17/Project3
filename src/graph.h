@@ -10,7 +10,7 @@
 #include <vector>
 #include <algorithm>
 #include <cmath>
-#include<memory>
+#include <memory>
 #include "game.h"
 #include "unordered_set"
 #include <QStringList>
