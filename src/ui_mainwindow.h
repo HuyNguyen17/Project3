@@ -110,9 +110,9 @@ public:
         // waiting message
         labelWaitText = new QLabel(centralwidget);
         labelWaitText->setObjectName("labelWaitText");
-        labelWaitText->setGeometry(QRect(680, 290, 521, 41));
+        labelWaitText->setGeometry(QRect(680, 240, 521, 41));
         QFont font;
-        font.setPointSize(24);
+        font.setPointSize(20);
         font.setBold(true);
         labelWaitText->setFont(font);
         labelWaitText->setStyleSheet(QString::fromUtf8("color: rgb(53, 132, 228)"));
