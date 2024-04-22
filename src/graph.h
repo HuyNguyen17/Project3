@@ -29,22 +29,32 @@ private:
     unordered_map<string, vector<int>> genre; //string will be the genre title and int will be gameID
     unordered_map<string, vector<int>> company; //string will be the company title and int will be gameID
     unordered_map<string, vector<int>> release_date; //string will be the release date and int will be gameID
-    QStringList qStringListNames;
 
+    QStringList qStringListNames;
+    QStringList qStringListCompanies;
+    QStringList qStringListGenres;
+    QStringList qStringListGameNameResults;
     vector<shared_ptr<game>> names;
 
     int numEdges = 0;
 public:
     graph() = default; // Default constructor
     void addGame(const shared_ptr<game>& game);
-    void addEdge(int gameId1, int gameId2);
-    void addEdge(pair<int,int>& gamePair);
+    bool addEdge(int gameId1, int gameId2);
+    bool addEdge(pair<int,int>& gamePair);
     void connectNodes();
 
     // add game name to QStringList
     void addGameToQString(QString qString);
+
+    void addAllGenresToQString();
+    void addAllCompaniesToQString();
     // return game StringList
     QStringList getQStringGameNames() {return qStringListNames; }
+    QStringList getQStringCompanyNames() {return qStringListCompanies; }
+    QStringList getQStringGenreNames() {return qStringListGenres; }
+    QStringList getQStringGameNameResults() {return qStringListGameNameResults; }
+
     std::vector<std::shared_ptr<game>> findByName(const string& name); // Method to find a game by name
     shared_ptr<game> findByID(const int ID); // find a gameby its id
 
@@ -87,8 +97,6 @@ public:
     void printAllCompany();
     //Prints all the games in a specific release date
     void searchByReleaseDate(string _releaseDate);
-
-
 };
 
 #endif //PROJECT3_GRAPH_H

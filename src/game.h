@@ -3,6 +3,7 @@
 #include<vector>
 #include<string>
 #include <iostream>
+
 using namespace std;
 // enumeration for genres
 struct Genre
@@ -35,6 +36,7 @@ public:
     string getReleaseDate() const;
     vector<int> getSimilarGames() const;
 
+    void removeSimilarGamesAfter(int ID);
     //used for the unordered map
     bool operator==(const game &other) const;
 private:

@@ -9,6 +9,8 @@
 #include "graph.h"
 #include "parser.h"
 #include <iostream>
+#include <QCompleter>
+#include <QListWidgetItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,10 +26,20 @@ public:
     graph gameGraph;
 private slots:
     void searchButtonClick();
+    void on_radioBtnGames_toggled(bool checked);
+    void on_radioBtnCompany_toggled(bool checked);
+    void on_radioBtnGenre_toggled(bool checked);
+    void on_checkBoxConnectedTo_toggled(bool checked);
+    void on_listWgtSearchObjects_itemSelectionChanged();
 
 private:
     Ui::MainWindow *ui;
     class Parser* parsed;
+    QCompleter* gameCompleter;
+    QCompleter* genreCompleter;
+    QCompleter* companyCompleter;
+
+    void displayGameInfo(shared_ptr<game> gamePtr);
 };
 
 #endif //PROJECT3_MAINWINDOW_H

@@ -21,18 +21,23 @@ void graph::addGame(const shared_ptr<game>& game) {
     release_date[(game->getReleaseDate())].push_back(game->getID());
 }
 
-void graph::addEdge(int gameId1, int gameId2) {
+bool graph::addEdge(int gameId1, int gameId2) {
     // need to make sure the nodes exist in the graph
     if (gameExists(gameId1) && gameExists(gameId2)) {
         edges[gameId1].push_back(gameId2);
         edges[gameId2].push_back(gameId1); // Assuming bidirectional relationship
         numEdges++;
+        return true;
+    }
+    else
+    {
+        return false; // not added
     }
 }
 
-void graph::addEdge(pair<int,int>& gamePair) {
+bool graph::addEdge(pair<int,int>& gamePair) {
     //makes it easier to directly add a pair for a graph
-    addEdge(gamePair.first, gamePair.second);
+    return addEdge(gamePair.first, gamePair.second);
 }
 
 vector<shared_ptr<game>> graph::findByName(const string& name) {
@@ -86,9 +91,27 @@ void graph::connectNodes() {
     for(auto node: nodes)
     {
         // go through each node in the graph and adds its similar games as edges
+        bool allValid = true;
+        int invalidIndex = -1;
         for(auto similarGame : node.second->getSimilarGames())
         {
-            addEdge(node.second->getID(), similarGame);
+            if(gameExists(similarGame))
+            {
+                addEdge(node.second->getID(), similarGame);
+            }
+            else
+            {
+                // remove that game and all games after from similar games
+                if(allValid)
+                {
+                    invalidIndex = similarGame;
+                    allValid = false;
+                }
+            }
+        }
+        if(!allValid)
+        {
+            node.second->removeSimilarGamesAfter(invalidIndex);
         }
     }
 }
@@ -104,14 +127,18 @@ int graph::getIDfromSearching(string &_name) {
 
     if (names.size() == 1) {
         _id = names.front()->getID();
-    } else {
-        cout << "Multiple games found. Please select one:" << endl;
-        for (const auto& gamePtr : names) {
-            cout << "Game: " << gamePtr->getName() << ", Released " << gamePtr->getReleaseDate() << ", ID: " << gamePtr->getID() << '\n';
-        }
-        cout << "Enter the ID of the game you want to select: ";
-        cin >> _id;
-        cin.ignore(); // Clear the newline character from the buffer
+    }
+    else
+    {
+        _id = names.front()->getID();
+//        Todo: give player ability to choose the game
+//        cout << "Multiple games found. Please select one:" << endl;
+//        for (const auto& gamePtr : names) {
+//            cout << "Game: " << gamePtr->getName() << ", Released " << gamePtr->getReleaseDate() << ", ID: " << gamePtr->getID() << '\n';
+//        }
+//        cout << "Enter the ID of the game you want to select: ";
+//        cin >> _id;
+//        cin.ignore(); // Clear the newline character from the buffer
     }
     return _id;
 }
@@ -119,6 +146,9 @@ int graph::getIDfromSearching(string &_name) {
 void graph::BFSprintConnectedGames(string _name, int maxDepth) {
     int _gameID = getIDfromSearching(_name);
     if (_gameID != -1) {
+        // clear the results before we add anything
+        qStringListGameNameResults.clear();
+
         queue<pair<int, int>> queue; // Store game ID and depth
         unordered_set<int> visited;
 
@@ -134,7 +164,9 @@ void graph::BFSprintConnectedGames(string _name, int maxDepth) {
             // Access the game using the ID and print its name
             auto gameIterator = nodes.find(currentID);
             if (gameIterator != nodes.end()) {
-                cout << gameIterator->second->getName() << endl;
+//                cout << gameIterator->second->getName() << endl;
+                // Add the game to a QStringList
+                qStringListGameNameResults << QString::fromStdString(gameIterator->second->getName());
             }
 
             // Stop BFS if depth exceeds maxDepth
@@ -155,6 +187,8 @@ void graph::BFSprintConnectedGames(string _name, int maxDepth) {
 void graph::DFSprintConnectedGames(string _name, int maxDepth) {
     int _gameID = getIDfromSearching(_name);
     if (_gameID != -1) {
+        // clear the results before we add anything
+        qStringListGameNameResults.clear();
         stack<pair<int, int>> stack;  // Use a stack to manage the DFS
         unordered_set<int> visited;
 
@@ -170,7 +204,8 @@ void graph::DFSprintConnectedGames(string _name, int maxDepth) {
             // Access the game using the ID and print its name
             auto gameIterator = nodes.find(currentID);
             if (gameIterator != nodes.end()) {
-                cout << gameIterator->second->getName() << endl;
+//                cout << gameIterator->second->getName() << endl;
+                qStringListGameNameResults << QString::fromStdString(gameIterator->second->getName());
             }
 
             // Stop DFS if depth exceeds maxDepth
@@ -255,6 +290,21 @@ void graph::addGameToQString(QString qString)
     qStringListNames << qString;
 }
 
+void graph::addAllGenresToQString()
+{
+    for (const auto& pair : genre)
+    {
+        qStringListGenres << QString::fromStdString(pair.first);
+    }
+}
+
+void graph::addAllCompaniesToQString() {
+    for (const auto& pair : company)
+    {
+        qStringListCompanies << QString::fromStdString(pair.first);
+    }
+}
+
 void graph::searchByGenre(string _genre) {
     auto it = genre.find(_genre);
     if (it == genre.end())
@@ -282,7 +332,8 @@ void graph::printAllGenre() {
     }
 
     cout << "Available Genres:" << endl;
-    for (const auto& pair : genre) {
+    for (const auto& pair : genre)
+    {
         cout << pair.first << endl;
     }
 }
@@ -315,7 +366,8 @@ void graph::printAllCompany() {
     }
 
     cout << "Available Companies:" << endl;
-    for (const auto& pair : company) {
+    for (const auto& pair : company)
+    {
         cout << pair.first << endl;
     }
 }
@@ -431,7 +483,7 @@ QVector<shared_ptr<game>> graph::getGamesByGenre(string _genre) {
     auto it = genre.find(_genre);
     if (it == genre.end()) {
         // Optionally handle the case where no games are found for the genre
-        cout << "No games found for the genre: " << _genre << endl;
+//        cout << "No games found for the genre: " << _genre << endl;
         return gamesByGenre; // Return an empty vector
     }
 
@@ -450,7 +502,7 @@ QVector<shared_ptr<game>> graph::getGamesByCompany(string _company) {
     auto it = company.find(_company);
     if (it == company.end()) {
         // Optionally handle the case where no games are found for the company
-        cout << "No games found for " << _company << endl;
+//        cout << "No games found for " << _company << endl;
         return gamesByCompany; // Return an empty vector
     }
 
@@ -509,7 +561,7 @@ QString graph::gamesConnected( string &name1,  string &name2, int searchPath) {
             int currentDepth = current.second;
 
             if (currentID == targetID) {
-                result = QString("[%1] is %2 games away from [%3].").arg(_name2).arg(currentDepth).arg(_name1);
+                result = QString("%1 is %2 games away from %3.").arg(_name2).arg(currentDepth).arg(_name1);
                 return result;
             }
 
@@ -532,7 +584,7 @@ QString graph::gamesConnected( string &name1,  string &name2, int searchPath) {
             int currentDepth = current.second;
 
             if (currentID == targetID) {
-                result = QString("[%1] is %2 games away from [%3].").arg(_name2).arg(currentDepth).arg(_name1);
+                result = QString("%1 is %2 games away from %3.").arg(_name2).arg(currentDepth).arg(_name1);
                 return result;
             }
 
