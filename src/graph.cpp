@@ -21,18 +21,23 @@ void graph::addGame(const shared_ptr<game>& game) {
     release_date[(game->getReleaseDate())].push_back(game->getID());
 }
 
-void graph::addEdge(int gameId1, int gameId2) {
+bool graph::addEdge(int gameId1, int gameId2) {
     // need to make sure the nodes exist in the graph
     if (gameExists(gameId1) && gameExists(gameId2)) {
         edges[gameId1].push_back(gameId2);
         edges[gameId2].push_back(gameId1); // Assuming bidirectional relationship
         numEdges++;
+        return true;
+    }
+    else
+    {
+        return false; // not added
     }
 }
 
-void graph::addEdge(pair<int,int>& gamePair) {
+bool graph::addEdge(pair<int,int>& gamePair) {
     //makes it easier to directly add a pair for a graph
-    addEdge(gamePair.first, gamePair.second);
+    return addEdge(gamePair.first, gamePair.second);
 }
 
 vector<shared_ptr<game>> graph::findByName(const string& name) {
@@ -86,9 +91,27 @@ void graph::connectNodes() {
     for(auto node: nodes)
     {
         // go through each node in the graph and adds its similar games as edges
+        bool allValid = true;
+        int invalidIndex = -1;
         for(auto similarGame : node.second->getSimilarGames())
         {
-            addEdge(node.second->getID(), similarGame);
+            if(gameExists(similarGame))
+            {
+                addEdge(node.second->getID(), similarGame);
+            }
+            else
+            {
+                // remove that game and all games after from similar games
+                if(allValid)
+                {
+                    invalidIndex = similarGame;
+                    allValid = false;
+                }
+            }
+        }
+        if(!allValid)
+        {
+            node.second->removeSimilarGamesAfter(invalidIndex);
         }
     }
 }

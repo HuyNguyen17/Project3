@@ -40,8 +40,8 @@ private:
 public:
     graph() = default; // Default constructor
     void addGame(const shared_ptr<game>& game);
-    void addEdge(int gameId1, int gameId2);
-    void addEdge(pair<int,int>& gamePair);
+    bool addEdge(int gameId1, int gameId2);
+    bool addEdge(pair<int,int>& gamePair);
     void connectNodes();
 
     // add game name to QStringList
