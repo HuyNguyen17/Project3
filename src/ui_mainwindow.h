@@ -125,7 +125,7 @@ public:
 //        simialr games
         labelSimilarGame = new QLabel(centralwidget);
         labelSimilarGame->setObjectName("labelSimilarGame");
-        labelSimilarGame->setGeometry(QRect(630, 80, 181, 20));
+        labelSimilarGame->setGeometry(QRect(510, 80, 421, 20));
         QFont font1;
         font1.setBold(true);
         labelSimilarGame->setFont(font1);

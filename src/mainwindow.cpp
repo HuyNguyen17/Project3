@@ -70,8 +70,13 @@ void MainWindow::searchButtonClick()
                 }
                 // remove the last two characters of the string before printing
                 ui->textBrowserGameHeader->append(genreStr.substr(0, genreStr.size() - 2).c_str());
-//                ui->textBrowserGameHeader->append("Genre: " + QString::fromStdString(gamePtr->getGenres()[0].name));
-                ui->textBrowserGameHeader->append("<b>Created by:</b> " + QString::fromStdString(gamePtr->getCompanies()[0].name));
+                string companyStr = " <b>Companies:</b> \n";
+                for(const auto& company : gamePtr->getCompanies())
+                {
+                    companyStr += company.name;
+                    companyStr += ", ";
+                }
+                ui->textBrowserGameHeader->append(companyStr.substr(0, companyStr.size() - 2).c_str());
 
                 // populate QListWidget with text corresponding to the results
                 ui->listWgtSearchObjects->clear();
