@@ -1,4 +1,4 @@
-# Project3 - (Insert Name Here)
+# Project3 - infoGamerz
 ***
 ## How to build!
 ### Windows
