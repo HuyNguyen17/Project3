@@ -155,8 +155,12 @@ graph Parser::parseToGraph(std::string filename) {
             // parse game and add it to the graph
             parseGame(mainIter, gamesGraph);
         }
+
         gamesGraph.connectNodes();
 
+        // Add to autocomplete - possible add to queue set
+        gamesGraph.addAllGenresToQString();
+        gamesGraph.addAllCompaniesToQString();
         return gamesGraph;
     }
 }

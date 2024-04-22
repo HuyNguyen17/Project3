@@ -11,6 +11,8 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
@@ -19,6 +21,7 @@
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextBrowser>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -30,16 +33,20 @@ public:
     QLineEdit *lineEditSearchBar;
     QPushButton *pushBtnSearch;
     QTextBrowser *textBrowserHeader;
-    QRadioButton *radioBtnBFS;
-    QRadioButton *radioBtnDFS;
     QTextBrowser *textBrowserLstWgtResults;
-    QRadioButton *radioBtnGames;
-    QRadioButton *radioBtnGenre;
-    QRadioButton *radioBtnCompany;
-    QRadioButton *radioBtnConnectedTo;
+    QCheckBox *checkBoxConnectedTo;
     QLineEdit *lineEditConnectedToResults;
     QTextBrowser *textBrowsrConnectedToResult;
     QListWidget *listWgtSearchObjects;
+    QWidget *searchTypeWidget;
+    QHBoxLayout *horizontalLayoutSearchCriteria;
+    QRadioButton *radioBtnGames;
+    QRadioButton *radioBtnGenre;
+    QRadioButton *radioBtnCompany;
+    QWidget *gameSearchWidget;
+    QVBoxLayout *verticalLayoutAlgoType;
+    QRadioButton *radioBtnBFS;
+    QRadioButton *radioBtnDFS;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -61,36 +68,62 @@ public:
         textBrowserHeader->setGeometry(QRect(350, 10, 321, 51));
         textBrowserHeader->setFrameShape(QFrame::NoFrame);
         textBrowserHeader->setFrameShadow(QFrame::Sunken);
-        radioBtnBFS = new QRadioButton(centralwidget);
-        radioBtnBFS->setObjectName("radioBtnBFS");
-        radioBtnBFS->setGeometry(QRect(40, 350, 131, 23));
-        radioBtnDFS = new QRadioButton(centralwidget);
-        radioBtnDFS->setObjectName("radioBtnDFS");
-        radioBtnDFS->setGeometry(QRect(40, 390, 131, 23));
         textBrowserLstWgtResults = new QTextBrowser(centralwidget);
         textBrowserLstWgtResults->setObjectName("textBrowserLstWgtResults");
         textBrowserLstWgtResults->setGeometry(QRect(840, 100, 401, 451));
-        radioBtnGames = new QRadioButton(centralwidget);
+        listWgtSearchObjects = new QListWidget(centralwidget);
+        listWgtSearchObjects->setObjectName("listWgtSearchObjects");
+        listWgtSearchObjects->setGeometry(QRect(480, 100, 341, 451));
+        searchTypeWidget = new QWidget(centralwidget);
+        searchTypeWidget->setObjectName("searchTypeWidget");
+        searchTypeWidget->setGeometry(QRect(20, 80, 442, 25));
+        horizontalLayoutSearchCriteria = new QHBoxLayout(searchTypeWidget);
+        horizontalLayoutSearchCriteria->setObjectName("horizontalLayoutSearchCriteria");
+        horizontalLayoutSearchCriteria->setContentsMargins(0, 0, 0, 0);
+        radioBtnGames = new QRadioButton(searchTypeWidget);
         radioBtnGames->setObjectName("radioBtnGames");
-        radioBtnGames->setGeometry(QRect(20, 80, 141, 23));
-        radioBtnGenre = new QRadioButton(centralwidget);
+        radioBtnGames->setChecked(true);
+
+        horizontalLayoutSearchCriteria->addWidget(radioBtnGames);
+
+        radioBtnGenre = new QRadioButton(searchTypeWidget);
         radioBtnGenre->setObjectName("radioBtnGenre");
-        radioBtnGenre->setGeometry(QRect(170, 80, 141, 23));
-        radioBtnCompany = new QRadioButton(centralwidget);
+
+        horizontalLayoutSearchCriteria->addWidget(radioBtnGenre);
+
+        radioBtnCompany = new QRadioButton(searchTypeWidget);
         radioBtnCompany->setObjectName("radioBtnCompany");
-        radioBtnCompany->setGeometry(QRect(310, 80, 151, 23));
-        radioBtnConnectedTo = new QRadioButton(centralwidget);
-        radioBtnConnectedTo->setObjectName("radioBtnConnectedTo");
-        radioBtnConnectedTo->setGeometry(QRect(40, 440, 131, 23));
+
+        horizontalLayoutSearchCriteria->addWidget(radioBtnCompany);
+
+        gameSearchWidget = new QWidget(centralwidget);
+        gameSearchWidget->setObjectName("gameSearchWidget");
+        gameSearchWidget->setGeometry(QRect(40, 350, 54, 54));
+        verticalLayoutAlgoType = new QVBoxLayout(gameSearchWidget);
+        verticalLayoutAlgoType->setObjectName("verticalLayoutAlgoType");
+        verticalLayoutAlgoType->setContentsMargins(0, 0, 0, 0);
+        radioBtnBFS = new QRadioButton(gameSearchWidget);
+        radioBtnBFS->setObjectName("radioBtnBFS");
+        radioBtnBFS->setChecked(true);
+
+        verticalLayoutAlgoType->addWidget(radioBtnBFS);
+
+        radioBtnDFS = new QRadioButton(gameSearchWidget);
+        radioBtnDFS->setObjectName("radioBtnDFS");
+
+        verticalLayoutAlgoType->addWidget(radioBtnDFS);
+
+        // connectedto stuff
+        checkBoxConnectedTo = new QCheckBox(centralwidget);
+        checkBoxConnectedTo->setObjectName("checkBoxConnectedTo");
+        checkBoxConnectedTo->setGeometry(QRect(40, 440, 131, 23));
         lineEditConnectedToResults = new QLineEdit(centralwidget);
         lineEditConnectedToResults->setObjectName("lineEditConnectedToResults");
         lineEditConnectedToResults->setGeometry(QRect(180, 440, 221, 25));
         textBrowsrConnectedToResult = new QTextBrowser(centralwidget);
         textBrowsrConnectedToResult->setObjectName("textBrowsrConnectedToResult");
         textBrowsrConnectedToResult->setGeometry(QRect(40, 480, 361, 71));
-        listWgtSearchObjects = new QListWidget(centralwidget);
-        listWgtSearchObjects->setObjectName("listWgtSearchObjects");
-        listWgtSearchObjects->setGeometry(QRect(480, 100, 341, 451));
+
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -117,12 +150,12 @@ public:
                                                                              "li.checked::marker { content: \"\\2612\"; }\n"
                                                                              "</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
                                                                              "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:700; color:#1a5fb4;\">Gamerz Edge</span></p></body></html>", nullptr));
-        radioBtnBFS->setText(QCoreApplication::translate("MainWindow", "BFS", nullptr));
-        radioBtnDFS->setText(QCoreApplication::translate("MainWindow", "DFS", nullptr));
+        checkBoxConnectedTo->setText(QCoreApplication::translate("MainWindow", "Connected To", nullptr));
         radioBtnGames->setText(QCoreApplication::translate("MainWindow", "Search by games", nullptr));
         radioBtnGenre->setText(QCoreApplication::translate("MainWindow", "Search by genre", nullptr));
         radioBtnCompany->setText(QCoreApplication::translate("MainWindow", "Search by company", nullptr));
-        radioBtnConnectedTo->setText(QCoreApplication::translate("MainWindow", "Connected To", nullptr));
+        radioBtnBFS->setText(QCoreApplication::translate("MainWindow", "BFS", nullptr));
+        radioBtnDFS->setText(QCoreApplication::translate("MainWindow", "DFS", nullptr));
     } // retranslateUi
 
 };

@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include <utility>
+#include <algorithm>
 
 bool game::operator==(const game &other) const {
     return other.id == this->id;
@@ -35,6 +36,13 @@ game::game(int ID, string gameName, string gameReleaseDate,
            vector<Genre>& genres, vector<Company>& companies, vector<int>& similarGames) :
         id(ID), name(std::move(gameName)), releaseDate(std::move(gameReleaseDate)),
         genres(genres), companies(companies), similarGamesIDs(similarGames) {
+}
+
+void game::removeSimilarGamesAfter(int toErase) {
+    // sort the id vector
+    sort(similarGamesIDs.begin(), similarGamesIDs.end());
+    // then remove all ids including and after this one
+    similarGamesIDs.erase(find(similarGamesIDs.begin(), similarGamesIDs.end(), toErase), similarGamesIDs.end());
 }
 
 game::~game() = default;
