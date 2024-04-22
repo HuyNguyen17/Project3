@@ -17,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushBtnSearch, &QPushButton::clicked, this, &MainWindow::searchButtonClick);
 
     gameGraph = parsed->parseToGraph("../data/data.json");
+    string gameInfo = string("<b><font color='#3584E4'>There are ") + to_string(gameGraph.getNumNodes()) + string(" games in the program!</font></b><br>");
+    ui->textBrowserGameHeader->setHtml(gameInfo.c_str());
 
     gameCompleter = new QCompleter(gameGraph.getQStringGameNames(), ui->lineEditSearchBar);
     gameCompleter->setCaseSensitivity(Qt::CaseInsensitive);
@@ -24,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     companyCompleter->setCaseSensitivity(Qt::CaseInsensitive);
     genreCompleter = new QCompleter(gameGraph.getQStringGenreNames(), ui->lineEditSearchBar);
     genreCompleter->setCaseSensitivity(Qt::CaseInsensitive);
+
 
     // Set the QCompleter to the existing QLineEdit
     ui->lineEditSearchBar->setCompleter(gameCompleter); // game completer by default
@@ -36,15 +39,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::searchButtonClick()
 {
-    ui->textBrowserLstWgtResults->clear(); // clear results at each search
+    ui->textBrowserLstWgtResults->clear(); // clear results at each
+    ui->labelWaitText->setVisible(false); // hide the wait test if a search is done
+    ui->labelSimilarGame->setVisible(true); // show the similar game button if text is true
     // only search games if games button checked
     if (ui->radioBtnGames->isChecked())
     {
-        ui->labelWaitText->setVisible(false);
-
+        ui->labelSimilarGame->setText("Similar Games");
         auto testVector = gameGraph.findByName(ui->lineEditSearchBar->text().toStdString());
         if (!testVector.empty()) {
-            ui->labelSimilarGame->setVisible(true);
             for (const auto &gamePtr: testVector) {
                 if (ui->radioBtnBFS->isChecked())
                 {
@@ -55,8 +58,9 @@ void MainWindow::searchButtonClick()
 
                 // Display Game header
 //                ui->lineEditSearchBar->clear();
+                ui->textBrowserGameHeader->setVisible(true);
                 ui->textBrowserGameHeader->setHtml("<b><font color='#3584E4'>Viewing:</font></b><br>");
-                ui->textBrowserGameHeader->append("<b><font size='4'>"+ QString::fromStdString(gamePtr->getName()) +"</font></b>");
+                ui->textBrowserGameHeader->append(QString::fromStdString(gamePtr->getName()));
                 ui->textBrowserGameHeader->append("<b>Released in</b>: " + QString::fromStdString(gamePtr->getReleaseDate()));
                 string genreStr = " <b>Genres:</b> \n";
                 for(const auto& genre : gamePtr->getGenres())
@@ -95,13 +99,19 @@ void MainWindow::searchButtonClick()
         }
         else
         {
-            ui->textBrowserGameHeader->setHtml(QString::fromStdString(" is not a valid Game. Please try a different Game name."));
+            ui->textBrowserLstWgtResults->setHtml(
+                    ui->lineEditSearchBar->text() + " is not a valid Game. Please try a different Game name.");
         }
     }
     else if(ui->radioBtnGenre->isChecked())
     {
+        // disable the text browser when we're searching genres
+        ui->textBrowserGameHeader->setVisible(false);
+
+        auto genreName = ui->lineEditSearchBar->text().toStdString();
+        ui->labelSimilarGame->setText(QString::fromStdString("Games In Genre " + genreName));
         // do genre search
-        auto gamesBygenre = gameGraph.getGamesByGenre(ui->lineEditSearchBar->text().toStdString());
+        auto gamesBygenre = gameGraph.getGamesByGenre(genreName);
         if (!gamesBygenre.empty()) {
             // store the games from genre into qlist
             QStringList gamesFromGenre;
@@ -115,14 +125,19 @@ void MainWindow::searchButtonClick()
         }
         else
         {
-            ui->textBrowserGameHeader->setHtml(
-                    " is not a valid Genre. Please try a different Genre name.");
+            ui->textBrowserLstWgtResults->setHtml(
+                    ui->lineEditSearchBar->text() + " is not a valid Genre. Please try a different Genre name.");
         }
     }
     else if (ui->radioBtnCompany->isChecked())
     {
+        // disable the text browser when we're searching companies
+        ui->textBrowserGameHeader->setVisible(false);
+
+        auto companyName = ui->lineEditSearchBar->text().toStdString();
+        ui->labelSimilarGame->setText(QString::fromStdString("Games With Involvement By " + companyName));
         // do company search
-        auto gamesByCompany = gameGraph.getGamesByCompany(ui->lineEditSearchBar->text().toStdString());
+        auto gamesByCompany = gameGraph.getGamesByCompany(companyName);
         if (!gamesByCompany.empty()) {
             // store the games from genre into qlist
             QStringList gamesFromCompany;
@@ -136,8 +151,8 @@ void MainWindow::searchButtonClick()
         }
         else
         {
-            ui->textBrowserGameHeader->setHtml(
-                    " is not a valid Company. Please try a different Company name.");
+            ui->textBrowserLstWgtResults->setHtml(
+                    ui->lineEditSearchBar->text() + " is not a valid Company. Please try a different Company name.");
         }
     }
 
