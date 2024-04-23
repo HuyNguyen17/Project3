@@ -544,6 +544,7 @@ QString graph::gamesConnected( string &name1,  string &name2, int searchPath) {
     QString result;
     QString _name1 = QString::fromStdString(name1);
     QString _name2 = QString::fromStdString(name2);
+    int depth = -1;
 
     int startID = getIDfromSearching(name1);
     int targetID = getIDfromSearching(name2);
@@ -566,8 +567,8 @@ QString graph::gamesConnected( string &name1,  string &name2, int searchPath) {
             int currentDepth = current.second;
 
             if (currentID == targetID) {
-                result = QString("%1 is %2 games away from %3.").arg(_name2).arg(currentDepth).arg(_name1);
-                return result;
+                depth = currentDepth;
+                break;
             }
 
             for (int neighbourID : edges[currentID]) {
@@ -589,8 +590,8 @@ QString graph::gamesConnected( string &name1,  string &name2, int searchPath) {
             int currentDepth = current.second;
 
             if (currentID == targetID) {
-                result = QString("%1 is %2 games away from %3.").arg(_name2).arg(currentDepth).arg(_name1);
-                return result;
+                depth = currentDepth;
+                break;
             }
 
             for (int neighbourID : edges[currentID]) {
@@ -601,7 +602,23 @@ QString graph::gamesConnected( string &name1,  string &name2, int searchPath) {
             }
         }
     }
-
-    result = QString("%1 is not reachable from %2").arg(_name2).arg(_name1);
+    string resultString;
+    switch(depth)
+    {
+        case -1:
+            result = _name1 + QString(" is not connected to ") + _name2;
+            break;
+        case 1:
+            result = _name1 + QString( " is very similar to ") + _name2;
+            break;
+        case 2:
+            result = _name1 + QString(" is somewhat similar to ") + _name2;
+            break;
+        case 3:
+            result = _name1 + QString(" is not very similar to ") + _name2;
+            break;
+        default:
+            result = _name1 + QString(" is not even close to ") + _name2;
+    }
     return result;
 }
